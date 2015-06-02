@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="50dp">
+
+        <com.db.circularcounter.CircularCounter
+            xmlns:meter="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/meter_ammo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:padding="5dp"
+            meter:range="60"
+            meter:textSize="100sp"
+            meter:textColor="#1796D6"
+            meter:metricSize="20sp"
+            meter:metricText="AMMO"
+            android:layout_below="@+id/meter"
+            android:layout_alignStart="@+id/meter"
+            android:layout_marginTop="33dp"
+            android:layout_gravity="center" />
+
+        <com.db.circularcounter.CircularCounter
+            xmlns:meter="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/meter"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:padding="5dp"
+            meter:range="60"
+            meter:textSize="100sp"
+            meter:textColor="#F51E22"
+            meter:metricSize="20sp"
+            meter:metricText="HP"
+            android:layout_below="@+id/btnMore"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Less"
+            android:id="@+id/btnLess"
+            android:layout_below="@+id/meter_ammo"
+            android:layout_toEndOf="@+id/btnAuto" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="auto"
+            android:id="@+id/btnAuto"
+            android:layout_below="@+id/btnLess"
+            android:layout_alignStart="@+id/meter_ammo" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:id="@+id/btnMore"
+            android:layout_alignStart="@+id/meter"
+            android:layout_gravity="right" />
+    </LinearLayout>
+
+
+</RelativeLayout>
+

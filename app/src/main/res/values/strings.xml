@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">BattleSuitController</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="colors">
+        <item>#004B4B</item>
+        <item>#DE9C59</item>
+        <item>#ffffff</item>
+    </string-array>
+
+    <string-array name="colors_AMMO">
+        <item>#000087</item>
+        <item>#00AAFF</item>
+        <item>#CDEEFF</item>
+    </string-array>
+
+    <string-array name="colors_HP">
+        <item>#9B0000</item>
+        <item>#E50707</item>
+        <item>#FFA6A6</item>
+    </string-array>
+
+    <string name="menu_settings">Settings</string>
+
+</resources>
