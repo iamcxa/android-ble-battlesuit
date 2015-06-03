@@ -9,36 +9,9 @@
         android:layout_height="match_parent"
         android:paddingTop="50dp">
 
-        <com.db.circularcounter.CircularCounter
-            xmlns:meter="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/meter_ammo"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:padding="5dp"
-            meter:range="60"
-            meter:textSize="100sp"
-            meter:textColor="#1796D6"
-            meter:metricSize="20sp"
-            meter:metricText="AMMO"
-            android:layout_below="@+id/meter"
-            android:layout_alignStart="@+id/meter"
-            android:layout_marginTop="33dp"
-            android:layout_gravity="center" />
+        <include layout="@layout/include_ring_ammo2"/>
+        <include layout="@layout/include_ring_hp"/>
 
-        <com.db.circularcounter.CircularCounter
-            xmlns:meter="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/meter"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:padding="5dp"
-            meter:range="60"
-            meter:textSize="100sp"
-            meter:textColor="#F51E22"
-            meter:metricSize="20sp"
-            meter:metricText="HP"
-            android:layout_below="@+id/btnMore"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center" />
     </LinearLayout>
 
 

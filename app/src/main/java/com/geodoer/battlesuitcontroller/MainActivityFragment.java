@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.db.circularcounter.CircularCounter;
+import com.geodoer.circularseekbar.CircularSeekBar;
 
 
 /**
@@ -18,7 +19,8 @@ import com.db.circularcounter.CircularCounter;
  */
 public class MainActivityFragment
         extends Fragment
-        implements View.OnClickListener{
+        implements View.OnClickListener,
+        CircularSeekBar.OnSeekChangeListener {
 
     private CircularCounter meterHp;
     private CircularCounter meterAmmo;
@@ -35,6 +37,10 @@ public class MainActivityFragment
     private Button btnAuto;
 
     private boolean isAutoRun;
+
+    private CircularSeekBar barAmmo;
+    private CircularSeekBar barHp;
+
 
     public MainActivityFragment() {
         handler = new Handler();
@@ -74,6 +80,22 @@ public class MainActivityFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        barAmmo=(CircularSeekBar)view.findViewById(R.id.barAmmo);
+        barAmmo.setMaxProgress(60);
+        barAmmo.setProgress(0);
+        barAmmo.setBarWidth(35);
+        barAmmo.invalidate();
+        barAmmo.setProgressColor(getResources().getColor(R.color.bar_color_ammo));
+        barAmmo.setSeekBarChangeListener(this);
+
+        barHp=(CircularSeekBar)view.findViewById(R.id.barHp);
+        barHp.setMaxProgress(5);
+        barHp.setProgress(0);
+        barHp.setBarWidth(35);
+        barHp.invalidate();
+        barHp.setProgressColor(getResources().getColor(R.color.bar_color_hp));
+        barHp.setSeekBarChangeListener(this);
+
         isAutoRun=false;
 
         btnMore=(Button)view.findViewById(R.id.btnMore);
@@ -99,7 +121,7 @@ public class MainActivityFragment
                 .setThirdWidth(getResources().getDimension(R.dimen.third))
                 .setThirdColor(Color.parseColor(colorsHp[2]))
 
-                .setBackgroundColor(-14606047);
+                .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
 
         meterAmmo.setFirstWidth(getResources().getDimension(R.dimen.first))
                 .setFirstColor(Color.parseColor(colorsAmmo[0]))
@@ -110,7 +132,7 @@ public class MainActivityFragment
                 .setThirdWidth(getResources().getDimension(R.dimen.third))
                 .setThirdColor(Color.parseColor(colorsAmmo[2]))
 
-                .setBackgroundColor(-14606047);
+                .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
     }
 
     @Override
@@ -146,14 +168,32 @@ public class MainActivityFragment
     }
 
     private void reduceMeter(CircularCounter meter){
-        meter.setValues(meter.getValue1()-1,
-                meter.getValue2()-2,
-                meter.getValue3()-3);
+        meter.setValues(meter.getValue1() - 1,
+                meter.getValue2() - 2,
+                meter.getValue3() - 3);
     }
 
     private void addMeter(CircularCounter meter){
         meter.setValues(meter.getValue1()+1,
                 meter.getValue2()+2,
                 meter.getValue3()+3);
+    }
+
+    private void addMeter(CircularCounter meter,int v1,int v2,int v3){
+        meter.setValues(v1,
+                v2,
+                v3);
+    }
+
+    @Override
+    public void onProgressChange(CircularSeekBar view, int newProgress) {
+        switch (view.getId()){
+            case R.id.barAmmo:
+                addMeter(meterAmmo,newProgress,newProgress*2,newProgress*3);
+                break;
+            case R.id.barHp:
+                addMeter(meterHp,newProgress,newProgress*2,newProgress*3);
+                break;
+        }
     }
 }

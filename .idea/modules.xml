@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BattleSuitController.iml" filepath="$PROJECT_DIR$/BattleSuitController.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/circularcounter/circularcounter.iml" filepath="$PROJECT_DIR$/circularcounter/circularcounter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/circularseekbar/circularseekbar.iml" filepath="$PROJECT_DIR$/circularseekbar/circularseekbar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/noway-p2-app-demo.iml" filepath="$PROJECT_DIR$/noway-p2-app-demo.iml" />
     </modules>
   </component>
 </project>
