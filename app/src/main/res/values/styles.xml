@@ -12,7 +12,7 @@
         <item name="colorPrimary">#673AB7</item>
         <item name="colorPrimaryDark">#512DA8</item>
         <item name="colorAccent">#FF4081</item>
-        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:windowBackground">@color/dim_foreground_disabled_material_dark</item>
     </style>
 
     <style name="Widget.CardContent" parent="android:Widget">

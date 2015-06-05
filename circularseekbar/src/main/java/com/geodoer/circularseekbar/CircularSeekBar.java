@@ -23,6 +23,9 @@ import com.geodoer.circularseekbar.R;
  */
 public class CircularSeekBar extends View {
 
+	/** the degree of circle */
+	private int degree=180;
+
 	/** The context */
 	private Context mContext;
 
@@ -39,10 +42,10 @@ public class CircularSeekBar extends View {
 	private Paint circleRing;
 
 	/** The angle of progress */
-	private int angle = 0;
+	private int angle = 90;
 
 	/** The start angle (12 O'clock */
-	private int startAngle = 270;
+	private int startAngle = 90;
 
 	/** The width of the progress ring */
 	private int barWidth = 10;
@@ -171,7 +174,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Instantiates a new circular seek bar.
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @param attrs
@@ -187,7 +190,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Instantiates a new circular seek bar.
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 * @param attrs
@@ -201,7 +204,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Instantiates a new circular seek bar.
-	 * 
+	 *
 	 * @param context
 	 *            the context
 	 */
@@ -278,7 +281,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Draw marker at the current progress point onto the given canvas.
-	 * 
+	 *
 	 * @param canvas
 	 *            the canvas
 	 */
@@ -293,7 +296,7 @@ public class CircularSeekBar extends View {
 	/**
 	 * Gets the X coordinate of the arc's end arm's point of intersection with
 	 * the circle
-	 * 
+	 *
 	 * @return the X coordinate
 	 */
 	public float getXFromAngle() {
@@ -307,7 +310,7 @@ public class CircularSeekBar extends View {
 	/**
 	 * Gets the Y coordinate of the arc's end arm's point of intersection with
 	 * the circle
-	 * 
+	 *
 	 * @return the Y coordinate
 	 */
 	public float getYFromAngle() {
@@ -320,7 +323,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Get the angle.
-	 * 
+	 *
 	 * @return the angle
 	 */
 	public int getAngle() {
@@ -329,13 +332,13 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Set the angle.
-	 * 
+	 *
 	 * @param angle
 	 *            the new angle
 	 */
 	public void setAngle(int angle) {
 		this.angle = angle;
-		float donePercent = (((float) this.angle) / 360) * 100;
+		float donePercent = (((float) this.angle) / degree) * 100;
 		float progress = (donePercent / 100) * getMaxProgress();
 		setProgressPercent(Math.round(donePercent));
 		CALLED_FROM_ANGLE = true;
@@ -343,8 +346,25 @@ public class CircularSeekBar extends View {
 	}
 
 	/**
+	 * get the degree
+	 * @return the degree
+	 */
+	public int getDegree(){
+		return degree;
+	}
+
+	/**
+	 * Set the degree
+	 * @param degree
+	 */
+	public void setDegree(int degree){
+		this.degree=degree;
+
+	}
+
+	/**
 	 * Sets the seek bar change listener.
-	 * 
+	 *
 	 * @param listener
 	 *            the new seek bar change listener
 	 */
@@ -354,7 +374,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the seek bar change listener.
-	 * 
+	 *
 	 * @return the seek bar change listener
 	 */
 	public OnSeekChangeListener getSeekBarChangeListener() {
@@ -363,7 +383,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the bar width.
-	 * 
+	 *
 	 * @return the bar width
 	 */
 	public int getBarWidth() {
@@ -372,7 +392,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the bar width.
-	 * 
+	 *
 	 * @param barWidth
 	 *            the new bar width
 	 */
@@ -388,14 +408,14 @@ public class CircularSeekBar extends View {
 	 * <code>setSeekBarChangeListener(OnSeekChangeListener)<code> method. When
 	 * the onSeekChange event occurs, that object's appropriate
 	 * method is invoked.
-	 * 
+	 *
 	 * @see OnSeekChangeEvent
 	 */
 	public interface OnSeekChangeListener {
 
 		/**
 		 * On progress change.
-		 * 
+		 *
 		 * @param view
 		 *            the view
 		 * @param newProgress
@@ -406,7 +426,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the max progress.
-	 * 
+	 *
 	 * @return the max progress
 	 */
 	public int getMaxProgress() {
@@ -415,7 +435,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the max progress.
-	 * 
+	 *
 	 * @param maxProgress
 	 *            the new max progress
 	 */
@@ -425,7 +445,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the progress.
-	 * 
+	 *
 	 * @return the progress
 	 */
 	public int getProgress() {
@@ -434,7 +454,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the progress.
-	 * 
+	 *
 	 * @param progress
 	 *            the new progress
 	 */
@@ -443,7 +463,7 @@ public class CircularSeekBar extends View {
 			this.progress = progress;
 			if (!CALLED_FROM_ANGLE) {
 				int newPercent = (this.progress * 100) / this.maxProgress;
-				int newAngle = (newPercent * 360) / 100 ;
+				int newAngle = (newPercent * (int)degree) / 100 ;
 				this.setAngle(newAngle);
 				this.setProgressPercent(newPercent);
 			}
@@ -454,7 +474,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the progress percent.
-	 * 
+	 *
 	 * @return the progress percent
 	 */
 	public int getProgressPercent() {
@@ -463,7 +483,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the progress percent.
-	 * 
+	 *
 	 * @param progressPercent
 	 *            the new progress percent
 	 */
@@ -473,7 +493,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the ring background color.
-	 * 
+	 *
 	 * @param color
 	 *            the new ring background color
 	 */
@@ -483,7 +503,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the back ground color.
-	 * 
+	 *
 	 * @param color
 	 *            the new back ground color
 	 */
@@ -493,7 +513,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the progress color.
-	 * 
+	 *
 	 * @param color
 	 *            the new progress color
 	 */
@@ -512,23 +532,23 @@ public class CircularSeekBar extends View {
 		float y = event.getY();
 		boolean up = false;
 		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			moved(x, y, up);
-			break;
-		case MotionEvent.ACTION_MOVE:
-			moved(x, y, up);
-			break;
-		case MotionEvent.ACTION_UP:
-			up = true;
-			moved(x, y, up);
-			break;
+			case MotionEvent.ACTION_DOWN:
+				moved(x, y, up);
+				break;
+			case MotionEvent.ACTION_MOVE:
+				moved(x, y, up);
+				break;
+			case MotionEvent.ACTION_UP:
+				up = true;
+				moved(x, y, up);
+				break;
 		}
 		return true;
 	}
 
 	/**
 	 * Moved.
-	 * 
+	 *
 	 * @param x
 	 *            the x
 	 * @param y
@@ -544,8 +564,8 @@ public class CircularSeekBar extends View {
 			markPointX = (float) (cx + outerRadius * Math.cos(Math.atan2(x - cx, cy - y) - (Math.PI /2)));
 			markPointY = (float) (cy + outerRadius * Math.sin(Math.atan2(x - cx, cy - y) - (Math.PI /2)));
 
-			float degrees = (float) ((float) ((Math.toDegrees(Math.atan2(x - cx, cy - y)) + 360.0)) % 360.0);
-			// and to make it count 0-360
+			float degrees = (float) ((float) ((Math.toDegrees(Math.atan2(x - cx, cy - y)) + (float)degree)) % (float)degree);
+			// and to make it count 0-degree
 			if (degrees < 0) {
 				degrees += 2 * Math.PI;
 			}
@@ -562,7 +582,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Gets the adjustment factor.
-	 * 
+	 *
 	 * @return the adjustment factor
 	 */
 	public float getAdjustmentFactor() {
@@ -571,7 +591,7 @@ public class CircularSeekBar extends View {
 
 	/**
 	 * Sets the adjustment factor.
-	 * 
+	 *
 	 * @param adjustmentFactor
 	 *            the new adjustment factor
 	 */

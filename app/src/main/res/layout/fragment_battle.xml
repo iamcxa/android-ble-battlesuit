@@ -9,8 +9,10 @@
         android:layout_height="match_parent"
         android:paddingTop="50dp">
 
-        <include layout="@layout/include_ring_ammo2"/>
+        <include layout="@layout/include_ring_ammo"/>
+
         <include layout="@layout/include_ring_hp"/>
+
 
     </LinearLayout>
 

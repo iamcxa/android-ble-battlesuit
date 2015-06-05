@@ -22,7 +22,10 @@ import android.view.View;
  */
 public class CircularCounter extends View {
 
-	
+	/** the degree of circle */
+	private int degree = 180;
+
+
 	/**
 	 * View starts at 6 o'clock
 	 */
@@ -323,15 +326,15 @@ public class CircularCounter extends View {
 	 */
 
 	public int getValue1(){
-		return Math.round((mOneDegrees*mRange)/360);
+		return Math.round((mOneDegrees*mRange)/degree);
 	}
 
 	public int getValue2(){
-		return  Math.round((mTwoDegrees*mRange)/360);
+		return  Math.round((mTwoDegrees*mRange)/degree);
 	}
 
 	public int getValue3(){
-		return Math.round((mThreeDegrees*mRange)/360);
+		return Math.round((mThreeDegrees*mRange)/degree);
 	}
 
 	/**
@@ -343,19 +346,19 @@ public class CircularCounter extends View {
 	public void setValues(int v1, int v2, int v3) {
 
 		if (v1 <= mRange)
-			mOneDegrees = Math.round(((float) v1 * 360) / mRange);
+			mOneDegrees = Math.round(((float) v1 * degree) / mRange);
 		else
-			mOneDegrees = 360;
+			mOneDegrees = degree;
 
 		if (v2 <= mRange)
-			mTwoDegrees = Math.round(((float) v2 * 360) / mRange);
+			mTwoDegrees = Math.round(((float) v2 * degree) / mRange);
 		else
-			mTwoDegrees = 360;
+			mTwoDegrees = degree;
 
 		if (v3 <= mRange)
-			mThreeDegrees = Math.round(((float) v3 * 360) / mRange);
+			mThreeDegrees = Math.round(((float) v3 * degree) / mRange);
 		else
-			mThreeDegrees = 360;
+			mThreeDegrees = degree;
 
 		mOneValue = v1;
 
@@ -417,6 +420,23 @@ public class CircularCounter extends View {
 	public CircularCounter setMetricText(String text) {
 		mMetricText = text;
 		return this;
+	}
+
+	/**
+	 * get the degree
+	 * @return the degree
+	 */
+	public int getDegree(){
+		return degree;
+	}
+
+	/**
+	 * Set the degree
+	 * @param degree
+	 */
+	public void setDegree(int degree){
+		this.degree=degree;
+
 	}
 
 	@Override

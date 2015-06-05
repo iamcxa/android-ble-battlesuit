@@ -18,21 +18,21 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/navm_home"
             android:icon="@drawable/ic_dashboard"
             android:title="Home" />
         <item
-            android:id="@+id/nav_messages"
+            android:id="@+id/navm_battle"
             android:icon="@drawable/ic_event"
-            android:title="Messages" />
+            android:title="BattleDashboard" />
         <item
-            android:id="@+id/nav_friends"
+            android:id="@+id/navm_bluetooth"
             android:icon="@drawable/ic_headset"
-            android:title="Friends" />
+            android:title="Bluetooth" />
         <item
-            android:id="@+id/nav_discussion"
+            android:id="@+id/navm_status"
             android:icon="@drawable/ic_forum"
-            android:title="Discussion" />
+            android:title="Status" />
     </group>
 
     <item android:title="Sub items">
