@@ -1,2 +1,1 @@
-include ':app', ':circularseekbar', ':bluetoothcontroler'
-include ':circularcounter'
+include ':circularseekbar', ':bluetoothcontroler', ':app', ':circularcounter'

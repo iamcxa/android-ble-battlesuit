@@ -6,40 +6,31 @@
 
     <LinearLayout
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
-        <at.markushi.ui.CircleButton
-            android:id="@+id/button0"
-            android:layout_width="match_parent"
-            android:layout_height="128dip"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dip"
-            android:src="@drawable/ic_action_tick"
-            app:cb_color="#99CC00" />
 
         <at.markushi.ui.CircleButton
-            android:id="@+id/button1"
-            android:layout_width="128dip"
-            android:layout_height="128dip"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
+            android:id="@+id/btnHost"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
             android:layout_marginBottom="8dip"
-            android:src="@drawable/ic_action_tick"
-            app:cb_color="#FFBB33" />
+            android:src="@drawable/ic_word_host"
+            app:cb_color="#FF4444"
+            app:cb_pressedRingWidth="12dip"
+            android:padding="20dp" />
 
         <at.markushi.ui.CircleButton
-            android:id="@+id/button2"
-            android:layout_width="128dip"
-            android:layout_height="128dip"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
+            android:id="@+id/btnJoin"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_marginBottom="8dip"
-            android:src="@drawable/ic_action_tick"
-            app:cb_color="#FF4444" />
+            android:src="@drawable/ic_word_join"
+            app:cb_color="@color/c_blue_ncs"
+            app:cb_pressedRingWidth="12dip"
+            android:padding="20dp" />
 
     </LinearLayout>
 

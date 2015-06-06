@@ -35,4 +35,6 @@ dependencies {
     compile 'com.github.markushi:circlebutton:1.1'
     compile 'com.cesarferreira.colorize:library:0.2.1'
     compile 'com.android.support:support-v4:22.2.0'
+    compile project(':bluetoothcontroler')
+    compile 'com.android.support:support-annotations:22.2.0'
 }

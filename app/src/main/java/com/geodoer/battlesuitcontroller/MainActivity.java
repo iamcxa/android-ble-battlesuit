@@ -16,8 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.geodoer.battlesuitcontroller.util.SystemUiHider;
 import com.geodoer.battlesuitcontroller.view.BattleFragment;
-import com.geodoer.battlesuitcontroller.view.HomeFragment;
+import com.geodoer.battlesuitcontroller.view.MainFragment;
 import com.geodoer.battlesuitcontroller.view.SettingsActivity;
 
 import java.util.ArrayList;
@@ -28,11 +29,11 @@ public class MainActivity
         extends
         AppCompatActivity
         implements
-        HomeFragment.OnFragmentInteractionListener,
+        MainFragment.OnFragmentInteractionListener,
         BattleFragment.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;
-
+    private SystemUiHider mSystemUiHider;
     private CharSequence mTitle;
 
     @Override
@@ -43,9 +44,7 @@ public class MainActivity
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
-        }
+        if (navigationView != null) setupDrawerContent(navigationView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -55,8 +54,7 @@ public class MainActivity
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
-
-        switchFragment(HomeFragment.newInstance("", ""));
+        switchFragment(MainFragment.newInstance("", ""));
     }
 
     @Override
@@ -94,7 +92,6 @@ public class MainActivity
         }
     }
 
-
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -104,12 +101,11 @@ public class MainActivity
                         mDrawerLayout.closeDrawers();
 
                         // update the main content by replacing
-                        FragmentManager fragmentManager = getSupportFragmentManager();
                         Fragment newFragment = null;
 
                         switch (menuItem.getItemId()) {
                             case R.id.navm_home:
-                                newFragment = HomeFragment.newInstance("", "");
+                                newFragment = MainFragment.newInstance("", "");
                                 break;
                             case R.id.navm_battle:
                                 newFragment = BattleFragment.newInstance("", "");
@@ -133,8 +129,8 @@ public class MainActivity
 
     }
 
-    private void switchFragment(Fragment newFragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    public void switchFragment(Fragment newFragment) {
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.container, newFragment).commit();
     }

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 import com.geodoer.bluetoothcontroler.controller.GeoBleController;
 
 
-public class MainActivity extends ActionBarActivity {
+public class BleMainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
