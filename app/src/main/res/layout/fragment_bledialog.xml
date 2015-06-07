@@ -1,37 +1,66 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:id="@+id/layout">
 
-    <com.db.circularcounter.CircularCounter
-        xmlns:meter="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/meter"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:padding="5dp"
-        meter:range="60"
-        meter:textSize="100sp"
-        meter:textColor="#ffffff"
-        meter:metricSize="20sp"
-        meter:metricText="HP"
-        />
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@android:id/list"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button_stopservice"
+        android:layout_above="@+id/text_display">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add"
-        android:id="@+id/btnMore"
-        android:layout_above="@+id/meter"
-        android:layout_alignStart="@+id/meter"
-        android:layout_marginBottom="39dp" />
+    </ListView>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Less"
-        android:id="@+id/btnLess"
-        android:layout_alignBottom="@+id/btnMore"
-        android:layout_alignEnd="@+id/meter" />
+        android:text="ScanStart"
+        android:id="@+id/button_scanstart"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Connecting"
+        android:id="@+id/button_stopservice"
+        android:layout_below="@+id/button_scanstart"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView_scanning"
+        android:layout_above="@+id/button_stopservice"
+        android:layout_toEndOf="@+id/button_scanstart"
+        android:textSize="24dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textView_connect"
+        android:layout_above="@android:id/list"
+        android:layout_toEndOf="@+id/button_stopservice"
+        android:textColor="#000000" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="display:"
+        android:id="@+id/text_display"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
-

@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.util.SystemUiHider;
 import com.geodoer.battlesuitcontroller.view.BattleFragment;
+import com.geodoer.battlesuitcontroller.view.BleFragment;
+import com.geodoer.battlesuitcontroller.view.HostFragment;
+import com.geodoer.battlesuitcontroller.view.JoinFragment;
 import com.geodoer.battlesuitcontroller.view.MainFragment;
 import com.geodoer.battlesuitcontroller.view.SettingsActivity;
 
@@ -30,7 +33,10 @@ public class MainActivity
         AppCompatActivity
         implements
         MainFragment.OnFragmentInteractionListener,
-        BattleFragment.OnFragmentInteractionListener {
+        BattleFragment.OnFragmentInteractionListener,
+        HostFragment.OnFragmentInteractionListener,
+        JoinFragment.OnFragmentInteractionListener,
+        BleFragment.OnFragmentInteractionListener{
 
     private DrawerLayout mDrawerLayout;
     private SystemUiHider mSystemUiHider;
