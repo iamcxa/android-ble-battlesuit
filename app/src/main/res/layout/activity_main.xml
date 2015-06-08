@@ -23,7 +23,7 @@
     android:layout_width="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/include_list_viewpager"/>
+    <include layout="@layout/include_main_viewpager"/>
 
 
     <FrameLayout android:id="@+id/container" android:layout_width="match_parent"

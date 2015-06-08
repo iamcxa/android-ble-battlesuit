@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:id="@+id/include_host_linearLayout"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <view
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            class="at.markushi.ui.CircleButton"
+            android:id="@+id/btnSelectJoin"
+            android:layout_weight="1"
+            android:src="@drawable/ic_clear_white_48dp"
+            app:cb_color="@color/c_light_sea_green"
+            app:cb_pressedRingWidth="12dip"
+            android:padding="20dp"
+            android:baselineAlignBottom="false"
+            android:cropToPadding="false"
+            android:layout_marginTop="5dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/linearLayout1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:layout_weight="5">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="[game_id]"
+                android:id="@+id/txtGameId"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="[game_start_time]"
+                android:id="@+id/txtGameStartTime"
+                android:layout_gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:minWidth="40dp"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

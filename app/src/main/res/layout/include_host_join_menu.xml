@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/include_host_linearLayout"
+    android:padding="10dp"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayoutMenu">
+
+        <view
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            class="at.markushi.ui.CircleButton"
+            android:id="@+id/btnStartGame"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.13"
+            android:src="@drawable/ic_done_white_48dp"
+            app:cb_color="@color/c_greenpigment"
+            app:cb_pressedRingWidth="12dip"
+            android:padding="20dp"  />
+
+        <view
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            class="at.markushi.ui.CircleButton"
+            android:id="@+id/btnBack"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.13"
+            android:src="@drawable/ic_clear_white_48dp"
+            app:cb_color="@color/c_red_ncs"
+            app:cb_pressedRingWidth="12dip"
+            android:padding="20dp"  />
+    </LinearLayout>
+
+</LinearLayout>
