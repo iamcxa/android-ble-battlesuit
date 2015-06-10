@@ -72,7 +72,6 @@ public class MainFragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -85,6 +84,16 @@ public class MainFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setComponents();
+    }
+
+    private void setComponents(){
+        if(getView()!=null){
+            btnHost = (CircleButton) getView().findViewById(R.id.btnHost);
+            btnJoin = (CircleButton) getView().findViewById(R.id.btnJoin);
+
+            btnHost.setOnClickListener(this);
+            btnJoin.setOnClickListener(this);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -129,13 +138,4 @@ public class MainFragment
         public void onFragmentInteraction(Uri uri);
     }
 
-    private void setComponents(){
-        if(getView()!=null){
-            btnHost = (CircleButton) getView().findViewById(R.id.btnHost);
-            btnJoin = (CircleButton) getView().findViewById(R.id.btnJoin);
-
-            btnHost.setOnClickListener(this);
-            btnJoin.setOnClickListener(this);
-        }
-    }
 }

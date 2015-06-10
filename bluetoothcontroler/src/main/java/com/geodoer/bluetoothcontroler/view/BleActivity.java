@@ -36,7 +36,8 @@ public class BleActivity extends ListActivity
     private static final long SCAN_PERIOD = 5000;
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String service_name ="com.geodoer.geobluetooth_example.GeoBleService";
-    public  static final String mAction_servicestate = "com.geodoer.geobluetooth_example.BleActivity.servicestate";
+    public  static final String mAction_servicestate
+            = "com.geodoer.geobluetooth_example.BleActivity.servicestate";
     public  static final String EXTRA_DATA = "extra";
 
     private static final String buttontext_scanstart = "Scan Start";
@@ -314,7 +315,6 @@ public class BleActivity extends ListActivity
         TextView deviceAddress;
     }
 
-
     private void Stopservice()
     {
         if(!mServiceExisting)return;
@@ -350,6 +350,7 @@ public class BleActivity extends ListActivity
             text_connect.setText(text_connect_off);
         }
     }
+
     //-----------------------------------------------------------------------------
     private final BroadcastReceiver ble_activity_receiver = new BroadcastReceiver()
     {
@@ -386,10 +387,9 @@ public class BleActivity extends ListActivity
                 }
 
             }
-
-
         }
     };
+
     private static IntentFilter ble_activity_receiverIntentFilter()
     {
         final IntentFilter intentFilter = new IntentFilter();

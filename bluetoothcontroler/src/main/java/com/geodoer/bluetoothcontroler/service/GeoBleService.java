@@ -170,7 +170,7 @@ public class GeoBleService extends Service
             }
             else if(mAction_servicestate.equals(action))
             {
-                broadcastUpdate(BleActivity.mAction_servicestate,device_name);
+                broadcastUpdate(BleActivity.mAction_servicestate,device_name+":"+device_address);
             }
             else if(mAction_stopself.equals(action))
             {

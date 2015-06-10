@@ -140,6 +140,9 @@ public class CircularSeekBar extends View {
 	/** The rectangle containing our circles and arcs. */
 	private RectF rect = new RectF();
 
+	/** The rectangle containing our circles and arcs. */
+	private RectF rect2 = new RectF();
+
 	{
 		mListener = new OnSeekChangeListener() {
 
@@ -218,7 +221,8 @@ public class CircularSeekBar extends View {
 	 * Inits the drawable.
 	 */
 	public void initDrawable() {
-		progressMark = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.scrubber_control_normal_holo);
+		progressMark = BitmapFactory.decodeResource(mContext.getResources(),
+				R.drawable.scrubber_control_normal_holo);
 		progressMarkPressed = BitmapFactory.decodeResource(mContext.getResources(),
 				R.drawable.scrubber_control_pressed_holo);
 	}
@@ -266,11 +270,16 @@ public class CircularSeekBar extends View {
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
-
-
-		canvas.drawCircle(cx, cy, outerRadius, circleRing);
+		//.drawCircle(cx, cy, outerRadius, circleRing);
 		canvas.drawArc(rect, startAngle, angle, true, circleColor);
-		canvas.drawCircle(cx, cy, innerRadius, innerColor);
+		//canvas.drawCircle(cx, cy, innerRadius, innerColor);
+
+		rect2.set(cx-innerRadius,cy+innerRadius,cx+innerRadius,cy-innerRadius);
+		canvas.drawArc(rect2, 0, 180, true, circleRing);
+		canvas.drawArc(rect2, 0, 180, true, innerColor);
+
+
+
 		if(SHOW_SEEKBAR){
 			dx = getXFromAngle();
 			dy = getYFromAngle();

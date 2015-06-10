@@ -39,7 +39,7 @@
             android:gravity="center" />
 
         <SeekBar
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/seekBarGTL"
             android:layout_weight="1" />
@@ -84,7 +84,7 @@
             android:gravity="center" />
 
         <SeekBar
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/seekBarHp"
             android:layout_weight="1" />
@@ -132,7 +132,7 @@
 
 
         <SeekBar
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/seekBarAmmo"
             android:layout_weight="1" />
@@ -141,7 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="100"
+            android:text="120"
             android:id="@+id/txtMaxAmmo"
             android:layout_gravity="center_vertical"
             android:textColor="#FFFFFF"
@@ -169,13 +169,13 @@
             android:textColor="#FFFFFF" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:text=""
-            android:hint="輸入膩稱"
+            android:hint="輸入暱稱"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/etxtPname"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:autoText="false"

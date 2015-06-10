@@ -37,4 +37,6 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile project(':bluetoothcontroler')
     compile 'com.android.support:support-annotations:22.2.0'
+
+    compile 'com.jakewharton:butterknife:6.1.0'
 }
