@@ -4,8 +4,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="first">20dp</dimen>
-    <dimen name="second">2dp</dimen>
-    <dimen name="third">2dp</dimen>
+    <dimen name="second">5dp</dimen>
+    <dimen name="third">5dp</dimen>
 
     <dimen name="detail_backdrop_height">256dp</dimen>
     <dimen name="card_margin">16dp</dimen>

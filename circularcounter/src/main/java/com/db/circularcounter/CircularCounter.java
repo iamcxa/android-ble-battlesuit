@@ -31,14 +31,14 @@ public class CircularCounter extends View {
 	 */
 	private final static float START_DEGREES = 90;
 
-	
+
 	/**
 	 * Default background
 	 */
 	private int mBackgroundCenter;
 	private int mBackgroundRadius;
 
-	
+
 	/**
 	 * Current degrees
 	 */
@@ -46,19 +46,19 @@ public class CircularCounter extends View {
 	private int mTwoDegrees;
 	private int mThreeDegrees;
 
-	
+
 	/**
 	 * Current real value
 	 */
 	private int mOneValue = 0;
 
-	
+
 	/**
 	 * Range of view
 	 */
 	private int mRange;
 
-	
+
 	/**
 	 * Thickness of flows
 	 */
@@ -66,14 +66,14 @@ public class CircularCounter extends View {
 	private float mTwoWidth;
 	private float mThreeWidth;
 
-	
+
 	/**
 	 * Size of text
 	 */
 	private float mTextSize;
 	private float mMetricSize;
 
-	
+
 	/**
 	 * Color of bars
 	 */
@@ -81,14 +81,14 @@ public class CircularCounter extends View {
 	private int mTwoColor;
 	private int mThreeColor;
 
-	
+
 	/**
 	 * Color of text
 	 */
 	private int mTextColor = -1;
 	private int mBackgroundColor;
 
-	
+
 	/**
 	 * Paint objects
 	 */
@@ -99,7 +99,7 @@ public class CircularCounter extends View {
 	private Paint mTextPaint;
 	private Paint mMetricPaint;
 
-	
+
 	/**
 	 * Bounds of each flow
 	 */
@@ -107,7 +107,7 @@ public class CircularCounter extends View {
 	private RectF mTwoBounds;
 	private RectF mThreeBounds;
 
-	
+
 	/**
 	 * Text position
 	 */
@@ -115,47 +115,47 @@ public class CircularCounter extends View {
 	private float mMetricPosY;
 	private float mMetricPaddingY;
 
-	
+
 	/**
 	 * Metric in use
 	 */
 	private String mMetricText;
 
-	
+
 	/**
 	 * Typeface of text
 	 */
 	private Typeface mTypeface;
 
-	
+
 	/**
 	 * Handler to update the view
 	 */
 	private SpeedHandler mSpinHandler;
 
-	
-	
+
+
 	@SuppressLint("Recycle")
 	public CircularCounter(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context.obtainStyledAttributes(attrs, R.styleable.CircularMeter));
 	}
 
-	
+
 	/**
 	 * Setting up variables on attach
 	 */
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
-		
+
 		mSpinHandler = new SpeedHandler(this);
 		setupBounds();
 		setupPaints();
 		setupTextPosition();
 	}
 
-	
+
 	/**
 	 * Free variables on detached
 	 */
@@ -173,7 +173,7 @@ public class CircularCounter extends View {
 		mMetricPaint = null;
 	}
 
-	
+
 	/**
 	 * Set up paint variables to be used in onDraw method
 	 */
@@ -219,7 +219,7 @@ public class CircularCounter extends View {
 		mMetricPaint.setTextAlign(Align.CENTER);
 	}
 
-	
+
 	/**
 	 * Set the bounds of the bars.
 	 */
@@ -232,7 +232,7 @@ public class CircularCounter extends View {
 				this.getPaddingLeft() + mOneWidth / 2,
 				this.getLayoutParams().width - this.getPaddingRight()
 						- mOneWidth / 2, this.getLayoutParams().height
-						- this.getPaddingBottom() - mOneWidth / 2);
+				- this.getPaddingBottom() - mOneWidth / 2);
 
 		mTwoBounds = new RectF(
 				this.getPaddingTop() + mTwoWidth / 2 + mOneWidth,
@@ -251,7 +251,7 @@ public class CircularCounter extends View {
 				- mOneWidth);
 	}
 
-	
+
 	/**
 	 * Setting up text position
 	 */
@@ -262,7 +262,7 @@ public class CircularCounter extends View {
 		mMetricPosY = mTextPosY + mMetricPaddingY;
 	}
 
-	
+
 	/**
 	 * Parse the attributes passed to the view and default values.
 	 */
@@ -280,7 +280,7 @@ public class CircularCounter extends View {
 
 		mRange = a.getInt(R.styleable.CircularMeter_range, 100);
 
-		mOneWidth = getResources().getDimension(R.dimen.width);
+		mOneWidth = getResources().getDimension(R.dimen.width3);
 		mTwoWidth = getResources().getDimension(R.dimen.width);
 		mThreeWidth = getResources().getDimension(R.dimen.width);
 
@@ -298,8 +298,8 @@ public class CircularCounter extends View {
 					.getAssets(), aux);
 	}
 
-	
-	
+
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
@@ -317,12 +317,12 @@ public class CircularCounter extends View {
 		canvas.drawText(mMetricText, mOneBounds.centerX(), mMetricPosY,
 				mMetricPaint);
 	}
-	
 
-	
+
+
 	/*
 	 * Setters
-	 * 
+	 *
 	 */
 
 	public int getValue1(){
@@ -364,9 +364,9 @@ public class CircularCounter extends View {
 
 		mSpinHandler.sendEmptyMessage(0);
 	}
-	
-	
-	
+
+
+
 	public CircularCounter setRange(int range) {
 		mRange = range;
 		return this;
@@ -449,8 +449,8 @@ public class CircularCounter extends View {
 		return this;
 	}
 
-	
-	
+
+
 	/**
 	 * Handles display invalidates
 	 */
@@ -468,7 +468,5 @@ public class CircularCounter extends View {
 			act.invalidate();
 			super.handleMessage(msg);
 		}
-
 	}
-
 }

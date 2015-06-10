@@ -51,6 +51,10 @@ public class BleFragment
             txtBleStatus.setText(thisDeviceName+","+thisDeviceId);
     }
 
+    public static String getDevice(){
+        return txtBleStatus.getText().toString();
+    }
+
     public BleFragment() {
         // Required empty public constructor
     }
@@ -172,7 +176,6 @@ public class BleFragment
     {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BleCustomDialog.mAction_servicestate);
-        intentFilter.addAction(BleCustomDialog.mAction_servicestate+"ID");
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }

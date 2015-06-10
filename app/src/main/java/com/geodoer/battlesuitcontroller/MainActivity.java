@@ -115,7 +115,7 @@ public class MainActivity
                                 newFragment = MainFragment.newInstance("", "");
                                 break;
                             case R.id.navm_battle:
-                                newFragment = BattleFragment.newInstance("", "");
+                                //newFragment = BattleFragment.newInstance("", "");
                                 break;
                             case R.id.navm_bluetooth:
 

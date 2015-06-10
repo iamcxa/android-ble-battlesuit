@@ -16,22 +16,5 @@
         meter:metricText="HP"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="add"
-        android:id="@+id/btnMore"
-        android:layout_above="@+id/meter"
-        android:layout_alignStart="@+id/meter"
-        android:layout_marginBottom="39dp" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Less"
-        android:id="@+id/btnLess"
-        android:layout_alignBottom="@+id/btnMore"
-        android:layout_alignEnd="@+id/meter" />
-
 </RelativeLayout>
 

@@ -1,12 +1,12 @@
-apply plugin: 'com.android.application'
-//apply plugin: 'com.android.library'
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.geodoer.parsecontroller"
+        //applicationId "com.geodoer.parsecontroller"
         minSdkVersion 18
         targetSdkVersion 22
         versionCode 1
@@ -23,10 +23,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-}
-
-dependencies {
     //parse libs
-    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.parse.bolts:bolts-android:1.2.0'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
 }

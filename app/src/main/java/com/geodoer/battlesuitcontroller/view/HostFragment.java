@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
 
@@ -36,6 +38,8 @@ public class HostFragment
     private CircleButton btnDone,btnBack;
 
     private EditText etxtPname;
+
+    private int vHp,vAmmo,vTime;
 
     /**
      * Use this factory method to create a new instance of
@@ -102,7 +106,17 @@ public class HostFragment
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnDone:
-                switchFragment(getActivity(),BattleFragment.newInstance("",""));
+                if(!BleFragment.getDevice().equals("[device_status]2")) {
+                    String pName = etxtPname.getText().toString();
+                    if (pName.isEmpty())
+                        pName = "player_host";
+                    switchFragment(getActivity(), BattleFragment
+                            .newInstance(vHp,
+                                    vAmmo,
+                                    vTime,
+                                    pName));
+                }else
+                    Toast.makeText(getActivity(),"請先選擇裝置!",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnBack:
                 switchFragment(getActivity(),MainFragment.newInstance("",""));
@@ -112,7 +126,23 @@ public class HostFragment
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        // if(fromUser) {
+        switch (seekBar.getId()) {
+            case R.id.seekBarAmmo:
+                vAmmo=progress;
+                break;
+            case R.id.seekBarHp:
+                vHp=progress;
+                break;
+            case R.id.seekBarGTL:
+                vTime=progress;
+                break;
+        }
+        Log.wtf("seekbar", "raw=" + progress +
+                ",vhp=" + vHp +
+                ",vAmmo=" + vAmmo +
+                ",vTime=" + vTime);
+        //}
     }
 
     @Override
@@ -133,6 +163,8 @@ public class HostFragment
 
     private void setComponents(){
         if(getView()!=null){
+            etxtPname=(EditText)getView().findViewById(R.id.etxtPname);
+
             btnBack=(CircleButton)getView().findViewById(R.id.btnBack);
             btnDone=(CircleButton)getView().findViewById(R.id.btnDone);
 
@@ -143,9 +175,21 @@ public class HostFragment
             seekBarHp=(SeekBar)getView().findViewById(R.id.seekBarHp);
             seekBarGTL=(SeekBar)getView().findViewById(R.id.seekBarGTL);
 
-            seekBarAmmo.setMax(120);
-            seekBarGTL.setMax(120);
-            seekBarHp.setMax(10);
+            vAmmo=120;
+            vTime=120;
+            vHp=10;
+
+            seekBarAmmo.setMax(vAmmo);
+            seekBarGTL.setMax(vTime);
+            seekBarHp.setMax(vHp);
+
+            seekBarAmmo.setProgress(120);
+            seekBarGTL.setProgress(10);
+            seekBarHp.setProgress(120);
+
+            seekBarAmmo.setOnSeekBarChangeListener(this);
+            seekBarHp.setOnSeekBarChangeListener(this);
+            seekBarGTL.setOnSeekBarChangeListener(this);
         }
     }
 
