@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- key of Hem's -->
+    <string name="parse_account_key">JDvr3ElOQ3pYXlBqT1twQHx3XvGmpO37XlROoThG</string>
+    <string name="parse_app_key">ISLvJ6xMzRkcpZRi3i3aCNTbAflt9hDl5cERONGP</string>
+    <string name="parse_table">TestObject</string>
+
+    <!-- -->
+
+</resources>
