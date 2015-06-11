@@ -43,15 +43,6 @@ public class MainFragment
     private CircleButton btnHost;
     private CircleButton btnJoin;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -72,7 +63,6 @@ public class MainFragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
@@ -85,6 +75,16 @@ public class MainFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setComponents();
+    }
+
+    private void setComponents(){
+        if(getView()!=null){
+            btnHost = (CircleButton) getView().findViewById(R.id.btnHost);
+            btnJoin = (CircleButton) getView().findViewById(R.id.btnJoin);
+
+            btnHost.setOnClickListener(this);
+            btnJoin.setOnClickListener(this);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -129,13 +129,4 @@ public class MainFragment
         public void onFragmentInteraction(Uri uri);
     }
 
-    private void setComponents(){
-        if(getView()!=null){
-            btnHost = (CircleButton) getView().findViewById(R.id.btnHost);
-            btnJoin = (CircleButton) getView().findViewById(R.id.btnJoin);
-
-            btnHost.setOnClickListener(this);
-            btnJoin.setOnClickListener(this);
-        }
-    }
 }

@@ -23,6 +23,7 @@ import com.geodoer.battlesuitcontroller.view.HostFragment;
 import com.geodoer.battlesuitcontroller.view.JoinFragment;
 import com.geodoer.battlesuitcontroller.view.MainFragment;
 import com.geodoer.battlesuitcontroller.view.SettingsActivity;
+import com.geodoer.bluetoothcontroler.service.GeoBleService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class MainActivity
                                 newFragment = MainFragment.newInstance("", "");
                                 break;
                             case R.id.navm_battle:
-                                newFragment = BattleFragment.newInstance("", "");
+                                //newFragment = BattleFragment.newInstance("", "");
                                 break;
                             case R.id.navm_bluetooth:
 
@@ -133,6 +134,14 @@ public class MainActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       // registerReceiver(mBroadcast, new IntentFilter(MY_MESSAGE));
+        final Intent intent = new Intent(GeoBleService.mAction_stopself);
+        sendBroadcast(intent);
     }
 
     public void switchFragment(Fragment newFragment) {

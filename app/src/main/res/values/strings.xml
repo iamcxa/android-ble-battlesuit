@@ -7,19 +7,20 @@
         <item>#004B4B</item>
         <item>#DE9C59</item>
         <item>#ffffff</item>
+        <item>#FFFEF258</item>
     </string-array>
 
     <string-array name="colors_AMMO">
-        <item>#A38200</item>
-        <item>#D9C248</item>
-        <item>#FEF258</item>
+        <item>#DE9C59</item>
+        <item>#FFD9C248</item>
+        <item>#FFFEF258</item>
         <item>#00000000</item>
     </string-array>
 
     <string-array name="colors_HP">
-        <item>#9B0000</item>
-        <item>#E50707</item>
-        <item>#FFA6A6</item>
+        <item>#FF9B0000</item>
+        <item>#FFE50707</item>
+        <item>#FFFFA6A6</item>
         <item>#00000000</item>
     </string-array>
 

@@ -7,8 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.geodoer.battlesuitcontroller.R;
+
+import at.markushi.ui.CircleButton;
+
+import static com.geodoer.battlesuitcontroller.util.utils.switchFragment;
 
 
 /**
@@ -19,7 +24,11 @@ import com.geodoer.battlesuitcontroller.R;
  * Use the {@link JoinFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class JoinFragment extends Fragment {
+public class JoinFragment
+        extends
+        Fragment
+        implements
+        View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,6 +39,10 @@ public class JoinFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private CircleButton btnDone,btnBack;
+
+    private ListView listView;
 
     /**
      * Use this factory method to create a new instance of
@@ -90,6 +103,35 @@ public class JoinFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnDone:
+
+                break;
+            case R.id.btnBack:
+                switchFragment(getActivity(),MainFragment.newInstance("",""));
+                break;
+        }
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setComponents();
+    }
+
+    private void setComponents(){
+        if(getView()!=null){
+            btnBack=(CircleButton)getView().findViewById(R.id.btnBack);
+            btnDone=(CircleButton)getView().findViewById(R.id.btnDone);
+
+            btnBack.setOnClickListener(this);
+            btnDone.setOnClickListener(this);
+
+        }
     }
 
     /**

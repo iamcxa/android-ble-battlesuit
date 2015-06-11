@@ -1,19 +1,30 @@
 package com.geodoer.battlesuitcontroller.view;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.db.circularcounter.CircularCounter;
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.bluetoothcontroler.service.BluetoothLeService;
 import com.geodoer.circularseekbar.CircularSeekBar;
+import com.geodoer.parsecontroller.controller.GameIdmaker;
+import com.geodoer.parsecontroller.controller.ParseController;
 
 
 /**
@@ -31,6 +42,8 @@ public class BattleFragment
         View.OnClickListener,
         CircularSeekBar.OnSeekChangeListener {
 
+    private ParseController PC;
+
     private CircularCounter meterHp;
     private CircularCounter meterAmmo;
 
@@ -39,7 +52,7 @@ public class BattleFragment
 
     private Handler handler;
 
-    private Runnable r;
+    private Runnable r,hideWarring;
 
     private Button btnMore;
     private Button btnLess;
@@ -50,31 +63,33 @@ public class BattleFragment
     private CircularSeekBar barAmmo;
     private CircularSeekBar barHp;
 
+    private TextView txtGetPname,txtBleState;
+
+    private ImageView ivWarning;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String arg1 = "sHp";
+    private static final String arg2 = "sAmmo";
+    private static final String arg3 = "gTime";
+    private static final String arg4 = "pName";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private int mArg1,mArg2,mArg3;
+    private String mArg4;
     private OnFragmentInteractionListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static BattleFragment newInstance(String param1, String param2) {
+    public static BattleFragment newInstance(int sHp,
+                                             int sAmmo,
+                                             int gTime,
+                                             String pName) {
         BattleFragment fragment = new BattleFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(arg1, sHp);
+        args.putInt(arg2, sAmmo);
+        args.putInt(arg3, gTime);
+        args.putString(arg4, pName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -101,15 +116,37 @@ public class BattleFragment
                 handler.postDelayed(this, 50);
             }
         };
+
+        hideWarring=new Runnable(){
+
+            @Override
+            public void run() {
+                ivWarning.setVisibility(View.INVISIBLE);
+            }
+        };
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mArg1 = getArguments().getInt(arg1);
+            mArg2 = getArguments().getInt(arg2);
+            mArg3 = getArguments().getInt(arg3);
+            mArg4 = getArguments().getString(arg4);
+
+            Log.wtf("args","hp="+mArg1+",ammo="+mArg2+",time="+mArg3+",name="+mArg4);
+
+            PC =new ParseController(getActivity().getApplicationContext());
+            PC.setGame(2, mArg1, mArg2, new ParseController.setGameCallback(GameIdmaker.newId()) {
+                @Override
+                public void run(boolean result) {
+                    if (result) Log.wtf("PARSE", "set Game success");
+                    else Log.wtf("PARSE", "set Game fail");
+                }
+            });
         }
+
     }
 
     @Override
@@ -148,61 +185,93 @@ public class BattleFragment
         mListener = null;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity()
+                .registerReceiver(ble_activity_receiver,
+                        ble_activity_receiverIntentFilter());
+    }
 
-    private void setupcompements(){
-        barAmmo=(CircularSeekBar)getView().findViewById(R.id.barAmmo);
-        barAmmo.setMaxProgress(60);
-        barAmmo.setProgress(0);
-        barAmmo.setBarWidth(35);
-        barAmmo.invalidate();
-        barAmmo.setProgressColor(getResources().getColor(R.color.bar_color_ammo));
-        barAmmo.setSeekBarChangeListener(this);
-
-        barHp=(CircularSeekBar)getView().findViewById(R.id.barHp);
-        barHp.setMaxProgress(5);
-        barHp.setProgress(0);
-        barHp.setBarWidth(35);
-        barHp.invalidate();
-        barHp.setProgressColor(getResources().getColor(R.color.bar_color_hp));
-        barHp.setSeekBarChangeListener(this);
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(ble_activity_receiver);
         isAutoRun=false;
+        handler.removeCallbacks(r);
+    }
 
-        btnMore=(Button)getView().findViewById(R.id.btnMore);
-        btnLess=(Button)getView().findViewById(R.id.btnLess);
-        btnAuto=(Button)getView().findViewById(R.id.btnAuto);
+    private void setupcompements() {
+        if (getView() != null) {
+            ivWarning=(ImageView)getView().findViewById(R.id.ivWarning);
+            ivWarning.setVisibility(View.INVISIBLE);
 
-        btnMore.setOnClickListener(this);
-        btnLess.setOnClickListener(this);
-        btnAuto.setOnClickListener(this);
+            txtGetPname = (TextView)getView().findViewById(R.id.txtGetPname);
+            txtGetPname.setText(mArg4);
 
-        colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
-        colorsHp = getResources().getStringArray(R.array.colors_HP);
+            txtBleState=(TextView)getView().findViewById(R.id.txtBleState);
+            txtBleState.setText("no data");
 
-        meterHp = (CircularCounter) getView().findViewById(R.id.meter);
-        meterAmmo = (CircularCounter) getView().findViewById(R.id.meter_ammo);
+            barAmmo = (CircularSeekBar) getView().findViewById(R.id.barAmmo);
+            barAmmo.setMaxProgress(mArg2);
+            barAmmo.setProgress(0);
+            barAmmo.setBarWidth(35);
+            barAmmo.invalidate();
+            barAmmo.setProgressColor(getResources().getColor(R.color.bar_color_ammo));
+            barAmmo.setSeekBarChangeListener(this);
 
-        meterHp.setFirstWidth(getResources().getDimension(R.dimen.first))
-                .setFirstColor(Color.parseColor(colorsHp[0]))
+            barHp = (CircularSeekBar) getView().findViewById(R.id.barHp);
+            barHp.setMaxProgress(mArg1);
+            barHp.setProgress(0);
+            barHp.setBarWidth(35);
+            barHp.invalidate();
+            barHp.setProgressColor(getResources().getColor(R.color.bar_color_hp));
+            barHp.setSeekBarChangeListener(this);
 
-                .setSecondWidth(getResources().getDimension(R.dimen.second))
-                .setSecondColor(Color.parseColor(colorsHp[1]))
+            isAutoRun = false;
 
-                .setThirdWidth(getResources().getDimension(R.dimen.third))
-                .setThirdColor(Color.parseColor(colorsHp[2]))
+            btnMore = (Button) getView().findViewById(R.id.btnMore);
+            btnLess = (Button) getView().findViewById(R.id.btnLess);
+            btnAuto = (Button) getView().findViewById(R.id.btnAuto);
 
-                .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
+            btnMore.setOnClickListener(this);
+            btnLess.setOnClickListener(this);
+            btnAuto.setOnClickListener(this);
 
-        meterAmmo.setFirstWidth(getResources().getDimension(R.dimen.first))
-                .setFirstColor(Color.parseColor(colorsAmmo[0]))
+            colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
+            colorsHp = getResources().getStringArray(R.array.colors_HP);
 
-                .setSecondWidth(getResources().getDimension(R.dimen.second))
-                .setSecondColor(Color.parseColor(colorsAmmo[1]))
+            meterHp = (CircularCounter) getView().findViewById(R.id.meter);
+            meterAmmo = (CircularCounter) getView().findViewById(R.id.meter_ammo);
 
-                .setThirdWidth(getResources().getDimension(R.dimen.third))
-                .setThirdColor(Color.parseColor(colorsAmmo[2]))
+            meterAmmo.setValues(mArg2,mArg2*2,mArg2*3);
+            meterAmmo.setRange(mArg2);
 
-                .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
+            meterHp.setValues(mArg1, mArg1 * 2, mArg1 * 3);
+            meterHp.setRange(mArg1)
+
+                    .setFirstWidth(getResources().getDimension(R.dimen.first))
+                    .setFirstColor(Color.parseColor(colorsHp[0]))
+
+                    .setSecondWidth(getResources().getDimension(R.dimen.second))
+                    .setSecondColor(Color.parseColor(colorsHp[1]))
+
+                    .setThirdWidth(getResources().getDimension(R.dimen.third))
+                    .setThirdColor(Color.parseColor(colorsHp[2]))
+
+                    .setBackgroundColor(Color.parseColor(colorsHp[3]));
+
+            meterAmmo.setFirstWidth(getResources().getDimension(R.dimen.first))
+                    .setFirstColor(Color.parseColor(colorsAmmo[0]))
+
+                    .setSecondWidth(getResources().getDimension(R.dimen.second))
+                    .setSecondColor(Color.parseColor(colorsAmmo[1]))
+
+                    .setThirdWidth(getResources().getDimension(R.dimen.third))
+                    .setThirdColor(Color.parseColor(colorsAmmo[2]))
+
+                    .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
+        }
     }
 
     private void reduceMeter(CircularCounter meter){
@@ -249,13 +318,6 @@ public class BattleFragment
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        isAutoRun=false;
-        handler.removeCallbacks(r);
-    }
-
-    @Override
     public void onProgressChange(CircularSeekBar view, int newProgress) {
         switch (view.getId()){
             case R.id.barAmmo:
@@ -282,4 +344,75 @@ public class BattleFragment
         public void onFragmentInteraction(Uri uri);
     }
 
+
+    private final BroadcastReceiver ble_activity_receiver = new BroadcastReceiver()
+    {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            final String action = intent.getAction();
+            final String bString = BleCustomDialog.mAction_servicestate;
+            if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action))
+            {
+                String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
+                if(data!=null)
+                {
+                    String temp = data.substring(0, 2);
+                    txtBleState.setText(temp+System.currentTimeMillis()/(60*60*60));
+
+                    // 被瞄準
+                    if(temp.equals("AA")){
+                        ivWarning.setVisibility(View.VISIBLE);
+                        handler.postDelayed(hideWarring,1500);
+
+                        // 被擊中
+                    }else if(temp.equals("BB")){
+                        if(meterHp.getValue1()>0) {
+                            reduceMeter(meterHp);
+
+                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.Hp, -1) {
+                                @Override
+                                public void run(boolean result) {
+                                    if (result) Log.wtf("PARSE", "update HP -1 success");
+                                    else Log.wtf("PARSE", "update HP -1 fail");
+                                }
+                            });
+                        }else
+                            Toast.makeText(getActivity(),
+                                    "你死啦！",
+                                    Toast.LENGTH_SHORT).show();
+
+                        // 開槍
+                    }else if(temp.equals("CC")){
+                        if(meterAmmo.getValue1()>0) {
+                            reduceMeter(meterAmmo);
+
+                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.Ammo, -1) {
+                                @Override
+                                public void run(boolean result) {
+                                    if (result)
+                                        Log.wtf("PARSE", "update Ammo -1 success");
+                                    else Log.wtf("PARSE", "update Ammo -1 fail");
+                                }
+                            });
+
+                        }else
+                            Toast.makeText(getActivity(),
+                                    "你沒子彈啦！",
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    };
+
+    private static IntentFilter ble_activity_receiverIntentFilter()
+    {
+        final IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BleCustomDialog.mAction_servicestate);
+        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+        return intentFilter;
+    }
+
 }
+
