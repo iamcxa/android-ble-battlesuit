@@ -24,17 +24,21 @@ import java.util.ArrayList;
 
 public class TestMainActivity extends ActionBarActivity
 {
-
     private ParseController PC;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_test_main);
+
+        final String TAG = "ParseController";
+
         LinearLayout LL = new LinearLayout(this);
         LL.setOrientation(LinearLayout.VERTICAL);
 
         Button setGame = new Button(this);
-        Button getOnliningGames = new Button(this);
+        Button getOnlineGames = new Button(this);
+        Button getGameInformation = new Button(this);
         Button connectGame = new Button(this);
         Button performGameInfo = new Button(this);
         Button performPlayerInfo = new Button(this);
@@ -44,16 +48,18 @@ public class TestMainActivity extends ActionBarActivity
 
 
         setGame.setText("setGame");
-        getOnliningGames.setText("getOnliningGames");
+        getOnlineGames.setText("getOnlineGames");
         connectGame.setText("connectGame");
         performGameInfo.setText("performInfo");
         performPlayerInfo.setText("performPlayerInfo");
         joinGame.setText("joinGame");
         updateHP.setText("updateHP -1");
         updateAMMO.setText("updateAMMO -1");
+        getGameInformation.setText("getGameInformation");
 
         LL.addView(setGame);
-        LL.addView(getOnliningGames);
+        LL.addView(getOnlineGames);
+        LL.addView(getGameInformation);
         LL.addView(connectGame);
         LL.addView(joinGame);
         LL.addView(performGameInfo);
@@ -61,14 +67,13 @@ public class TestMainActivity extends ActionBarActivity
         LL.addView(updateHP);
         LL.addView(updateAMMO);
 
-        Log.wtf("PARSE","--------------APP START---------------");
+        Log.wtf(TAG,"--------------APP START---------------");
         /**
          *   Initialize
          *   need Context
          */
+
         PC =new ParseController(this);
-
-
 
         setGame.setOnClickListener(new View.OnClickListener()
         {
@@ -89,52 +94,94 @@ public class TestMainActivity extends ActionBarActivity
                     @Override
                     public void run(boolean result)
                     {
-                        if(result)Log.wtf("PARSE", "set Game success");
-                        else Log.wtf("PARSE","set Game fail");
+                        if(result)Log.wtf(TAG, "setGame success");
+                        else Log.wtf(TAG,"setGame fail");
                     }
                 });
             }
         });
 
-        getOnliningGames.setOnClickListener(new View.OnClickListener()
-        {
+        getOnlineGames.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 /**
                  *
-                 *     getOnliningGames( getOnliningGamesCallback )
+                 *     getOnlineGames( getOnliningGamesCallback )
                  *     result = success or not
                  *       false with parse exception
                  *     list = List of Onlining Games
                  *       possible with size = 0
                  *
                  */
-                PC.getOnliningGames(new ParseController.getOnliningGamesCallback()
-                {
+                PC.getOnlineGames(new ParseController.getOnlineGamesCallback() {
                     @Override
-                    public void run(boolean result, ArrayList<Long> list)
-                    {
-                        if(result)
-                        {
-                            Log.wtf("PARSE", "get Onlining Games success");
+                    public void run(boolean result, ArrayList<Long> list) {
+                        if (result) {
+                            Log.wtf(TAG, "getOnlineGames success");
 
-                            //-------get ID from list--------------------
-                            if(list ==null) Log.wtf("PARSE", "getOnlining list is null");
-                            else
-                            {
-                                Log.wtf("PARSE", "getOnlining list size :" + list.size());
-                                for (long i : list)
-                                {
-                                    Log.wtf("PARSE", "Onlining Games ID : " + i);
+                            if (list == null) Log.wtf(TAG, "getOnline list is null");
+                            else {
+                                Log.wtf(TAG, "getOnline list size :" + list.size());
+                                for (long i : list) {
+                                    Log.wtf(TAG, "Online Games ID : " + i);
                                 }
                             }
                             //---------------------------------------------
-                        }
-                        else
-                            Log.wtf("PARSE", "get Onlining Games fail");
+                        } else
+                            Log.wtf(TAG, "getOnlineGames fail");
                     }
 
+                });
+            }
+        });
+        getGameInformation.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                /**
+                 *
+                 *     getGameInformation( getGameInformationCallback )
+                 *     result = success or not
+                 *       false with parse exception
+                 *     Player_count = number of players in this game
+                 *
+                 *     Name_list, Hp_list, Ammo_list
+                 *       = player's status
+                 *
+                 *     when name is not "empty"
+                 *       that is there is a player online
+                 *
+                 */
+                PC.getGameInformation(new ParseController.getGameInformationCallback()
+                {
+                    @Override
+                    public void run(boolean result, int Player_count,
+                                    ArrayList<String> Name_list,
+                                    ArrayList<Integer> Hp_list,
+                                    ArrayList<Integer> Ammo_list)
+                    {
+
+                        if (result)
+                        {
+                            Log.wtf(TAG, "getGamesInformation success");
+
+                            if (Player_count == 0) Log.wtf(TAG, "this game no player");
+                            else
+                            {
+                                Log.wtf(TAG, "player count :" + Player_count);
+                                for (int i=0 ;i< Player_count ;i++)
+                                {
+                                    Log.wtf(TAG, "PlayerNumber:"+(i+1)+
+                                                 " ,Name:"+Name_list.get(i) +
+                                                 " ,Hp:"+Hp_list.get(i) +
+                                                 " ,Ammo:" + Ammo_list.get(i) );
+                                }
+                            }
+                        } else
+
+                            Log.wtf(TAG, "getGamesInformation fail");
+                    }
                 });
             }
         });
@@ -144,7 +191,6 @@ public class TestMainActivity extends ActionBarActivity
             @Override
             public void onClick(View view)
             {
-
                 /**
                  *
                  *      connectGame( connectGameCallback( targetId ) )
@@ -161,9 +207,8 @@ public class TestMainActivity extends ActionBarActivity
                     @Override
                     public void run(boolean result)
                     {
-                        if(result)Log.wtf("PARSE", "connect success");
-                        else Log.wtf("PARSE", "connect fail");
-
+                        if(result)Log.wtf(TAG, "connectGame success");
+                        else Log.wtf(TAG, "connectGame fail");
                     }
                 });
 
@@ -187,9 +232,8 @@ public class TestMainActivity extends ActionBarActivity
                     @Override
                     public void run(boolean result)
                     {
-
-                        if(result)Log.wtf("PARSE", "join success");
-                        else Log.wtf("PARSE", "join fail");
+                        if(result)Log.wtf(TAG, "joinGame success");
+                        else Log.wtf(TAG, "joinGame fail");
                     }
                 });
 
@@ -203,18 +247,18 @@ public class TestMainActivity extends ActionBarActivity
             {
                 /**
                  *
-                 *   updateInfo(  updateInfoCallback ( PC.Player.Hp , -1 )
+                 *   updateInfo(  updateInfoCallback ( PC.Player.HP , -1 )
                  *   result = success or not
                  *        false with parse exception
                  *
                  */
-                PC.Player.updateInfo(new ParseController.updateInfoCallback( PC.Player.Hp, -1 )
+                PC.Player.updateInfo(new ParseController.updateInfoCallback( ParseController.PlayerStatus.HP, -1 )
                 {
                     @Override
                     public void run(boolean result)
                     {
-                        if(result)Log.wtf("PARSE", "update HP -1 success");
-                        else Log.wtf("PARSE", "update HP -1 fail");
+                        if(result)Log.wtf(TAG, "updateHP -1 success");
+                        else Log.wtf(TAG, "updateHP -1 fail");
                     }
                 });
 
@@ -227,18 +271,18 @@ public class TestMainActivity extends ActionBarActivity
             {
                 /**
                  *
-                 *   updateInfo(  updateInfoCallback ( PC.Player.Ammo , -1 )
+                 *   updateInfo(  updateInfoCallback ( PC.Player.AMMO , -1 )
                  *   result = success or not
                  *        false with parse exception
                  *
                  */
-                PC.Player.updateInfo(new ParseController.updateInfoCallback( PC.Player.Ammo, -1 )
+                PC.Player.updateInfo(new ParseController.updateInfoCallback( ParseController.PlayerStatus.AMMO, -1 )
                 {
                     @Override
                     public void run(boolean result)
                     {
-                        if(result)Log.wtf("PARSE", "update Ammo -1 success");
-                        else Log.wtf("PARSE", "update Ammo -1 fail");
+                        if(result)Log.wtf(TAG, "update Ammo -1 success");
+                        else Log.wtf(TAG, "update Ammo -1 fail");
                     }
                 });
 
@@ -256,10 +300,10 @@ public class TestMainActivity extends ActionBarActivity
                  *
                  */
 
-                Log.wtf("PARSE", "Game ObjectId = " + PC.getObjectId());
-                Log.wtf("PARSE", "Game ID       = " + PC.getGameId());
-                Log.wtf("PARSE", "Game setHP    = " + PC.getSetHP());
-                Log.wtf("PARSE", "Game setAmmo  = " + PC.getSetAMMO());
+                Log.wtf(TAG, "Game ObjectId = " + PC.getObjectId());
+                Log.wtf(TAG, "Game ID       = " + PC.getGameId());
+                Log.wtf(TAG, "Game setHP    = " + PC.getSetHP());
+                Log.wtf(TAG, "Game setAmmo  = " + PC.getSetAMMO());
             }
         });
 
@@ -272,11 +316,11 @@ public class TestMainActivity extends ActionBarActivity
                  *
                  *   Getting player Info method
                  */
-                Log.wtf("PARSE", "Player status = " + PC.Player.getStatus());
-                Log.wtf("PARSE", "Player Num    = " + PC.Player.getNum());
-                Log.wtf("PARSE", "Player Name   = " + PC.Player.getName());
-                Log.wtf("PARSE", "Player HP     = " + PC.Player.getHP());
-                Log.wtf("PARSE", "Player AMMO   = " + PC.Player.getAMMO());
+                Log.wtf(TAG, "Player status = " + PC.Player.getStatus());
+                Log.wtf(TAG, "Player Num    = " + PC.Player.getNum());
+                Log.wtf(TAG, "Player Name   = " + PC.Player.getName());
+                Log.wtf(TAG, "Player HP     = " + PC.Player.getHp());
+                Log.wtf(TAG, "Player AMMO   = " + PC.Player.getAmmo());
             }
         });
 
