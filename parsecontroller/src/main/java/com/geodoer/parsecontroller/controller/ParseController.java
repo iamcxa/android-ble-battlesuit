@@ -66,12 +66,12 @@ public class ParseController
         thisGame.put(ParseColumn.game.onlining, true);
 
         if(players >0)
-        for(int i = 1 ; i <= players; i++)
-        {
-            thisGame.put(ParseColumn.player_stattus.Name(i),"empty");
-            thisGame.put(ParseColumn.player_stattus.Hp(i),setHp);
-            thisGame.put(ParseColumn.player_stattus.Ammo(i),setAmmo);
-        }
+            for(int i = 1 ; i <= players; i++)
+            {
+                thisGame.put(ParseColumn.player_stattus.Name(i),"empty");
+                thisGame.put(ParseColumn.player_stattus.Hp(i),setHp);
+                thisGame.put(ParseColumn.player_stattus.Ammo(i),setAmmo);
+            }
         thisGame.saveInBackground(sGC);
     }
     public void connectGame(connectGameCallback cGC)
@@ -114,6 +114,7 @@ public class ParseController
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
         query.whereEqualTo(ParseColumn.game.onlining,true);
+        query.orderByDescending("createdAt");
         query.findInBackground(callBack);
     }
 
@@ -210,7 +211,7 @@ public class ParseController
      *
      *    Abstract
      *
-    **/
+     **/
     public static abstract class setGameCallback implements SaveCallback
     {
         private long gId;
@@ -224,13 +225,14 @@ public class ParseController
         {
             if(e==null)
             {
-
                 gameId = gId;
                 //Log.wtf("PARSE","set Game set Gameid = "+gameId);
                 run(true);
             }
-            else
+            else {
                 run(false);
+                Log.wtf("PARSE", "=ParseException  " + e.toString());
+            }
         }
         public long getgId()
         {

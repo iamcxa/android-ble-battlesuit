@@ -187,7 +187,6 @@ public class TestMainActivity extends ActionBarActivity
                     @Override
                     public void run(boolean result)
                     {
-
                         if(result)Log.wtf("PARSE", "join success");
                         else Log.wtf("PARSE", "join fail");
                     }

@@ -106,7 +106,7 @@ public class HostFragment
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnDone:
-                if(!BleFragment.getDevice().equals("[device_status]2")) {
+                if(!BleFragment.getDevice().equals("[device_status]")) {
                     String pName = etxtPname.getText().toString();
                     if (pName.isEmpty())
                         pName = "player_host";

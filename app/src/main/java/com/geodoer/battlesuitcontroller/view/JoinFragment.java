@@ -4,12 +4,19 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.parsecontroller.controller.ParseController;
+
+import java.util.ArrayList;
 
 import at.markushi.ui.CircleButton;
 
@@ -28,7 +35,8 @@ public class JoinFragment
         extends
         Fragment
         implements
-        View.OnClickListener {
+        View.OnClickListener,
+        ListView.OnItemClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,6 +51,10 @@ public class JoinFragment
     private CircleButton btnDone,btnBack;
 
     private ListView listView;
+
+    private ParseController PC;
+
+    private ArrayAdapter<Long> adapter;
 
     /**
      * Use this factory method to create a new instance of
@@ -131,7 +143,78 @@ public class JoinFragment
             btnBack.setOnClickListener(this);
             btnDone.setOnClickListener(this);
 
+            listView=(ListView)getView().findViewById(R.id.lvJoin);
+            listView.setOnItemClickListener(this);
+
+            PC =new ParseController(getActivity().getApplicationContext());
+            PC.getOnliningGames(new ParseController.getOnliningGamesCallback() {
+                @Override
+                public void run(boolean result, ArrayList<Long> list) {
+                    if (result) {
+                        Log.wtf("PARSE", "get Onlining Games success");
+
+                        //-------get ID from list--------------------
+                        if (list == null)
+                            Log.wtf("PARSE", "getOnlining list is null");
+                        else {
+                            Log.wtf("PARSE", "getOnlining list size :" + list.size());
+                            for (long i : list) {
+                                Log.wtf("PARSE", "Onlining Games ID : " + i);
+                            }
+                            adapter=new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_list_item_1 , list);
+                            listView.setAdapter(adapter);
+                        }
+                        //---------------------------------------------
+                    } else
+                        Log.wtf("PARSE", "get Onlining Games fail");
+                }
+            });
+
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //
+        if(!BleFragment.getDevice().equals("[device_status]")) {
+        //
+
+
+            PC.connectGame(new ParseController.connectGameCallback(
+                    adapter.getItem(position)){
+                @Override
+                public void run(boolean result) {
+                    if (result) {
+                        Log.wtf("PARSE", "connect success");
+
+                        PC.joinGame(new ParseController.joinGameCallback(1, "Test Name") {
+                            @Override
+                            public void run(boolean result) {
+
+                                if (result) {
+                                    Log.wtf("PARSE", "join success");
+                                    switchFragment(getActivity(), BattleFragment
+                                            .newInstance(PC.getSetHP(),
+                                                    PC.getSetAMMO(),
+                                                    PC.getGameId(),
+                                                    "join"));
+                                }
+                                else
+                                    Log.wtf("PARSE", "join fail");
+                            }
+                        });
+
+                    } else Log.wtf("PARSE", "connect fail");
+                }
+            });
+
+
+
+        }else
+            Toast.makeText(getActivity(), "請先選擇裝置!", Toast.LENGTH_SHORT).show();
+
+
     }
 
     /**
