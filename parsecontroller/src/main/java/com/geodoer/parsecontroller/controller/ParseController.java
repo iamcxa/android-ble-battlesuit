@@ -64,6 +64,7 @@ public class ParseController
         thisGame.put(ParseColumn.game.setAmmo , setAmmo);
         thisGame.put(ParseColumn.game.onlining, true);
         if(players >0)
+<<<<<<< HEAD
         for(int i = 1 ; i <= players; i++)
         {
             thisGame.put(ParseColumn.player_stattus.Name(i),DEFAULT_PLAYER_NAME);
@@ -71,6 +72,14 @@ public class ParseController
             thisGame.put(ParseColumn.player_stattus.Ammo(i),setAmmo);
             thisGame.put(ParseColumn.player_stattus.Ammo_t(i),0);
         }
+=======
+            for(int i = 1 ; i <= players; i++)
+            {
+                thisGame.put(ParseColumn.player_stattus.Name(i),"empty");
+                thisGame.put(ParseColumn.player_stattus.Hp(i),setHp);
+                thisGame.put(ParseColumn.player_stattus.Ammo(i),setAmmo);
+            }
+>>>>>>> master
         thisGame.saveInBackground(sGC);
     }
 
@@ -117,6 +126,7 @@ public class ParseController
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
         query.whereEqualTo(ParseColumn.game.onlining,true);
+<<<<<<< HEAD
         query.orderByDescending("createAt");
         query.findInBackground(gGC);
     }
@@ -139,6 +149,10 @@ public class ParseController
         }
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
         query.getInBackground(ObjectId,gWC);
+=======
+        query.orderByDescending("createdAt");
+        query.findInBackground(callBack);
+>>>>>>> master
     }
 
     public long getGameId()
@@ -244,7 +258,7 @@ public class ParseController
      *
      *    Abstract
      *
-    **/
+     **/
     public static abstract class setGameCallback implements SaveCallback
     {
         private long gId;
@@ -261,10 +275,16 @@ public class ParseController
                 gameId = gId;
                 run(true);
             }
+<<<<<<< HEAD
             else
             {
                 run(false);
                 Log.wtf(TAG,"setGameCallback exception:"+e.toString());
+=======
+            else {
+                run(false);
+                Log.wtf("PARSE", "=ParseException  " + e.toString());
+>>>>>>> master
             }
         }
         public long getgId()

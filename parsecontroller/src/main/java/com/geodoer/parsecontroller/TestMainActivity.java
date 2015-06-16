@@ -256,6 +256,7 @@ public class TestMainActivity extends ActionBarActivity
                     {
                         if(result)Log.wtf(TAG, "joinGame success");
                         else Log.wtf(TAG, "joinGame fail");
+
                     }
                 });
 

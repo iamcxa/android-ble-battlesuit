@@ -82,13 +82,13 @@ public class BattleFragment
     // TODO: Rename and change types and number of parameters
     public static BattleFragment newInstance(int sHp,
                                              int sAmmo,
-                                             int gTime,
+                                             long gTime,
                                              String pName) {
         BattleFragment fragment = new BattleFragment();
         Bundle args = new Bundle();
         args.putInt(arg1, sHp);
         args.putInt(arg2, sAmmo);
-        args.putInt(arg3, gTime);
+        args.putLong(arg3, gTime);
         args.putString(arg4, pName);
         fragment.setArguments(args);
         return fragment;
@@ -141,10 +141,37 @@ public class BattleFragment
             PC.setGame(2, mArg1, mArg2, new ParseController.setGameCallback(GameIdmaker.newId()) {
                 @Override
                 public void run(boolean result) {
-                    if (result) Log.wtf("PARSE", "set Game success");
+                    if (result) {
+                        Log.wtf("PARSE", "set Game success");
+
+                        PC.connectGame(new ParseController.connectGameCallback(PC.getGameId()) {
+                            @Override
+                            public void run(boolean result) {
+                                if (result){
+                                    Log.wtf("PARSE", "connect success");
+                                    PC.joinGame(new ParseController.joinGameCallback(1, "Test Name") {
+                                        @Override
+                                        public void run(boolean result) {
+
+                                            if (result)
+                                                Log.wtf("PARSE", "join success");
+                                            else
+                                                Log.wtf("PARSE", "join fail");
+                                        }
+                                    });
+                                }
+                                else Log.wtf("PARSE", "connect fail");
+                            }
+                        });
+
+
+
+                    }
                     else Log.wtf("PARSE", "set Game fail");
                 }
             });
+
+
         }
 
     }
@@ -381,6 +408,8 @@ public class BattleFragment
                             Toast.makeText(getActivity(),
                                     "你死啦！",
                                     Toast.LENGTH_SHORT).show();
+
+
 
                         // 開槍
                     }else if(temp.equals("CC")){
