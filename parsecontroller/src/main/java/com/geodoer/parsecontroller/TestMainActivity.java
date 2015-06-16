@@ -6,13 +6,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.geodoer.parsecontroller.controller.GameIdmaker;
 import com.geodoer.parsecontroller.controller.ParseController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -36,15 +44,22 @@ public class TestMainActivity extends ActionBarActivity
         LinearLayout LL = new LinearLayout(this);
         LL.setOrientation(LinearLayout.VERTICAL);
 
-        Button setGame = new Button(this);
-        Button getOnlineGames = new Button(this);
+
+        ScrollView SV = new ScrollView(this);
+
+
+
+        Button setGame            = new Button(this);
+        Button getOnlineGames     = new Button(this);
         Button getGameInformation = new Button(this);
-        Button connectGame = new Button(this);
-        Button performGameInfo = new Button(this);
-        Button performPlayerInfo = new Button(this);
-        Button joinGame = new Button(this);
-        Button updateHP = new Button(this);
-        Button updateAMMO = new Button(this);
+        Button connectGame        = new Button(this);
+        Button performGameInfo    = new Button(this);
+        Button performPlayerInfo  = new Button(this);
+        Button joinGame           = new Button(this);
+        Button updateHP           = new Button(this);
+        Button updateAMMO         = new Button(this);
+        Button updateAMMO_t       = new Button(this);
+        Button getWhoShoot        = new Button(this);
 
 
         setGame.setText("setGame");
@@ -55,7 +70,9 @@ public class TestMainActivity extends ActionBarActivity
         joinGame.setText("joinGame");
         updateHP.setText("updateHP -1");
         updateAMMO.setText("updateAMMO -1");
+        updateAMMO_t.setText("updateAMMO_t to 1");
         getGameInformation.setText("getGameInformation");
+        getWhoShoot.setText("getWhoShoot");
 
         LL.addView(setGame);
         LL.addView(getOnlineGames);
@@ -66,6 +83,11 @@ public class TestMainActivity extends ActionBarActivity
         LL.addView(performPlayerInfo);
         LL.addView(updateHP);
         LL.addView(updateAMMO);
+        LL.addView(updateAMMO_t);
+        LL.addView(getWhoShoot);
+
+        SV.addView(LL);
+
 
         Log.wtf(TAG,"--------------APP START---------------");
         /**
@@ -288,6 +310,62 @@ public class TestMainActivity extends ActionBarActivity
 
             }
         });
+        updateAMMO_t.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                /**
+                 *
+                 *   updateInfo(  updateInfoCallback ( PlayerStatus.AMMO_t , 1 )
+                 *   this is set AMMO_t to 1
+                 *
+                 *   result = success or not
+                 *        false with parse exception
+                 *
+                 */
+                PC.Player.updateInfo(new ParseController.updateInfoCallback(ParseController.PlayerStatus.AMMO_t, 1)
+                {
+                    @Override
+                    public void run(boolean result)
+                    {
+                        if(result)Log.wtf(TAG, "update Ammo_t 1 success");
+                        else Log.wtf(TAG, "update Ammo_t 1 fail");
+                    }
+                });
+            }
+        });
+        getWhoShoot.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                /**
+                 *
+                 *     getWhoShooting( getWhoShootCallback )
+                 *     result = success or not
+                 *       false with parse exception
+                 *     list = List of Who was Shooting
+                 *       possible with size = 0 //nobody
+                 *
+                 */
+                PC.getWhoShooting(new ParseController.getWhoShootCallback()
+                {
+                    @Override
+                    public void run(boolean result, ArrayList<Integer> list)
+                    {
+                        if (result)
+                        {
+                            Log.wtf(TAG, "getWhoShooting success");
+                        }
+                        else
+                        {
+                            Log.wtf(TAG, "getWhoShooting fail");
+                        }
+                    }
+                });
+            }
+        });
 
 
 
@@ -321,12 +399,13 @@ public class TestMainActivity extends ActionBarActivity
                 Log.wtf(TAG, "Player Name   = " + PC.Player.getName());
                 Log.wtf(TAG, "Player HP     = " + PC.Player.getHp());
                 Log.wtf(TAG, "Player AMMO   = " + PC.Player.getAmmo());
+                Log.wtf(TAG, "Player AMMO_t = " + PC.Player.getAmmo_t());
             }
         });
 
 
 
-        setContentView(LL);
+        setContentView(SV);
 
 
     }

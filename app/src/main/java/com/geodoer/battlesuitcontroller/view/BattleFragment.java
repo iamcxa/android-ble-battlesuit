@@ -370,7 +370,7 @@ public class BattleFragment
                         if(meterHp.getValue1()>0) {
                             reduceMeter(meterHp);
 
-                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.Hp, -1) {
+                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.HP, -1) {
                                 @Override
                                 public void run(boolean result) {
                                     if (result) Log.wtf("PARSE", "update HP -1 success");
@@ -387,7 +387,7 @@ public class BattleFragment
                         if(meterAmmo.getValue1()>0) {
                             reduceMeter(meterAmmo);
 
-                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.Ammo, -1) {
+                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.AMMO, -1) {
                                 @Override
                                 public void run(boolean result) {
                                     if (result)

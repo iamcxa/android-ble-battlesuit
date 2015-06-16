@@ -21,8 +21,9 @@ public class ParseColumn
     }
     public static class player_stattus
     {
-        public static String Name(int num) { return "p"+ num + "Name" ; }
-        public static String Hp(int num) { return "p"+ num + "Hp" ; }
-        public static String Ammo(int num) { return "p"+ num + "Ammo" ; }
+        public static String Name  (int num) { return "p"+ num + "Name"  ; }
+        public static String Hp    (int num) { return "p"+ num + "Hp"    ; }
+        public static String Ammo  (int num) { return "p"+ num + "Ammo"  ; }
+        public static String Ammo_t(int num) { return "p"+ num + "Ammo_t"; }
     }
 }

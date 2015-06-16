@@ -69,6 +69,7 @@ public class ParseController
             thisGame.put(ParseColumn.player_stattus.Name(i),DEFAULT_PLAYER_NAME);
             thisGame.put(ParseColumn.player_stattus.Hp(i),setHp);
             thisGame.put(ParseColumn.player_stattus.Ammo(i),setAmmo);
+            thisGame.put(ParseColumn.player_stattus.Ammo_t(i),0);
         }
         thisGame.saveInBackground(sGC);
     }
@@ -129,6 +130,16 @@ public class ParseController
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
         query.getInBackground(ObjectId,gGC);
     }
+    public void getWhoShooting(getWhoShootCallback gWC)
+    {
+        if(ObjectId.equals("") || ObjectId.isEmpty() )
+        {
+            Log.wtf(TAG, "getWhoShooting failure with no ObjectID, Please connectGame before get");
+            return;
+        }
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
+        query.getInBackground(ObjectId,gWC);
+    }
 
     public long getGameId()
     {
@@ -157,12 +168,13 @@ public class ParseController
     {
         public static final String AMMO = "Player_Ammo";
         public static final String HP = "Player_Hp";
-
+        public static final String AMMO_t = "Player_Ammo_t";
         private boolean status = false;
         private String Name;
         private int Num = 0;
         private int Hp = 0;
         private int Ammo = 0;
+        private int Ammo_t = 0;
 
         public PlayerStatus()
         {
@@ -179,6 +191,7 @@ public class ParseController
             this.Name = name;
             this.Hp = hp;
             this.Ammo = ammo;
+            this.Ammo_t = 0;
         }
 
         public void updateInfo(updateInfoCallback uGC)
@@ -199,6 +212,7 @@ public class ParseController
         {
             this.Ammo += i;
         }
+        public void changeAMMO_t(int i) { this.Ammo_t = i;}
 
         public boolean getStatus()
         {
@@ -215,6 +229,10 @@ public class ParseController
         public int getAmmo()
         {
             return Ammo;
+        }
+        public int getAmmo_t()
+        {
+            return Ammo_t;
         }
         public String getName()
         {
@@ -359,6 +377,39 @@ public class ParseController
                                  ArrayList<Integer> Hp_list,
                                  ArrayList<Integer> Ammo_list );
     }
+    public static abstract class getWhoShootCallback implements  GetCallback<ParseObject>
+    {
+        @Override
+        public void done(ParseObject parseObject, ParseException e)
+        {
+            if (e==null)
+            {
+                int num = parseObject.getInt(ParseColumn.game.gPcount);
+                ArrayList<Integer> list = new ArrayList<>();
+                if(num>0)
+                {
+                    for (int i = 1; i <= num; i++)
+                    {
+                        if (parseObject.getInt(ParseColumn.player_stattus.Ammo_t(i)) == 1)
+                            list.add(i);
+                    }
+                    run(true, list);
+                }
+                else
+                {
+                    Log.wtf(TAG,"getWhoShootingCallback exception: player count error?");
+                    run(false,null);
+                }
+            }
+            else
+            {
+                run(false,null);
+                Log.wtf(TAG,"getWhoShootCallback exception:"+e.toString());
+            }
+
+        }
+        public abstract void run(boolean result,ArrayList<Integer> list);
+    }
 
 
     private static class joinGameGetCallback implements GetCallback<ParseObject>
@@ -477,6 +528,19 @@ public class ParseController
                     change = Player.getHp() + uGC.getChange();
                     break;
 
+                case PlayerStatus.AMMO_t:
+
+                    this.item = ParseColumn.player_stattus.Ammo_t(Num);
+                    change = uGC.getChange();
+
+                    if(change == Player.getAmmo_t())
+                    {
+                        Log.wtf(TAG,"updateInfoGetCallback exception: AMMO_t have the same status");
+                        uGC.run(false);
+                        return;
+                    }
+                    break;
+
                 default:
 
                     this.item = null;
@@ -492,7 +556,7 @@ public class ParseController
                 if( item == null || item.isEmpty() )
                 {
                     uGC.run(false);
-                    Log.wtf(TAG,"updateInfoGetCallback exception: item name error(neither HP nor AMMO?)");
+                    Log.wtf(TAG,"updateInfoGetCallback exception: item name error(neither HP ,AMMO nor AMMO_t ?)");
                     return;
                 }
                 if(!parseObject.getBoolean(ParseColumn.game.onlining))
@@ -541,6 +605,12 @@ public class ParseController
                     case PlayerStatus.HP:
 
                         Player.changeHP(change);
+                        run(true);
+                        break;
+
+                    case PlayerStatus.AMMO_t:
+
+                        Player.changeAMMO_t(change);
                         run(true);
                         break;
 
