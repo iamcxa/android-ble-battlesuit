@@ -1,14 +1,17 @@
 package com.geodoer.battlesuitcontroller.view;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +55,9 @@ public class BattleFragment
 
     private Handler handler;
 
-    private Runnable r,hideWarring;
+    private Handler stateUpdateHandle;
+
+    private Runnable r,hideWarring,stateUpdate;
 
     private Button btnMore;
     private Button btnLess;
@@ -66,6 +71,10 @@ public class BattleFragment
     private TextView txtGetPname,txtBleState;
 
     private ImageView ivWarning;
+
+    private Vibrator mVibrator;
+
+    private MediaPlayer mPlayer;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,11 +133,21 @@ public class BattleFragment
                 ivWarning.setVisibility(View.INVISIBLE);
             }
         };
+
+        stateUpdate = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        };
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
+
         if (getArguments() != null) {
             mArg1 = getArguments().getInt(arg1);
             mArg2 = getArguments().getInt(arg2);
@@ -153,9 +172,10 @@ public class BattleFragment
                                         @Override
                                         public void run(boolean result) {
 
-                                            if (result)
+                                            if (result) {
                                                 Log.wtf("PARSE", "join success");
-                                            else
+                                                handler.postDelayed(stateUpdate, 100);
+                                            }else
                                                 Log.wtf("PARSE", "join fail");
                                         }
                                     });
@@ -391,6 +411,7 @@ public class BattleFragment
                     if(temp.equals("AA")){
                         ivWarning.setVisibility(View.VISIBLE);
                         handler.postDelayed(hideWarring,1500);
+                        mVibrator.vibrate(1000);
 
                         // 被擊中
                     }else if(temp.equals("BB")){
