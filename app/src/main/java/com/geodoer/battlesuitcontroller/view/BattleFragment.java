@@ -29,6 +29,8 @@ import com.geodoer.circularseekbar.CircularSeekBar;
 import com.geodoer.parsecontroller.controller.GameIdmaker;
 import com.geodoer.parsecontroller.controller.ParseController;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,28 +47,15 @@ public class BattleFragment
         View.OnClickListener,
         CircularSeekBar.OnSeekChangeListener {
 
-    private ParseController PC;
+    private static ParseController PC;
 
-    private CircularCounter meterHp;
-    private CircularCounter meterAmmo;
+    private CircularCounter meterHp,meterAmmo;
 
-    private String[] colorsAmmo;
-    private String[] colorsHp;
-
-    private Handler handler;
-
-    private Handler stateUpdateHandle;
+    private Handler handler,stateUpdateHandle;
 
     private Runnable r,hideWarring,stateUpdate;
 
-    private Button btnMore;
-    private Button btnLess;
-    private Button btnAuto;
-
     private boolean isAutoRun;
-
-    private CircularSeekBar barAmmo;
-    private CircularSeekBar barHp;
 
     private TextView txtGetPname,txtBleState;
 
@@ -76,32 +65,45 @@ public class BattleFragment
 
     private MediaPlayer mPlayer;
 
+
+    private int isHost,tVibrattion=100;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String arg1 = "sHp";
     private static final String arg2 = "sAmmo";
     private static final String arg3 = "gTime";
     private static final String arg4 = "pName";
+    private static final String arg5 = "isHost";
+    private static final String arg6 = "gameID";
 
     // TODO: Rename and change types of parameters
-    private int mArg1,mArg2,mArg3;
+    private int mArg1,mArg2,mArg3,mArg5;
     private String mArg4;
+    private long tNow,mArg6;
     private OnFragmentInteractionListener mListener;
 
     // TODO: Rename and change types and number of parameters
     public static BattleFragment newInstance(int sHp,
                                              int sAmmo,
                                              long gTime,
-                                             String pName) {
+                                             String pName,
+                                             int isHost,
+                                             long gameID,
+                                             ParseController thisPC) {
         BattleFragment fragment = new BattleFragment();
         Bundle args = new Bundle();
         args.putInt(arg1, sHp);
         args.putInt(arg2, sAmmo);
         args.putLong(arg3, gTime);
         args.putString(arg4, pName);
+        args.putInt(arg5, isHost);
+        args.putLong(arg6, gameID);
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     public BattleFragment() {
         // Required empty public constructor
@@ -127,10 +129,10 @@ public class BattleFragment
         };
 
         hideWarring=new Runnable(){
-
             @Override
             public void run() {
                 ivWarning.setVisibility(View.INVISIBLE);
+                mVibrator.vibrate(tVibrattion);
             }
         };
 
@@ -146,6 +148,7 @@ public class BattleFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 震動元件
         mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
 
         if (getArguments() != null) {
@@ -153,47 +156,15 @@ public class BattleFragment
             mArg2 = getArguments().getInt(arg2);
             mArg3 = getArguments().getInt(arg3);
             mArg4 = getArguments().getString(arg4);
+            mArg5 = getArguments().getInt(arg5);
+            mArg6 = getArguments().getLong(arg6);
 
             Log.wtf("args","hp="+mArg1+",ammo="+mArg2+",time="+mArg3+",name="+mArg4);
+            Log.wtf("args", "gameID=" + mArg6);
 
             PC =new ParseController(getActivity().getApplicationContext());
-            PC.setGame(2, mArg1, mArg2, new ParseController.setGameCallback(GameIdmaker.newId()) {
-                @Override
-                public void run(boolean result) {
-                    if (result) {
-                        Log.wtf("PARSE", "set Game success");
-
-                        PC.connectGame(new ParseController.connectGameCallback(PC.getGameId()) {
-                            @Override
-                            public void run(boolean result) {
-                                if (result){
-                                    Log.wtf("PARSE", "connect success");
-                                    PC.joinGame(new ParseController.joinGameCallback(1, "Test Name") {
-                                        @Override
-                                        public void run(boolean result) {
-
-                                            if (result) {
-                                                Log.wtf("PARSE", "join success");
-                                                handler.postDelayed(stateUpdate, 100);
-                                            }else
-                                                Log.wtf("PARSE", "join fail");
-                                        }
-                                    });
-                                }
-                                else Log.wtf("PARSE", "connect fail");
-                            }
-                        });
-
-
-
-                    }
-                    else Log.wtf("PARSE", "set Game fail");
-                }
-            });
-
-
+            setGame(mArg5);
         }
-
     }
 
     @Override
@@ -243,6 +214,11 @@ public class BattleFragment
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         getActivity().unregisterReceiver(ble_activity_receiver);
         isAutoRun=false;
         handler.removeCallbacks(r);
@@ -259,7 +235,7 @@ public class BattleFragment
             txtBleState=(TextView)getView().findViewById(R.id.txtBleState);
             txtBleState.setText("no data");
 
-            barAmmo = (CircularSeekBar) getView().findViewById(R.id.barAmmo);
+            CircularSeekBar barAmmo = (CircularSeekBar) getView().findViewById(R.id.barAmmo);
             barAmmo.setMaxProgress(mArg2);
             barAmmo.setProgress(0);
             barAmmo.setBarWidth(35);
@@ -267,7 +243,7 @@ public class BattleFragment
             barAmmo.setProgressColor(getResources().getColor(R.color.bar_color_ammo));
             barAmmo.setSeekBarChangeListener(this);
 
-            barHp = (CircularSeekBar) getView().findViewById(R.id.barHp);
+            CircularSeekBar barHp = (CircularSeekBar) getView().findViewById(R.id.barHp);
             barHp.setMaxProgress(mArg1);
             barHp.setProgress(0);
             barHp.setBarWidth(35);
@@ -277,16 +253,16 @@ public class BattleFragment
 
             isAutoRun = false;
 
-            btnMore = (Button) getView().findViewById(R.id.btnMore);
-            btnLess = (Button) getView().findViewById(R.id.btnLess);
-            btnAuto = (Button) getView().findViewById(R.id.btnAuto);
+            Button btnMore = (Button) getView().findViewById(R.id.btnMore);
+            Button btnLess = (Button) getView().findViewById(R.id.btnLess);
+            Button btnAuto = (Button) getView().findViewById(R.id.btnAuto);
 
             btnMore.setOnClickListener(this);
             btnLess.setOnClickListener(this);
             btnAuto.setOnClickListener(this);
 
-            colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
-            colorsHp = getResources().getStringArray(R.array.colors_HP);
+            String[] colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
+            String[] colorsHp = getResources().getStringArray(R.array.colors_HP);
 
             meterHp = (CircularCounter) getView().findViewById(R.id.meter);
             meterAmmo = (CircularCounter) getView().findViewById(R.id.meter_ammo);
@@ -368,7 +344,7 @@ public class BattleFragment
     public void onProgressChange(CircularSeekBar view, int newProgress) {
         switch (view.getId()){
             case R.id.barAmmo:
-                addMeter(meterAmmo,newProgress,newProgress*2,newProgress*3);
+                addMeter(meterAmmo, newProgress, newProgress * 2, newProgress * 3);
                 break;
             case R.id.barHp:
                 addMeter(meterHp,newProgress,newProgress*2,newProgress*3);
@@ -376,6 +352,82 @@ public class BattleFragment
         }
     }
 
+    private void setGame(final int isHost){
+
+        PC =new ParseController(getActivity().getApplicationContext());
+
+
+        // host遊戲
+        if(isHost==1) {
+            PC.setGame(2, mArg1, mArg2, new ParseController.setGameCallback(GameIdmaker.newId()) {
+                @Override
+                public void run(boolean result) {
+                    if (result) {
+                        Log.wtf("PARSE", "set Game success");
+                        connectGame();
+                    } else {
+                        Log.wtf("PARSE", "set Game fail");
+                        Toast.makeText(getActivity(),
+                                "set Game. retry pls.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            mArg6=PC.getGameId();
+        }else
+            connectGame();
+    }
+
+    private void connectGame(){
+
+        String pName = mArg4;
+        if (pName.isEmpty())
+            pName = "player_host";
+        final String finalPName = pName;
+
+        // 連結
+        PC.connectGame(new ParseController.connectGameCallback(mArg6) {
+            @Override
+            public void run(boolean result) {
+                if (result){
+                    // 連結成功
+                    Log.wtf("PARSE", "connect success");
+
+                    // 加入遊戲, hostId=1
+                    PC.joinGame(new ParseController.joinGameCallback(
+                            isHost,
+                            finalPName) {
+                        @Override
+                        public void run(boolean result) {
+                            if (result) {
+                                // 成功
+                                Log.wtf("PARSE", "join success");
+                                txtGetPname
+                                        .setText(
+                                                txtGetPname.getText()
+                                                        + "[" + mArg6 + "]");
+
+                            }else{
+                                // 失敗
+                                Log.wtf("PARSE", "join fail");
+                                Toast.makeText(getActivity(),
+                                        "join fail. retry pls.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+                else {
+                    // 連結失敗
+                    Log.wtf("PARSE", "connect fail");
+                    Toast.makeText(getActivity(),
+                            "connect fail. retry pls.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -391,14 +443,14 @@ public class BattleFragment
         public void onFragmentInteraction(Uri uri);
     }
 
-
+    // 接收BLE廣播
     private final BroadcastReceiver ble_activity_receiver = new BroadcastReceiver()
     {
         @Override
         public void onReceive(Context context, Intent intent)
         {
             final String action = intent.getAction();
-            final String bString = BleCustomDialog.mAction_servicestate;
+            //final String bString = BleCustomDialog.mAction_servicestate;
             if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action))
             {
                 String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
@@ -408,43 +460,121 @@ public class BattleFragment
                     txtBleState.setText(temp+System.currentTimeMillis()/(60*60*60));
 
                     // 被瞄準
-                    if(temp.equals("AA")){
+                    if(temp.equals("AA")) {
                         ivWarning.setVisibility(View.VISIBLE);
-                        handler.postDelayed(hideWarring,1500);
-                        mVibrator.vibrate(1000);
+                        handler.postDelayed(hideWarring, 1500);
+
+                        tNow=System.currentTimeMillis();
+
+                        // 檢查誰開槍
+                        PC.getWhoShooting(new ParseController.getWhoShootCallback() {
+                            @Override
+                            public void run(boolean result, ArrayList<Integer> list) {
+                                if(result){
+                                    Log.wtf("PARSE", list.toString());
+                                    if(!list.isEmpty()){
+                                        Log.wtf("PARSE", "tNow="+tNow);
+                                        Log.wtf("list", "mArg5="+mArg5);
+                                        if(list.contains(mArg5)){
+                                            int i;
+                                            for(i=0;i<list.size();i++){
+                                                Log.wtf("list", "list item=" + list.get(i));
+                                                if(list.get(i)==mArg5){
+                                                    list.remove(i);
+                                                    Log.wtf("list", "remove itself.");
+                                                }}
+                                        }
+                                    }else
+                                        Log.wtf("PARSE", "沒有配對到槍手");
+                                }
+                            }
+                        });
 
                         // 被擊中
                     }else if(temp.equals("BB")){
+
+                        // 如果還有血
                         if(meterHp.getValue1()>0) {
+
+                            // 血環扣血
                             reduceMeter(meterHp);
 
-                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.HP, -1) {
-                                @Override
-                                public void run(boolean result) {
-                                    if (result) Log.wtf("PARSE", "update HP -1 success");
-                                    else Log.wtf("PARSE", "update HP -1 fail");
-                                }
-                            });
+                            // 雲端扣血
+                            PC.Player
+                                    .updateInfo(new ParseController
+                                            .updateInfoCallback(ParseController
+                                            .PlayerStatus.HP, -1) {
+                                        @Override
+                                        public void run(boolean result) {
+                                            if (result) {
+                                                Log.wtf("PARSE", "update HP -1 success");
+                                                mVibrator.vibrate(tVibrattion);
+                                            } else Log.wtf("PARSE", "update HP -1 fail");
+                                        }
+                                    });
+
+
                         }else
+                            // 沒血
                             Toast.makeText(getActivity(),
                                     "你死啦！",
                                     Toast.LENGTH_SHORT).show();
-
-
-
                         // 開槍
                     }else if(temp.equals("CC")){
+                        //
                         if(meterAmmo.getValue1()>0) {
+
+                            mVibrator.vibrate(tVibrattion);
                             reduceMeter(meterAmmo);
 
-                            PC.Player.updateInfo(new ParseController.updateInfoCallback(PC.Player.AMMO, -1) {
-                                @Override
-                                public void run(boolean result) {
-                                    if (result)
-                                        Log.wtf("PARSE", "update Ammo -1 success");
-                                    else Log.wtf("PARSE", "update Ammo -1 fail");
-                                }
-                            });
+                            if(PC.Player.getAmmo_t()==0) {
+                                // 開槍狀態=1
+                                PC.Player
+                                        .updateInfo(
+                                                new ParseController
+                                                        .updateInfoCallback(
+                                                        ParseController
+                                                                .PlayerStatus.AMMO_t
+                                                        , 1) {
+                                                    @Override
+                                                    public void run(boolean result) {
+                                                        if (result)
+                                                            Log.wtf("PARSE", "update Ammo_t 1 success");
+                                                        else
+                                                            Log.wtf("PARSE", "update Ammo_t 1 fail");
+                                                    }
+                                                });
+                            }else{
+//                                // 開槍狀態=0
+//                                PC.Player.updateInfo(
+//                                        new ParseController
+//                                                .updateInfoCallback(
+//                                                ParseController
+//                                                        .PlayerStatus.AMMO_t
+//                                                , 0) {
+//                                            @Override
+//                                            public void run(boolean result) {
+//                                                if (result) Log.wtf("PARSE", "update Ammo_t 0 success");
+//                                                else Log.wtf("PARSE", "update Ammo_t 0 fail");
+//                                            }
+//                                        });
+                            }
+
+                            // 更新子彈量
+                            PC.Player
+                                    .updateInfo(
+                                            new ParseController
+                                                    .updateInfoCallback(
+                                                    ParseController
+                                                            .PlayerStatus.AMMO
+                                                    , -1) {
+                                                @Override
+                                                public void run(boolean result) {
+                                                    if (result) {
+                                                        Log.wtf("PARSE", "update Ammo -1 success");
+                                                    } else Log.wtf("PARSE", "update Ammo -1 fail");
+                                                }
+                                            });
 
                         }else
                             Toast.makeText(getActivity(),
@@ -456,6 +586,7 @@ public class BattleFragment
         }
     };
 
+    //
     private static IntentFilter ble_activity_receiverIntentFilter()
     {
         final IntentFilter intentFilter = new IntentFilter();
@@ -463,6 +594,5 @@ public class BattleFragment
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         return intentFilter;
     }
-
 }
 

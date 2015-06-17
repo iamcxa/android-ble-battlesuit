@@ -48,14 +48,13 @@ public class JoinFragment
 
     private OnFragmentInteractionListener mListener;
 
-    private CircleButton btnDone,btnBack;
-
     private ListView listView;
 
     private ParseController PC;
 
     private ArrayAdapter<Long> adapter;
 
+    private long gTime=0;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -137,8 +136,8 @@ public class JoinFragment
 
     private void setComponents(){
         if(getView()!=null){
-            btnBack=(CircleButton)getView().findViewById(R.id.btnBack);
-            btnDone=(CircleButton)getView().findViewById(R.id.btnDone);
+            CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
+            CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
 
             btnBack.setOnClickListener(this);
             btnDone.setOnClickListener(this);
@@ -147,9 +146,10 @@ public class JoinFragment
             listView.setOnItemClickListener(this);
 
             PC =new ParseController(getActivity().getApplicationContext());
-            PC.getOnliningGames(new ParseController.getOnliningGamesCallback() {
+            PC.getOnlineGames(new ParseController.getOnlineGamesCallback() {
                 @Override
                 public void run(boolean result, ArrayList<Long> list) {
+                    //
                     if (result) {
                         Log.wtf("PARSE", "get Onlining Games success");
 
@@ -161,13 +161,14 @@ public class JoinFragment
                             for (long i : list) {
                                 Log.wtf("PARSE", "Onlining Games ID : " + i);
                             }
-                            adapter=new ArrayAdapter<>(getActivity(),
-                                    android.R.layout.simple_list_item_1 , list);
+                            adapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_list_item_1, list);
                             listView.setAdapter(adapter);
                         }
                         //---------------------------------------------
                     } else
                         Log.wtf("PARSE", "get Onlining Games fail");
+                    //
                 }
             });
 
@@ -178,9 +179,7 @@ public class JoinFragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //
         if(!BleFragment.getDevice().equals("[device_status]")) {
-        //
-
-
+            //
             PC.connectGame(new ParseController.connectGameCallback(
                     adapter.getItem(position)){
                 @Override
@@ -188,33 +187,35 @@ public class JoinFragment
                     if (result) {
                         Log.wtf("PARSE", "connect success");
 
-                        PC.joinGame(new ParseController.joinGameCallback(1, "Test Name") {
-                            @Override
-                            public void run(boolean result) {
+                        switchFragment(getActivity(), BattleFragment
+                                .newInstance(0,
+                                        PC.getSetHP(),
+                                        PC.getSetAMMO(),
+                                        "join",
+                                        2,
+                                        PC.getGameId(),
+                                        PC));
 
-                                if (result) {
-                                    Log.wtf("PARSE", "join success");
-                                    switchFragment(getActivity(), BattleFragment
-                                            .newInstance(PC.getSetHP(),
-                                                    PC.getSetAMMO(),
-                                                    PC.getGameId(),
-                                                    "join"));
-                                }
-                                else
-                                    Log.wtf("PARSE", "join fail");
-                            }
-                        });
+
+//                        PC.joinGame(new ParseController.joinGameCallback(2, "joiner") {
+//                            @Override
+//                            public void run(boolean result) {
+//
+//                                if (result) {
+//                                    Log.wtf("PARSE", "join success");
+//
+//                                }
+//                                else
+//                                    Log.wtf("PARSE", "join fail");
+//                            }
+//                        });
 
                     } else Log.wtf("PARSE", "connect fail");
                 }
             });
 
-
-
         }else
             Toast.makeText(getActivity(), "請先選擇裝置!", Toast.LENGTH_SHORT).show();
-
-
     }
 
     /**

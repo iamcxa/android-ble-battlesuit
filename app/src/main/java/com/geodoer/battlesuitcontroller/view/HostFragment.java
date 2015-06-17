@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.parsecontroller.controller.ParseController;
 
 import at.markushi.ui.CircleButton;
 
@@ -33,23 +34,12 @@ public class HostFragment
 
     private OnFragmentInteractionListener mListener;
 
-    private SeekBar seekBarGTL,seekBarHp,seekBarAmmo;
-
-    private CircleButton btnDone,btnBack;
-
     private EditText etxtPname;
 
     private int vHp,vAmmo,vTime;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    private ParseController PC;
+
     public static HostFragment newInstance(String param1, String param2) {
         HostFragment fragment = new HostFragment();
         Bundle args = new Bundle();
@@ -107,14 +97,20 @@ public class HostFragment
         switch (v.getId()){
             case R.id.btnDone:
                 if(!BleFragment.getDevice().equals("[device_status]")) {
+
                     String pName = etxtPname.getText().toString();
                     if (pName.isEmpty())
                         pName = "player_host";
+
+                    // 切換
                     switchFragment(getActivity(), BattleFragment
                             .newInstance(vHp,
                                     vAmmo,
                                     vTime,
-                                    pName));
+                                    pName,
+                                    1,
+                                    0,
+                                    PC));
                 }else
                     Toast.makeText(getActivity(),"請先選擇裝置!",Toast.LENGTH_SHORT).show();
                 break;
@@ -165,15 +161,15 @@ public class HostFragment
         if(getView()!=null){
             etxtPname=(EditText)getView().findViewById(R.id.etxtPname);
 
-            btnBack=(CircleButton)getView().findViewById(R.id.btnBack);
-            btnDone=(CircleButton)getView().findViewById(R.id.btnDone);
+            CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
+            CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
 
             btnBack.setOnClickListener(this);
             btnDone.setOnClickListener(this);
 
-            seekBarAmmo=(SeekBar)getView().findViewById(R.id.seekBarAmmo);
-            seekBarHp=(SeekBar)getView().findViewById(R.id.seekBarHp);
-            seekBarGTL=(SeekBar)getView().findViewById(R.id.seekBarGTL);
+            SeekBar seekBarAmmo = (SeekBar) getView().findViewById(R.id.seekBarAmmo);
+            SeekBar seekBarHp = (SeekBar) getView().findViewById(R.id.seekBarHp);
+            SeekBar seekBarGTL = (SeekBar) getView().findViewById(R.id.seekBarGTL);
 
             vAmmo=120;
             vTime=120;
@@ -191,6 +187,12 @@ public class HostFragment
             seekBarHp.setOnSeekBarChangeListener(this);
             seekBarGTL.setOnSeekBarChangeListener(this);
         }
+    }
+
+
+    //
+    private boolean hostGame(){
+
     }
 
     public interface OnFragmentInteractionListener {

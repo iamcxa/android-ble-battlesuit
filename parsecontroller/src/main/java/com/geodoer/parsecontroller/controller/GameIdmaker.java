@@ -5,8 +5,15 @@ package com.geodoer.parsecontroller.controller;
  */
 public class GameIdmaker
 {
+    private static long nowId;
+
     public static long newId()
     {
-        return System.currentTimeMillis();
+        nowId=System.currentTimeMillis();
+        return nowId;
+    }
+
+    public static long getNowId(){
+        return nowId;
     }
 }
