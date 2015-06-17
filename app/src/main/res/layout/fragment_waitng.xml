@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="50dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Less"
+                android:id="@+id/btnLess"
+                android:layout_below="@+id/meter_ammo"
+                android:layout_toEndOf="@+id/btnAuto"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="auto"
+                android:id="@+id/btnAuto"
+                android:layout_below="@+id/button"
+                android:layout_alignStart="@+id/meter_ammo"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="add"
+                android:id="@+id/btnMore"
+                android:layout_alignStart="@+id/meter"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="[pName]"
+            android:id="@+id/txtGetPname"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="50dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="[BleState]"
+            android:id="@+id/txtBleState"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"/>
+
+        <include
+            layout="@layout/include_battle_ammo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <include
+            layout="@layout/include_battle_hp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:id="@+id/ivWarning"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/warning"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
+
