@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/circularcounter" />
             <option value="$PROJECT_DIR$/circularseekbar" />
             <option value="$PROJECT_DIR$/parsecontroller" />
+            <option value="$PROJECT_DIR$/phpcontroller" />
           </set>
         </option>
       </GradleProjectSettings>
