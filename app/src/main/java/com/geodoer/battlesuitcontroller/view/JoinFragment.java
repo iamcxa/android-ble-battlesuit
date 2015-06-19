@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.battlesuitcontroller.controller.GameController;
+import com.geodoer.battlesuitcontroller.item.aPlayer;
 import com.geodoer.parsecontroller.controller.ParseController;
 
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class JoinFragment
         Fragment
         implements
         View.OnClickListener,
-        ListView.OnItemClickListener{
+        ListView.OnItemClickListener,
+        GameController.whenSucceed{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -51,6 +54,8 @@ public class JoinFragment
     private ListView listView;
 
     private ParseController PC;
+
+    private GameController gc;
 
     private ArrayAdapter<Long> adapter;
 
@@ -84,6 +89,7 @@ public class JoinFragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -145,6 +151,9 @@ public class JoinFragment
             listView=(ListView)getView().findViewById(R.id.lvJoin);
             listView.setOnItemClickListener(this);
 
+            gc=new GameController(getActivity());
+            gc.setWhenSucceedTarget(this);
+
             PC =new ParseController(getActivity().getApplicationContext());
             PC.getOnlineGames(new ParseController.getOnlineGamesCallback() {
                 @Override
@@ -179,43 +188,75 @@ public class JoinFragment
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //
         if(!BleFragment.getDevice().equals("[device_status]")) {
-            //
-            PC.connectGame(new ParseController.connectGameCallback(
-                    adapter.getItem(position)){
-                @Override
-                public void run(boolean result) {
-                    if (result) {
-                        Log.wtf("PARSE", "connect success");
 
-                        switchFragment(getActivity(), BattleFragment
-                                .newInstance(0,
-                                        PC.getSetHP(),
-                                        PC.getSetAMMO(),
-                                        "join",
-                                        2,
-                                        PC.getGameId(),
-                                        PC));
+            long gameId=adapter.getItem(position);
 
 
-//                        PC.joinGame(new ParseController.joinGameCallback(2, "joiner") {
-//                            @Override
-//                            public void run(boolean result) {
-//
-//                                if (result) {
-//                                    Log.wtf("PARSE", "join success");
-//
-//                                }
-//                                else
-//                                    Log.wtf("PARSE", "join fail");
-//                            }
-//                        });
+            gc.connect(gameId);
 
-                    } else Log.wtf("PARSE", "connect fail");
-                }
-            });
-
+//            ConnectGame connectGame=new ConnectGame(getActivity());
+//            if(connectGame.connect(gameId))
+//                // 切換
+//                switchFragment(getActivity(),
+//                        BattleFragment.newInstance(
+//                                gameId,
+//                                2,
+//                                connectGame.getSetHp(),
+//                                connectGame.getSetAmmo(),
+//                                120,
+//                                "joiner"));
         }else
             Toast.makeText(getActivity(), "請先選擇裝置!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hostSucceed() {
+
+    }
+
+    @Override
+    public void connectSucceed() {
+        Toast.makeText(getActivity(),"connectSucceed",Toast.LENGTH_SHORT).show();
+
+        aPlayer aPlayer = new aPlayer();
+        aPlayer.setPlayerId(2);
+        aPlayer.setPlayerName("joiner");
+
+        gc.join(aPlayer);
+    }
+
+    @Override
+    public void joinSucceed() {
+        Toast.makeText(getActivity(),"joinSucceed",Toast.LENGTH_SHORT).show();
+        switchFragment(getActivity(),
+                BattleFragment.newInstance(
+                        PC.getGameId(),
+                        2,
+                        PC.getSetHP(),
+                        PC.getSetAMMO(),
+                        120,
+                        gc.getPlayer().getPlayerName()
+
+//                        gc.getGame().getSetHp(),
+//                        gc.getGame().getSetAmmo(),
+//                        gc.getGame().getGameTime(),
+//                        gc.getPlayer().getPlayerName()
+                ));
+    }
+
+    @Override
+    public void hostFailed() {
+
+    }
+
+    @Override
+    public void connectFailed() {
+
+    }
+
+    @Override
+    public void joinFailed() {
+
     }
 
     /**

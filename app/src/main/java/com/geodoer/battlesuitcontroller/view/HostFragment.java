@@ -13,6 +13,10 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.battlesuitcontroller.controller.GameController;
+import com.geodoer.battlesuitcontroller.item.aGame;
+import com.geodoer.battlesuitcontroller.item.aPlayer;
+import com.geodoer.parsecontroller.controller.GameIdmaker;
 import com.geodoer.parsecontroller.controller.ParseController;
 
 import at.markushi.ui.CircleButton;
@@ -24,7 +28,8 @@ public class HostFragment
         Fragment
         implements
         View.OnClickListener,
-        SeekBar.OnSeekBarChangeListener{
+        SeekBar.OnSeekBarChangeListener,
+        GameController.whenSucceed{
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -36,9 +41,11 @@ public class HostFragment
 
     private EditText etxtPname;
 
-    private int vHp,vAmmo,vTime;
+    private int vHp,vAmmo,vgTime;
 
-    private ParseController PC;
+    private ParseController pc;
+
+    private GameController gc;
 
     public static HostFragment newInstance(String param1, String param2) {
         HostFragment fragment = new HostFragment();
@@ -60,6 +67,8 @@ public class HostFragment
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        gc = new GameController(getActivity());
+        gc.setWhenSucceedTarget(this);
     }
 
     @Override
@@ -99,18 +108,24 @@ public class HostFragment
                 if(!BleFragment.getDevice().equals("[device_status]")) {
 
                     String pName = etxtPname.getText().toString();
-                    if (pName.isEmpty())
-                        pName = "player_host";
+                    if (pName.isEmpty()) pName = "player_host";
 
-                    // 切換
-                    switchFragment(getActivity(), BattleFragment
-                            .newInstance(vHp,
-                                    vAmmo,
-                                    vTime,
-                                    pName,
-                                    1,
-                                    0,
-                                    PC));
+                    // set game's parameter.
+                    aGame aGame=new aGame();
+                    aGame.setGameId(GameIdmaker.newId());
+                    aGame.setPlayerCount(2);
+                    aGame.setSetHp(vHp);
+                    aGame.setSetAmmo(vAmmo);
+                    aGame.setGameTime(vgTime);
+
+                    // set a player.
+                    aPlayer aPlayer=new aPlayer();
+                    aPlayer.setPlayerId(1);
+                    aPlayer.setPlayerName(pName);
+
+                    // host it up.
+                    gc.host(aGame, aPlayer);
+
                 }else
                     Toast.makeText(getActivity(),"請先選擇裝置!",Toast.LENGTH_SHORT).show();
                 break;
@@ -131,13 +146,13 @@ public class HostFragment
                 vHp=progress;
                 break;
             case R.id.seekBarGTL:
-                vTime=progress;
+                vgTime=progress;
                 break;
         }
         Log.wtf("seekbar", "raw=" + progress +
                 ",vhp=" + vHp +
                 ",vAmmo=" + vAmmo +
-                ",vTime=" + vTime);
+                ",vTime=" + vgTime);
         //}
     }
 
@@ -172,11 +187,11 @@ public class HostFragment
             SeekBar seekBarGTL = (SeekBar) getView().findViewById(R.id.seekBarGTL);
 
             vAmmo=120;
-            vTime=120;
+            vgTime=120;
             vHp=10;
 
             seekBarAmmo.setMax(vAmmo);
-            seekBarGTL.setMax(vTime);
+            seekBarGTL.setMax(vgTime);
             seekBarHp.setMax(vHp);
 
             seekBarAmmo.setProgress(120);
@@ -189,9 +204,41 @@ public class HostFragment
         }
     }
 
+    @Override
+    public void hostSucceed() {
+        Toast.makeText(getActivity(),"hostSucceed",Toast.LENGTH_SHORT).show();
+    }
 
-    //
-    private boolean hostGame(){
+    @Override
+    public void connectSucceed() {
+        Toast.makeText(getActivity(),"connectSucceed",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void joinSucceed() {
+        switchFragment(getActivity(),
+                BattleFragment.newInstance(
+                        gc.getGame().getGameId(),
+                        gc.getPlayer().getPlayerId(),
+                        gc.getGame().getSetHp(),
+                        gc.getGame().getSetAmmo(),
+                        gc.getGame().getGameTime(),
+                        gc.getPlayer().getPlayerName()
+                ));
+    }
+
+    @Override
+    public void hostFailed() {
+
+    }
+
+    @Override
+    public void connectFailed() {
+
+    }
+
+    @Override
+    public void joinFailed() {
 
     }
 
