@@ -1,1 +1,1 @@
-include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar'
+include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar', ':phpcontroller'

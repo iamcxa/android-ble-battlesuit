@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="get">http://fud.dscloud.me/Gun/getGame.php</string>
+
+    <string name="add">http://fud.dscloud.me/Gun/addGame.php</string>
+
+    <string name="update">http://fud.dscloud.me/Gun/updateGame.php</string>
+
+</resources>

@@ -5,7 +5,6 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,9 +13,11 @@
             <option value="$PROJECT_DIR$/circularcounter" />
             <option value="$PROJECT_DIR$/circularseekbar" />
             <option value="$PROJECT_DIR$/parsecontroller" />
+            <option value="$PROJECT_DIR$/phpcontroller" />
           </set>
         </option>
       </GradleProjectSettings>
     </option>
   </component>
 </project>
+
