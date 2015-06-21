@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.geodoer.phpcontroller.R;
 
+import java.util.Objects;
+
 /**
  *
  *  Created by MurasakiYoru on 2015/6/18.
@@ -13,13 +15,17 @@ public class PHPaddressBuilder
     public static final String AddGame = "Add";
     public static final String GetGame = "Get";
     public static final String UpdateGame = "Update";
+    public static final String Shootout = "shootout";
 
     private static String PHPadd;
     private static String PHPget;
     private static String PHPupdate;
+    private static String PHPshootout;
 
     //private Context context;
-    private StringBuilder SB;
+
+    //private StringBuilder SB;
+    private StringBuffer SB;
     private String prefix;
 
     public PHPaddressBuilder(Context c)
@@ -27,7 +33,10 @@ public class PHPaddressBuilder
         PHPadd = c.getResources().getString(R.string.add);
         PHPget = c.getResources().getString(R.string.get);
         PHPupdate = c.getResources().getString(R.string.update);
-        SB = new StringBuilder();
+        PHPshootout = c.getResources().getString(R.string.shootout);
+
+        //SB = new StringBuilder();
+        SB = new StringBuffer();
     }
     private void clear()
     {
@@ -49,6 +58,10 @@ public class PHPaddressBuilder
 
             case UpdateGame:
                 SB.append(PHPupdate);
+                break;
+
+            case Shootout:
+                SB.append(PHPshootout);
                 break;
 
             default:

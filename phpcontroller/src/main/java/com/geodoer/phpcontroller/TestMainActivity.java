@@ -1,5 +1,6 @@
 package com.geodoer.phpcontroller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.ScrollView;
 
 import com.geodoer.phpcontroller.controller.GameIdmaker;
 import com.geodoer.phpcontroller.controller.PHPController;
+import com.geodoer.phpcontroller.utils.StatusChangeListener;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,10 @@ public class TestMainActivity extends AppCompatActivity
 {
     private PHPController PC;
 
+    public final static String ACTION_DATA_AVAILABLE =
+            "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
+    public final static String EXTRA_DATA =
+            "com.example.bluetooth.le.EXTRA_DATA";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -42,6 +48,11 @@ public class TestMainActivity extends AppCompatActivity
         //Button updateAMMO         = new Button(this);
         //Button updateAMMO_t       = new Button(this);
         //Button getWhoShoot        = new Button(this);
+        Button startservice       = new Button(this);
+        Button stopservice        = new Button(this);
+
+        Button sendCC = new Button(this);
+        Button sendBBCC = new Button(this);
 
         setGame.setText("setGame");
         getOnlineGames.setText("getOnlineGames");
@@ -54,6 +65,12 @@ public class TestMainActivity extends AppCompatActivity
         //updateAMMO_t.setText("updateAMMO_t to 1");
         //getGameInformation.setText("getGameInformation");
         //getWhoShoot.setText("getWhoShoot");
+        startservice.setText("startservice");
+        stopservice.setText("stopservice");
+
+
+        sendBBCC.setText("sendBBCC");
+        sendCC.setText("sendCC");
 
         LL.addView(setGame);
         LL.addView(getOnlineGames);
@@ -66,6 +83,11 @@ public class TestMainActivity extends AppCompatActivity
         //LL.addView(updateAMMO);
         //LL.addView(updateAMMO_t);
         //LL.addView(getWhoShoot);
+        LL.addView(startservice);
+        LL.addView(stopservice);
+
+        LL.addView(sendCC);
+        LL.addView(sendBBCC);
 
         SV.addView(LL);
 
@@ -227,6 +249,84 @@ public class TestMainActivity extends AppCompatActivity
                 Log.wtf(TAG, "Player Name   = " + PC.getPlayer_name());
                 Log.wtf(TAG, "Player HP     = " + PC.getPlayer_hp());
                 Log.wtf(TAG, "Player AMMO   = " + PC.getPlayer_ammo());
+            }
+        });
+
+
+        /**
+         *
+         * add a status changed listener to api
+         *
+         */
+        StatusChangeListener SCL = new StatusChangeListener()
+        {
+            @Override
+            public void onHPChanged(int value)
+            {
+                Log.wtf(TAG,"HP have been changed to "+value);
+            }
+
+            @Override
+            public void onAMMOChanged(int value)
+            {
+                Log.wtf(TAG,"AMMO have been changed to "+value);
+            }
+        };
+        PC.addSCListener(SCL);
+        //PC.clearSCListener();
+
+        startservice.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                /**
+                 * start service
+                 * must after join
+                 */
+                PC.startService();
+            }
+        });
+
+        stopservice.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                /**
+                 * stop service
+                 *
+                 */
+                PC.stopService();
+            }
+        });
+
+
+        //---------test block-------------------
+        //here is only simulate the BLE signal as CC / BB+CC
+        sendCC.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                final Intent intent = new Intent(ACTION_DATA_AVAILABLE);
+                intent.putExtra(EXTRA_DATA,"CC");
+                sendBroadcast(intent);
+            }
+        });
+
+        sendBBCC.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                final Intent intent1 = new Intent(ACTION_DATA_AVAILABLE);
+                intent1.putExtra(EXTRA_DATA,"CC");
+                sendBroadcast(intent1);
+
+                final Intent intent2 = new Intent(ACTION_DATA_AVAILABLE);
+                intent2.putExtra(EXTRA_DATA,"BB");
+                sendBroadcast(intent2);
             }
         });
 
