@@ -118,8 +118,9 @@ public class ParseController
     {
         ParseQuery<ParseObject> query = ParseQuery.getQuery(table_name);
         query.whereEqualTo(ParseColumn.game.onlining,true);
-        query.orderByDescending("createAt");
+        query.orderByDescending("gId");
         query.findInBackground(gGC);
+//        query.setLimit(5);
     }
     public void getGameInformation (getGameInformationCallback gGC)
     {
