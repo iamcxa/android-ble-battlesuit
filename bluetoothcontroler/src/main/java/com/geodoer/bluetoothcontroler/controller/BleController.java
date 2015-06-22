@@ -110,7 +110,7 @@ public class BleController {
         {
             Log.wtf(logTag," Ble Service Checked. Its on. ");
 
-            mWhenRunningBleService.onServiceIsRunningNow();
+            mWhenRunningBleService.onBcServiceIsRunningNow();
 
             final Intent intent = new Intent(GeoBleService.mAction_servicestate);
             context.sendBroadcast(intent);
@@ -119,7 +119,7 @@ public class BleController {
         {
             Log.wtf(logTag," Ble Service Checked. Its off. ");
 
-            mWhenRunningBleService.onServiceIsStopped();
+            mWhenRunningBleService.onBcServiceIsStopped();
 
             mScanning = false;
         }
@@ -137,7 +137,7 @@ public class BleController {
     }
 
     //
-    public void triggerStop()
+    public void triggerStopService()
     {
         Log.wtf(logTag," Triggered Ble Scan stop ");
 
@@ -153,7 +153,7 @@ public class BleController {
     {
         mScanning = true;
 
-        mWhenRunningBleService.startScanning();
+        mWhenRunningBleService.BcStartScanning();
 
         mBluetoothAdapter.startLeScan(mLeScanCallback);
 
@@ -173,7 +173,7 @@ public class BleController {
     {
         mScanning = false;
 
-        mWhenRunningBleService.stopScanning();
+        mWhenRunningBleService.BcStopScanning();
         mBluetoothAdapter.stopLeScan(mLeScanCallback);
     }
 
@@ -191,7 +191,7 @@ public class BleController {
                                     thisDevice.getAddress()+
                                     " ");
 
-                    mWhenRunningBleService.onGotBleDevices(
+                    mWhenRunningBleService.onBcFoundBleDevices(
                             thisDevice,
                             rssi,
                             scanRecord
@@ -202,15 +202,15 @@ public class BleController {
     //
     public interface whenRunningBleService{
 
-        void onServiceIsRunningNow();
+        void onBcServiceIsRunningNow();
 
-        void onServiceIsStopped();
+        void onBcServiceIsStopped();
 
-        void startScanning();
+        void BcStartScanning();
 
-        void stopScanning();
+        void BcStopScanning();
 
-        void onGotBleDevices(
+        void onBcFoundBleDevices(
                 final BluetoothDevice thisDevice,
                 int rssi,
                 byte[] scanRecord

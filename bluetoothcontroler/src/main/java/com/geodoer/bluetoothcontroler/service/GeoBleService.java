@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class GeoBleService extends Service
 {
-    private static final String TAG = "GeoBle";
+    private static final String TAG = "GBS";
     private static final String targetUUID = "0000fff1-0000-1000-8000-00805f9b34fb";
     public  static final String mAction_servicestate ="com.geodoer.geobluetooth_example.GeoBleService.servicestate";
     public  static final String mAction_stopself = "com.geodoer.geobluetooth_example.GeoBleService.stopself";
@@ -41,6 +41,11 @@ public class GeoBleService extends Service
     private String device_name;
     private String device_address;
     private boolean mConnected = false;
+
+
+
+    //-----------------> added by kuyen for setting interface call.
+    private static whenServiceStateChanged whenServiceStateChanged;
 
     @Override
     public void onCreate()
@@ -72,6 +77,10 @@ public class GeoBleService extends Service
 
         broadcastUpdate(BleActivity.mAction_servicestate,device_name);
 
+
+        //-----------------------------> added by kuyen
+        whenServiceStateChanged.onServiceStart();
+
         //return super.onStartCommand(intent, flags, startId);
         return Service.START_NOT_STICKY;
     }
@@ -79,12 +88,12 @@ public class GeoBleService extends Service
     @Override
     public void onDestroy()
     {
-        Log.wtf(TAG,"service destroyed");
+        Log.wtf(TAG, "service destroyed");
 
         if(mNotifyCharacteristic!=null)
         {
             mBluetoothLeService.setCharacteristicNotification(mNotifyCharacteristic, false);
-            mNotifyCharacteristic=null;
+            mNotifyCharacteristic = null;
         }
 
         unregisterReceiver(mGattUpdateReceiver);
@@ -93,7 +102,11 @@ public class GeoBleService extends Service
         mBluetoothLeService.disconnect();
         mBluetoothLeService = null;
 
-        broadcastUpdate(BleActivity.mAction_servicestate,"null");
+        broadcastUpdate(BleActivity.mAction_servicestate, "null");
+
+
+        //-----------------------------> added by kuyen
+        whenServiceStateChanged.onServiceDestroyed();
 
         super.onDestroy();
     }
@@ -109,16 +122,23 @@ public class GeoBleService extends Service
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service)
         {
-            Log.wtf(TAG,"onServiceConnected");
+            Log.wtf(TAG,"onServiceConnected to this:"+device_address);
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
             if (!mBluetoothLeService.initialize())
             {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 stopSelf();
+
+                //-----------------------------> added by kuyen
+                whenServiceStateChanged.onServiceUnableToInitialized();
+
             }
 
             // Automatically connects to the device upon successful start-up initialization.
             mBluetoothLeService.connect(device_address);
+
+            //-----------------------------> added by kuyen
+            whenServiceStateChanged.onServiceConnected(device_address);
         }
 
         @Override
@@ -126,6 +146,9 @@ public class GeoBleService extends Service
         {
             Log.wtf(TAG,"onServiceDisConnected");
             mBluetoothLeService = null;
+
+            //-----------------------------> added by kuyen
+            whenServiceStateChanged.onServiceDisConnected(componentName);
         }
     };
     //---------------------------------------------------------------------------------------------
@@ -170,7 +193,9 @@ public class GeoBleService extends Service
             }
             else if(mAction_servicestate.equals(action))
             {
-                broadcastUpdate(BleActivity.mAction_servicestate,device_name+":"+device_address);
+                broadcastUpdate(BleActivity.mAction_servicestate,device_name+
+                        ": \""+
+                        device_address+"\"");
             }
             else if(mAction_stopself.equals(action))
             {
@@ -249,5 +274,24 @@ public class GeoBleService extends Service
         final Intent intent = new Intent(action);
         intent.putExtra(BleActivity.EXTRA_DATA,s);
         sendBroadcast(intent);
+    }
+
+    //-----------------> added by kuyen for setting interface call.
+    public void setServiceStateChangedTarget(whenServiceStateChanged target){
+        whenServiceStateChanged = target;
+    }
+
+
+    //-----------------> added by kuyen.
+    public interface whenServiceStateChanged{
+        void onServiceConnected(String device_address);
+
+        void onServiceDisConnected(ComponentName componentName);
+
+        void onServiceDestroyed();
+
+        void onServiceStart();
+
+        void onServiceUnableToInitialized();
     }
 }

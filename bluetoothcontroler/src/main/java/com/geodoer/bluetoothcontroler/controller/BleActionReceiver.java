@@ -29,10 +29,9 @@ public class BleActionReceiver extends BroadcastReceiver {
             String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
             if(data!=null)
             {
-                Log.wtf(BcUtils.logTag, "---------- Received "+
-                        data.substring(0, 2)+
-                        " ----------");
-                mWhenReceivedBleAction.onActionDataAvailable(data.substring(0, 2));
+                Log.wtf(BcUtils.BarLogTag, " Received : \""+
+                        data.substring(0, 2));
+                mWhenReceivedBleAction.onReceivedActionData(data.substring(0, 2)+"\"");
             }
         }
         else if (BcUtils.SERVICE_STATE.equals(action))
@@ -41,16 +40,16 @@ public class BleActionReceiver extends BroadcastReceiver {
 
             if(data.equals("null"))
             {
-                Log.wtf(BcUtils.logTag, "---------- Received null ----------");
+                Log.wtf(BcUtils.BarLogTag, " Received : null");
 
-                mWhenReceivedBleAction.onBleServiceNotConnecting();
+                mWhenReceivedBleAction.onReceivedNull();
                 BcUtils.IS_SERVICE_EXSTING = false;
             }
             else
             {
-                Log.wtf(BcUtils.logTag, "---------- Received "+action+" ----------");
+                Log.wtf(BcUtils.BarLogTag, " Received : \""+action+"\"");
 
-                mWhenReceivedBleAction.onBleServiceConnecting();
+                mWhenReceivedBleAction.onReceivedSomething();
                 BcUtils.IS_SERVICE_EXSTING = true;
             }
         }
@@ -71,10 +70,10 @@ public class BleActionReceiver extends BroadcastReceiver {
 
     // interface
     public interface whenReceivedBleAction{
-        void onActionDataAvailable(String actionData);
+        void onReceivedActionData(String actionData);
 
-        void onBleServiceNotConnecting();
+        void onReceivedNull();
 
-        void onBleServiceConnecting();
+        void onReceivedSomething();
     }
 }

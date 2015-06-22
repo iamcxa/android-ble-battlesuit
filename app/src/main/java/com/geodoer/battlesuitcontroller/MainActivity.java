@@ -2,6 +2,7 @@ package com.geodoer.battlesuitcontroller;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ import com.geodoer.bluetoothcontroler.controller.BleActionReceiver;
 import com.geodoer.bluetoothcontroler.controller.BleController;
 import com.geodoer.bluetoothcontroler.service.GeoBleService;
 
+import java.util.ArrayList;
+
 import at.markushi.ui.CircleButton;
 
 import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
@@ -36,7 +39,8 @@ public class MainActivity
         implements
         View.OnClickListener,
         BleActionReceiver.whenReceivedBleAction,
-        BleController.whenRunningBleService{
+        BleController.whenRunningBleService,
+        GeoBleService.whenServiceStateChanged{
 
     private CircleButton btnHost;
     private CircleButton btnJoin;
@@ -49,6 +53,8 @@ public class MainActivity
 
     //
     private static boolean isCancel = false, isBreathing = true;
+    private boolean hasDevice1 = false, hasDevice2 = false, doConnect = false;
+    private ArrayList<String> bleDevices;
     private final String bleDevice1 = "8C:DE:52:34:C6:2F";
     private final String bleDevice2 = "8C:DE:52:34:C6:34";
 
@@ -60,6 +66,7 @@ public class MainActivity
 
     private BleController bc;
 
+    private static GeoBleService gbs;
 
     //
     // AppCompatActivity Overrides
@@ -120,6 +127,7 @@ public class MainActivity
         // 傳送意圖以停止 Ble 服務
         final Intent intent = new Intent(GeoBleService.mAction_stopself);
         sendBroadcast(intent);
+        Log.wtf(BscUtils.logTag, "---------- APP END ----------");
     }
 
     //
@@ -153,6 +161,11 @@ public class MainActivity
 
         bc = new BleController(getApplicationContext());
         bc.setBleServiceRunningTarget(this);
+
+        gbs = new GeoBleService();
+        gbs.setServiceStateChangedTarget(this);
+
+        bleDevices = new ArrayList<>();
 
         handlerForUi = new Handler();
         handlerForUi.postDelayed(setWaiting(), 300);
@@ -192,9 +205,9 @@ public class MainActivity
                 }).show();
     }
 
-    //
-    // Runnable(s)
-    //
+    //==============================//
+    //         Runnable(s)          //
+    //==============================//
 
     // 搜尋Ble裝置時做動
     private Runnable setWaiting(){
@@ -259,7 +272,6 @@ public class MainActivity
             @Override
             public void run() {
                 // run start
-                isBreathing = false;
                 setComponentsVisible();
                 // run end
             }
@@ -268,25 +280,28 @@ public class MainActivity
 
     private Runnable setAutoConnectToDevice(final BluetoothDevice thisDevice){
         return rAutoConnectToDevice = new Runnable(){
-
             @Override
             public void run() {
-                // run end
-                final Intent connectBle = new Intent(getApplicationContext(),
-                        GeoBleService.class);
-                connectBle.putExtra(GeoBleService.EXTRAS_DEVICE_NAME,
-                        thisDevice.getName());
-                connectBle.putExtra(GeoBleService.EXTRAS_DEVICE_ADDRESS,
-                        thisDevice.getAddress());
-                startService(connectBle);
+                // run start
+                if(doConnect) {
+                    final Intent connectBle = new Intent(getApplicationContext(),
+                            GeoBleService.class);
+                    connectBle.putExtra(GeoBleService.EXTRAS_DEVICE_NAME,
+                            thisDevice.getName());
+                    connectBle.putExtra(GeoBleService.EXTRAS_DEVICE_ADDRESS,
+                            thisDevice.getAddress());
+                    startService(connectBle);
+                }
+                else
+                    handler.postDelayed(setAutoConnectToDevice(thisDevice), 3000);
                 // run end
             }
         };
     }
 
-    //
-    // interface callbacks
-    //
+    //==============================//
+    //      interface callbacks     //
+    //==============================//
 
     @Override
     public void onClick(View v) {
@@ -301,49 +316,99 @@ public class MainActivity
         Toast.makeText(this, v.getId() + "", Toast.LENGTH_SHORT).show();
     }
 
+
+    // BleController
+
     @Override
-    public void onActionDataAvailable(String actionData) {
+    public void onBcServiceIsRunningNow() {
 
     }
 
     @Override
-    public void onBleServiceNotConnecting() {
+    public void onBcServiceIsStopped() {
 
     }
 
     @Override
-    public void onBleServiceConnecting() {
+    public void BcStartScanning() {
 
     }
 
     @Override
-    public void onServiceIsRunningNow() {
+    public void BcStopScanning() {
+        if(hasDevice1 || hasDevice2)
+            doConnect = true;
+    }
+
+    @Override
+    public void onBcFoundBleDevices(
+            BluetoothDevice thisDevice,
+            int rssi, byte[] scanRecord) {
+
+        if(bleDevices!=null) {
+            if (!hasDevice1)
+                if (thisDevice.getAddress().equals(bleDevice1)) {
+                    hasDevice1 = true;
+                    bleDevices.add(bleDevice1);
+                    handler.postDelayed(setAutoConnectToDevice(thisDevice), 1500);
+                }
+
+            if (!hasDevice2)
+                if (thisDevice.getAddress().equals(bleDevice2)) {
+                    hasDevice2 = true;
+                    bleDevices.add(bleDevice2);
+                    handler.postDelayed(setAutoConnectToDevice(thisDevice), 1500);
+                }
+        }else
+            Log.wtf("","arraylist is null!");
+    }
+
+
+    // GeoBleService
+
+    @Override
+    public void onServiceConnected(String device_address) {
+
+        if(device_address.equals(bleDevice1)||
+                device_address.equals(bleDevice2))isBreathing = false;
 
     }
 
     @Override
-    public void onServiceIsStopped() {
+    public void onServiceDisConnected(ComponentName componentName) {
 
     }
 
     @Override
-    public void startScanning() {
+    public void onServiceDestroyed() {
 
     }
 
     @Override
-    public void stopScanning() {
+    public void onServiceStart() {
 
     }
 
     @Override
-    public void onGotBleDevices(BluetoothDevice thisDevice, int rssi, byte[] scanRecord) {
+    public void onServiceUnableToInitialized() {
 
-        if((thisDevice.getAddress().equals(bleDevice1) ||
-                (thisDevice.getAddress().equals(bleDevice2))))
-        {
-            handler.postDelayed(rAutoConnectToDevice,1500);
-        }
+    }
+
+
+    // receiver
+
+    @Override
+    public void onReceivedActionData(String actionData) {
+
+    }
+
+    @Override
+    public void onReceivedNull() {
+
+    }
+
+    @Override
+    public void onReceivedSomething() {
 
     }
 }

@@ -10,6 +10,9 @@ public class BcUtils {
     public static final String logTag
             = "BC";
 
+    public static final String BarLogTag
+            = "BAR";
+
     public static final int REQUEST_ENABLE_BT
             = 1;
 
