@@ -1,16 +1,17 @@
-package com.geodoer.battlesuitcontroller.util;
+package com.geodoer.battlesuitcontroller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.geodoer.battlesuitcontroller.R;
-
 /**
  * Created by iamcx_000 on 2015/6/6.
  */
-public class utils {
+public class BscUtils {
+
+    public static final String logTag
+            = "BSC";
 
     public static void switchFragment(FragmentActivity fragmentActivity, Fragment newFragment) {
         switchFragment(fragmentActivity,null,newFragment);

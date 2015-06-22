@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import at.markushi.ui.CircleButton;
 
-import static com.geodoer.battlesuitcontroller.util.utils.switchFragment;
+import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
 
 
 /**
@@ -129,7 +129,7 @@ public class JoinFragment
 
                 break;
             case R.id.btnBack:
-                switchFragment(getActivity(),MainFragment.newInstance("",""));
+                //switchFragment(getActivity(),MainFragment.newInstance("",""));
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.geodoer.battlesuitcontroller.view;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -12,6 +13,7 @@ import android.content.DialogInterface.OnShowListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -59,6 +61,8 @@ public class BleCustomDialog extends AlertDialog
     private static final String text_scan_off = "state:Not Scanning";
     private static final String text_connect_on = "Service is Running";
     private static final String text_connect_off = "No Service";
+    private Button button_scan,stop_service;
+    private TextView text_scan,text_connect,text_display;
 
     private LeDeviceListAdapter mLeDeviceListAdapter;
     private BluetoothAdapter mBluetoothAdapter;
@@ -66,8 +70,6 @@ public class BleCustomDialog extends AlertDialog
     private boolean mScanning ;
     private Handler mHandler;
 
-    private Button button_scan,stop_service;
-    private TextView text_scan,text_connect,text_display;
 
     private boolean mServiceExisting = false;
 
@@ -79,6 +81,7 @@ public class BleCustomDialog extends AlertDialog
     //private ViewHolder v=new ViewHolder();
     private ListView lvBleDevice;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -331,6 +334,7 @@ public class BleCustomDialog extends AlertDialog
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void start_scanning()
     {
         mScanning = true;
@@ -340,6 +344,7 @@ public class BleCustomDialog extends AlertDialog
         mBluetoothAdapter.startLeScan(mLeScanCallback);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void stop_scanning()
     {
         mScanning = false;
@@ -434,6 +439,7 @@ public class BleCustomDialog extends AlertDialog
 
 
     private BluetoothDevice device;
+
 
     // Device scan callback.
     private BluetoothAdapter.LeScanCallback mLeScanCallback =

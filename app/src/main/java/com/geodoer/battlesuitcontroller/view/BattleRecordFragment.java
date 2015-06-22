@@ -13,7 +13,7 @@ import com.geodoer.battlesuitcontroller.R;
 
 import at.markushi.ui.CircleButton;
 
-import static com.geodoer.battlesuitcontroller.util.utils.switchFragment;
+import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
 
 
 /**

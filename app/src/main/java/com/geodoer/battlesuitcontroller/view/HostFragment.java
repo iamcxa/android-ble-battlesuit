@@ -21,7 +21,7 @@ import com.geodoer.parsecontroller.controller.ParseController;
 
 import at.markushi.ui.CircleButton;
 
-import static com.geodoer.battlesuitcontroller.util.utils.switchFragment;
+import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
 
 public class HostFragment
         extends
@@ -130,7 +130,7 @@ public class HostFragment
                     Toast.makeText(getActivity(),"請先選擇裝置!",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnBack:
-                switchFragment(getActivity(),MainFragment.newInstance("",""));
+               // switchFragment(getActivity(),MainFragment.newInstance("",""));
                 break;
         }
     }

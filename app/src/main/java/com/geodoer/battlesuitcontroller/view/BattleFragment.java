@@ -54,7 +54,7 @@ public class BattleFragment
 
     private Handler handler,stateUpdateHandle;
 
-    private Runnable r,hideWarring,stateUpdate;
+    private Runnable r,hideWarring,stateUpdate,setShottingFlag;
 
     private boolean isAutoRun;
 
@@ -126,7 +126,7 @@ public class BattleFragment
                     currV--;
 
                 meterAmmo.setValues(currV, currV*2, currV*3);
-                meterHp.setValues(currV, currV*2, currV*3);
+                meterHp.setValues(currV, currV * 2, currV * 3);
                 handler.postDelayed(this, 50);
             }
         };
@@ -146,7 +146,20 @@ public class BattleFragment
                 txtLoading.setVisibility(View.GONE);
             }
         };
+
+        setShottingFlag= new Runnable(){
+
+            @Override
+            public void run() {
+
+
+                setShootingFlag();
+
+            }
+        };
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -381,23 +394,43 @@ public class BattleFragment
         public void onFragmentInteraction(Uri uri);
     }
 
+    private void setShootingFlag(){
+        if(PC.Player.getAmmo_t()==1)
+            // 開槍狀態=0
+            PC.Player.updateInfo(
+                    new ParseController
+                            .updateInfoCallback(
+                            ParseController
+                                    .PlayerStatus.AMMO_t
+                            , 0) {
+                        @Override
+                        public void run(boolean result) {
+                            if (result){
+                                Log.wtf("PARSE", "update Ammo_t 0 success");
+                            }
+                            else Log.wtf("PARSE", "update Ammo_t 0 fail");
+                        }
+                    });
+        handler.removeCallbacks(setShottingFlag);
+    }
+
     private void reduceHp(){
         // 血環扣血
-        reduceMeter(meterHp);
-
-        // 雲端扣血
-        PC.Player
-                .updateInfo(new ParseController
-                        .updateInfoCallback(ParseController
-                        .PlayerStatus.HP, -1) {
-                    @Override
-                    public void run(boolean result) {
-                        if (result) {
-                            Log.wtf("PARSE", "update HP -1 success");
-                            mVibrator.vibrate(tVibrattion);
-                        } else Log.wtf("PARSE", "update HP -1 fail");
-                    }
-                });
+        if(meterHp.getValue1()>0)
+            // 雲端扣血
+            PC.Player
+                    .updateInfo(new ParseController
+                            .updateInfoCallback(ParseController
+                            .PlayerStatus.HP, -1) {
+                        @Override
+                        public void run(boolean result) {
+                            if (result) {
+                                Log.wtf("PARSE", "update HP -1 success");
+                                mVibrator.vibrate(tVibrattion);
+                                reduceMeter(meterHp);
+                            } else Log.wtf("PARSE", "update HP -1 fail");
+                        }
+                    });
     }
 
     // 接收BLE廣播
@@ -428,9 +461,8 @@ public class BattleFragment
                             @Override
                             public void run(boolean result, ArrayList<Integer> list) {
                                 if(result){
-                                    Log.wtf("PARSE", list.toString());
                                     if(!list.isEmpty()){
-                                        Log.wtf("list", "tNow="+tNow+" this is pId="+mPlayerId);
+                                        Log.wtf("PARSE", list.toString()+"Now="+tNow+" this is pId="+mPlayerId);
                                         if(list.contains(mPlayerId)){
                                             int i;
                                             for(i=0;i<list.size();i++){
@@ -441,24 +473,11 @@ public class BattleFragment
                                                 }}
                                         }else {
 
-                                            Log.wtf("list", "attacked by pId=" + list.toString());
+                                            Log.wtf("PARSE", "attacked by pId=" + list.toString());
 
-                                            reduceHp();
 
-                                            // 開槍狀態=0
-                                            PC.Player.updateInfo(
-                                                    new ParseController
-                                                            .updateInfoCallback(
-                                                            ParseController
-                                                                    .PlayerStatus.AMMO_t
-                                                            , 0) {
-                                                        @Override
-                                                        public void run(boolean result) {
-                                                            if (result)
-                                                                Log.wtf("PARSE", "update Ammo_t 0 success");
-                                                            else Log.wtf("PARSE", "update Ammo_t 0 fail");
-                                                        }
-                                                    });
+                                            //reduceHp();
+
                                         }
 
                                     }else
@@ -508,6 +527,7 @@ public class BattleFragment
                                                 });
                             }else{
 
+                                handler.postDelayed(setShottingFlag,10);
                             }
 
                             // 更新子彈量

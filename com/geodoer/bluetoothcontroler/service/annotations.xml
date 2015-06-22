@@ -1,0 +1,11 @@
+<root>
+  <item
+      name='com.geodoer.bluetoothcontroler.service.GeoBleService void displayGattServices(java.util.List&lt;android.bluetooth.BluetoothGattService&gt;)'>
+      <annotation name='android.annotation.SuppressLint'>
+          <val val="&quot;NewApi&quot;"/>
+      </annotation>
+      <annotation name='android.annotation.TargetApi'>
+          <val val="android.os.Build.VERSION_CODES.JELLY_BEAN_MR2"/>
+      </annotation>
+  </item>
+</root>

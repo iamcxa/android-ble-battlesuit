@@ -1,5 +1,6 @@
 package com.geodoer.bluetoothcontroler.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ListActivity;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -192,6 +194,7 @@ public class BleActivity extends ListActivity
 
         mBluetoothAdapter.startLeScan(mLeScanCallback);
     }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private void stop_scanning()
     {
         mScanning = false;
@@ -366,7 +369,7 @@ public class BleActivity extends ListActivity
                 {
                     String temp = text_display.getText().toString();
                     if(temp.length() > 18)
-                        text_display.setText(new String(data.substring(0, 2)));
+                        text_display.setText(data.substring(0, 2));
                     else
                         text_display.setText(temp+"-"+new String(data.substring(0, 2)));
                 }
