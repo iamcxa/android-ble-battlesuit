@@ -7,4 +7,6 @@
 
     <string name="update">http://fud.dscloud.me/Gun/updateGame.php</string>
 
+    <string name="shootout">http://fud.dscloud.me/Gun/shootout.php</string>
+
 </resources>
