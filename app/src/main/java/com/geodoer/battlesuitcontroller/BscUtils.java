@@ -1,5 +1,6 @@
 package com.geodoer.battlesuitcontroller;
 
+import android.bluetooth.BluetoothClass;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +13,13 @@ public class BscUtils {
 
     public static final String logTag
             = "BSC";
+
+    public static String deviceName;
+
+    public static String ConnectedBleDeviceAddress;
+
+    public static BluetoothClass.Device ConnectedBleDevice;
+
 
     public static void switchFragment(FragmentActivity fragmentActivity, Fragment newFragment) {
         switchFragment(fragmentActivity,null,newFragment);

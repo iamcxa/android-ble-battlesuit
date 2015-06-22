@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by iamcx_000 on 2015/6/22.
+ * Created by iamcx_000 on 2015/6/22.f
  */
 public class BleDeviceListAdapder extends BaseAdapter {
 

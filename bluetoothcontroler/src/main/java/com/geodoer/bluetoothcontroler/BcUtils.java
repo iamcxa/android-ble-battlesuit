@@ -1,7 +1,5 @@
 package com.geodoer.bluetoothcontroler;
 
-import android.bluetooth.BluetoothClass;
-
 /**
  * Created by iamcx_000 on 2015/6/22.
  */
@@ -48,8 +46,6 @@ public class BcUtils {
 
     public static final String BLUETOOTH_DEVICE_NOT_FOUND
             =" BLE devices not found.";
-
-    public static BluetoothClass.Device BleDevice;
 
     public static final String buttontext_scanstart = "Scan Start";
     public static final String buttontext_scanstop = "Scan  Stop";

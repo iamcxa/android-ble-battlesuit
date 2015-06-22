@@ -29,9 +29,11 @@ public class BleActionReceiver extends BroadcastReceiver {
             String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
             if(data!=null)
             {
-                Log.wtf(BcUtils.BarLogTag, " Received : \""+
-                        data.substring(0, 2));
-                mWhenReceivedBleAction.onReceivedActionData(data.substring(0, 2)+"\"");
+                Log.wtf(BcUtils.BarLogTag,
+                        " Received : \""+
+                        data.substring(0, 2)+"\"");
+
+                mWhenReceivedBleAction.onReceivedActionData(data.substring(0, 2));
             }
         }
         else if (BcUtils.SERVICE_STATE.equals(action))

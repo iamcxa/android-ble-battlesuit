@@ -1,0 +1,8 @@
+<root>
+  <item
+      name='com.geodoer.bluetoothcontroler.controller.BleController int keepConnection(java.lang.String)'>
+      <annotation name='android.annotation.TargetApi'>
+          <val val="android.os.Build.VERSION_CODES.LOLLIPOP"/>
+      </annotation>
+  </item>
+</root>

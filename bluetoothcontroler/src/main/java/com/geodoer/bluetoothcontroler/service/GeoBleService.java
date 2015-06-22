@@ -122,7 +122,6 @@ public class GeoBleService extends Service
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service)
         {
-            Log.wtf(TAG,"onServiceConnected to this:"+device_address);
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
             if (!mBluetoothLeService.initialize())
             {
@@ -131,14 +130,16 @@ public class GeoBleService extends Service
 
                 //-----------------------------> added by kuyen
                 whenServiceStateChanged.onServiceUnableToInitialized();
-
             }
 
             // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(device_address);
+            if(mBluetoothLeService.connect(device_address)) {
 
-            //-----------------------------> added by kuyen
-            whenServiceStateChanged.onServiceConnected(device_address);
+                //-----------------------------> added by kuyen
+                whenServiceStateChanged.onServiceConnected(device_address);
+
+                Log.wtf(TAG, "onServiceConnected to this: " + device_address);
+            }
         }
 
         @Override
@@ -174,7 +175,7 @@ public class GeoBleService extends Service
             else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action))
             {
 
-                if(mConnected == false )return;
+                if(!mConnected)return;
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
 

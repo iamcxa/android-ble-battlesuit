@@ -7,11 +7,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 
 import at.markushi.ui.CircleButton;
 
+import static com.geodoer.battlesuitcontroller.BscUtils.logTag;
 import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
 
 
@@ -42,21 +45,42 @@ public class MainActivity
         BleController.whenRunningBleService,
         GeoBleService.whenServiceStateChanged{
 
-    private CircleButton btnHost;
-    private CircleButton btnJoin;
-    private CircleButton cbMainLogo;
-    private Toolbar toolbar;
-    private TextView txtWaitingIndicator;
+    private CircleButton
+            btnHost,
+            btnJoin,cbMainLogo;
 
-    private Handler handler, handlerForUi;
-    private Runnable rCheckBle,rConnectBle,rWaitingForConnection,rAutoConnectToDevice;
+    private Toolbar
+            toolbar;
+
+    private TextView
+            txtWaitingIndicator;
+
+    private Handler
+            handler,
+            handlerForUi;
+
+    private Runnable
+            rCheckBle,
+            rCheckConnectionAlive,
+            rWaitingForConnection,
+            rAutoConnectToDevice;
 
     //
-    private static boolean isCancel = false, isBreathing = true;
-    private boolean hasDevice1 = false, hasDevice2 = false, doConnect = false;
-    private ArrayList<String> bleDevices;
-    private final String bleDevice1 = "8C:DE:52:34:C6:2F";
-    private final String bleDevice2 = "8C:DE:52:34:C6:34";
+    private boolean
+            isWaiting = true,
+            hasDevice1 = false,
+            hasDevice2 = false,
+            doConnect = false;
+
+    private final String
+            bleDevice1 = "8C:DE:52:34:C6:2F",
+            bleDevice2 = "8C:DE:52:34:C6:34";
+
+    private int
+            findDeviceFailedCount = 0;
+
+    private ArrayList<String>
+            arrayBleDevices = null;
 
     //
     //
@@ -65,8 +89,6 @@ public class MainActivity
     private BleActionReceiver mBleActionReceiver;
 
     private BleController bc;
-
-    private static GeoBleService gbs;
 
     //
     // AppCompatActivity Overrides
@@ -116,6 +138,7 @@ public class MainActivity
     @Override
     protected void onPause() {
         super.onPause();
+        //this.recreate();
     }
 
     @Override
@@ -124,10 +147,46 @@ public class MainActivity
         // 移除廣播接收器
         unregisterReceiver(mBleActionReceiver);
 
+        removeAllRunnableFromQueue();
+
         // 傳送意圖以停止 Ble 服務
         final Intent intent = new Intent(GeoBleService.mAction_stopself);
         sendBroadcast(intent);
         Log.wtf(BscUtils.logTag, "---------- APP END ----------");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            event.startTracking();
+            return true;
+        }else
+        if(keyCode == KeyEvent.KEYCODE_HOME)
+        {
+
+            return true;
+        }else
+        if(keyCode == KeyEvent.KEYCODE_APP_SWITCH)
+        {
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, @NonNull KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK &&
+                event.isTracking() &&
+                !event.isCanceled()) {
+
+            showDialogWhenPressedBackKey();
+
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
     }
 
     //
@@ -154,7 +213,6 @@ public class MainActivity
         cbMainLogo.setOnClickListener(this);
 
         txtWaitingIndicator = (TextView) findViewById(R.id.txtWaitingIndicator);
-        txtWaitingIndicator.setText("...");
 
         mBleActionReceiver = new BleActionReceiver();
         mBleActionReceiver.setWhenReceivedBleActionTarget(this);
@@ -162,45 +220,171 @@ public class MainActivity
         bc = new BleController(getApplicationContext());
         bc.setBleServiceRunningTarget(this);
 
-        gbs = new GeoBleService();
+        GeoBleService gbs = new GeoBleService();
         gbs.setServiceStateChangedTarget(this);
 
-        bleDevices = new ArrayList<>();
+        arrayBleDevices = new ArrayList<>();
+        arrayBleDevices.clear();
 
         handlerForUi = new Handler();
-        handlerForUi.postDelayed(setWaiting(), 300);
-
         handler = new Handler();
+
+        start();
+    }
+
+    private void start(){
+        // 還原預設值
+        setComponentsBackDefaultValue();
+
+        // 清空queue
+        removeAllRunnableFromQueue();
+
+        // 塞入runnable
+        handlerForUi.postDelayed(setWaiting(), 300);
         handler.post(setCheckBle());
     }
 
-    private void setComponentsVisible(){
-        //cbMainLogo.setVisibility(View.INVISIBLE);
-        //cbMainLogo.setColor(getResources().getColor(R.color.c_blue_green));
-        //toolbar.setVisibility(View.VISIBLE);
-        //ivMainLogo.setVisibility(View.INVISIBLE);
-        // btnHost.setVisibility(View.VISIBLE);
-        //btnJoin.setVisibility(View.VISIBLE);
+    private void removeAllRunnableFromQueue(){
+        if(rCheckBle!=null)
+            handler.removeCallbacks(rCheckBle);
+        if(rWaitingForConnection!=null)
+            handlerForUi.removeCallbacks(rWaitingForConnection);
+        if(rCheckConnectionAlive!=null)
+            handlerForUi.removeCallbacks(rCheckConnectionAlive);
+        if(rAutoConnectToDevice!=null)
+            handler.removeCallbacks(rAutoConnectToDevice);
+
+        bc.triggerStopService();
+    }
+
+    private void setComponentsBackDefaultValue(){
+        Log.wtf(BscUtils.logTag, "----------- reSTART -----------");
+
+        BscUtils.deviceName = "";
+        BscUtils.ConnectedBleDeviceAddress = "";
+        BscUtils.ConnectedBleDevice = null;
+
+        arrayBleDevices.clear();
+
+        findDeviceFailedCount = 0;
+        isWaiting = true;
+        hasDevice1 = false;
+        hasDevice2 = false;
+        doConnect = false;
+
+        setComponentsWhenNeededToConnectBleDevices();
+    }
+
+    private void setComponentsWhenBleDeviceConnected(){
         cbMainLogo.setColor(getResources().getColor(R.color.c_brick_red));
         cbMainLogo.setAlpha((float) 1);
         cbMainLogo.setClickable(true);
     }
 
-    private void setComponentsInVisible(){
-        cbMainLogo.setClickable(false);
+    private void setComponentsWhenNeededToConnectBleDevices(){
+        txtWaitingIndicator.setVisibility(View.VISIBLE);
+        txtWaitingIndicator.setText("...");
+
         toolbar.setVisibility(View.GONE);
         btnHost.setVisibility(View.INVISIBLE);
         btnJoin.setVisibility(View.INVISIBLE);
+
+        cbMainLogo.setVisibility(View.VISIBLE);
+        cbMainLogo.setColor(getResources().getColor(R.color.c_deep_sky_blue));
+        cbMainLogo.setAlpha((float) 0.5);
+        cbMainLogo.setClickable(false);
     }
 
-    private AlertDialog showExitAlertDialog(){
+    private void setSubMenuShow(){
+        txtWaitingIndicator.setVisibility(View.GONE);
+        txtWaitingIndicator.setText("...");
+
+        toolbar.setVisibility(View.VISIBLE);
+        btnHost.setVisibility(View.VISIBLE);
+        btnJoin.setVisibility(View.VISIBLE);
+
+        cbMainLogo.setClickable(false);
+        cbMainLogo.setVisibility(View.GONE);
+    }
+
+
+    //
+    // dialogs
+    //
+
+    private AlertDialog showDialogWhenGetNoBleSupport(){
         return new AlertDialog.Builder(this)
                 .setTitle("發現問題")
+                .setIcon(R.drawable.warning)
                 .setMessage("你的裝置不支援藍牙4.0！")
+                .setCancelable(false)
                 .setPositiveButton("離開", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
+                    }
+                }).show();
+    }
+
+    private AlertDialog showDialogWhenFindNoDevices(){
+        return new AlertDialog.Builder(this)
+                .setTitle("發現問題")
+                .setIcon(R.drawable.warning)
+                .setMessage("找不到裝置！")
+                .setCancelable(false)
+                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setPositiveButton("再多試幾次", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        start();
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    private AlertDialog showDialogWhenPressedBackKey(){
+        return new AlertDialog.Builder(this)
+                .setTitle("啊?")
+                .setIcon(R.drawable.ic_forum)
+                .setMessage("要離開B.S.C嗎？")
+                .setCancelable(false)
+                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setPositiveButton("沒事...", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    private AlertDialog showDialogWhenLostConnection(){
+        bc.triggerStopService();
+        return new AlertDialog.Builder(this)
+                .setTitle("發現問題")
+                .setIcon(R.drawable.warning)
+                .setMessage("裝置斷線！")
+                .setCancelable(false)
+                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.this.finish();
+                    }
+                })
+                .setPositiveButton("重新連線", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        MainActivity.this.recreate();
                     }
                 }).show();
     }
@@ -223,15 +407,15 @@ public class MainActivity
                 if (txtWaitingIndicator.getText().equals("....."))
                     txtWaitingIndicator.setText("...");
 
-                if(isBreathing)
+                if(isWaiting)
                 {
                     handlerForUi.postDelayed(this, 300);
-                    // setComponentsInVisible();
                 }
                 else
                 {
-                    txtWaitingIndicator.setText("OK");
                     handlerForUi.removeCallbacks(this);
+                    setComponentsWhenBleDeviceConnected();
+                    handlerForUi.postDelayed(setCheckConnectionAlive(),2500);
                 }
             }
         };
@@ -248,8 +432,7 @@ public class MainActivity
                 if (bleStateCode==BleController.BLE_STATE_OK)
                 {
                     bc.triggerScan();
-                    handler.removeCallbacks(rCheckBle);
-                    handler.postDelayed(setConnectBle(), 5000);
+                    handler.removeCallbacks(this);
                 }
                 else if (bleStateCode==BleController.BLE_STATE_OFF)
                 {
@@ -259,20 +442,46 @@ public class MainActivity
                 }
                 else if(bleStateCode == BleController.BLE_STATE_UNSUPPORTED)
                 {
-                    showExitAlertDialog();
+                    showDialogWhenGetNoBleSupport();
                 }
                 // run end
             }
         };
     }
 
-    // 如果發現預設兩組ble-address, 則自動連線
-    private Runnable setConnectBle() {
-        return rConnectBle = new Runnable() {
+    // 自動檢查連線狀態
+    private Runnable setCheckConnectionAlive() {
+        return rCheckConnectionAlive = new Runnable() {
+            int bleConnectionState = 0;
+            String bleConnectionStateString;
             @Override
             public void run() {
                 // run start
-                setComponentsVisible();
+                bleConnectionState =
+                        bc.keepConnection(BscUtils.ConnectedBleDeviceAddress);
+
+                switch (bleConnectionState) {
+                    case -1: // not ready yet
+
+                        break;
+
+                    case 0: // disconnected
+                        showDialogWhenLostConnection();
+                        bleConnectionStateString = "DISCONNECTION.";
+                        break;
+
+                    case 2: // connected
+                        handlerForUi.removeCallbacks(this);
+                        handlerForUi.postDelayed(this, 2500);
+                        bleConnectionStateString = "ALIVE.";
+                        break;
+                }
+
+                Log.wtf(logTag, "Connection state with Board "+
+                        BscUtils.deviceName +
+                        " is " +
+                        bleConnectionStateString);
+
                 // run end
             }
         };
@@ -309,8 +518,13 @@ public class MainActivity
             case R.id.btnHost:
                 switchFragment(this,HostFragment.newInstance("", ""));
                 break;
+
             case R.id.btnJoin:
                 switchFragment(this,JoinFragment.newInstance("", ""));
+                break;
+
+            case R.id.cbMainLogo:
+                setSubMenuShow();
                 break;
         }
         Toast.makeText(this, v.getId() + "", Toast.LENGTH_SHORT).show();
@@ -336,8 +550,20 @@ public class MainActivity
 
     @Override
     public void BcStopScanning() {
+
         if(hasDevice1 || hasDevice2)
+        {
             doConnect = true;
+        }
+        else
+        {
+            findDeviceFailedCount++;
+            Log.wtf(logTag," device finding failed count is " + findDeviceFailedCount);
+        }
+
+        if(findDeviceFailedCount >= 1){
+            showDialogWhenFindNoDevices();
+        }
     }
 
     @Override
@@ -345,18 +571,19 @@ public class MainActivity
             BluetoothDevice thisDevice,
             int rssi, byte[] scanRecord) {
 
-        if(bleDevices!=null) {
+        if(arrayBleDevices !=null) {
+            arrayBleDevices.trimToSize();
             if (!hasDevice1)
                 if (thisDevice.getAddress().equals(bleDevice1)) {
                     hasDevice1 = true;
-                    bleDevices.add(bleDevice1);
+                    arrayBleDevices.add(bleDevice1);
                     handler.postDelayed(setAutoConnectToDevice(thisDevice), 1500);
                 }
 
             if (!hasDevice2)
                 if (thisDevice.getAddress().equals(bleDevice2)) {
                     hasDevice2 = true;
-                    bleDevices.add(bleDevice2);
+                    arrayBleDevices.add(bleDevice2);
                     handler.postDelayed(setAutoConnectToDevice(thisDevice), 1500);
                 }
         }else
@@ -369,14 +596,28 @@ public class MainActivity
     @Override
     public void onServiceConnected(String device_address) {
 
-        if(device_address.equals(bleDevice1)||
-                device_address.equals(bleDevice2))isBreathing = false;
+        Log.wtf(logTag,"connected with "+device_address);
 
+        if(device_address.equals(bleDevice1)||
+                device_address.equals(bleDevice2)){
+            //
+            isWaiting = false;
+
+            BscUtils.deviceName = device_address.subSequence(15,17).toString();
+
+            BscUtils.ConnectedBleDeviceAddress = device_address;
+
+            txtWaitingIndicator.setText(
+                    "OK with Board " + BscUtils.deviceName);
+        }
     }
 
     @Override
     public void onServiceDisConnected(ComponentName componentName) {
-
+        Log.wtf(logTag, " Connection Lost with " +
+                componentName.getPackageName() + "/" +
+                componentName.getShortClassName());
+        // showDialogWhenLostConnection();
     }
 
     @Override
