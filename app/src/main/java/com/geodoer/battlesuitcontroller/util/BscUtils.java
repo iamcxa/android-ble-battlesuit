@@ -13,6 +13,13 @@ import com.geodoer.battlesuitcontroller.R;
  */
 public class BscUtils {
 
+
+    public final static String ACTION_DATA_AVAILABLE =
+            "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
+    public final static String EXTRA_DATA =
+            "com.example.bluetooth.le.EXTRA_DATA";
+
+
     public static final String logTag
             = "BSC";
 

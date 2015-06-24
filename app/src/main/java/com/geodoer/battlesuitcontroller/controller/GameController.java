@@ -6,14 +6,15 @@ import android.util.Log;
 
 import com.geodoer.battlesuitcontroller.gameItem.aGame;
 import com.geodoer.battlesuitcontroller.gameItem.aPlayer;
-import com.geodoer.parsecontroller.controller.ParseController;
+import com.geodoer.phpcontroller.controller.GameIdmaker;
+import com.geodoer.phpcontroller.controller.PHPController;
 
 /**
  * Created by iamcx_000 on 2015/6/18.
  */
 public class GameController {
 
-    private static ParseController PC;
+    private static PHPController PC;
     private aGame thisGame;
     private aPlayer thisPlayer;
     private long gameId;
@@ -27,9 +28,11 @@ public class GameController {
 
     //
     public GameController(Context context) {
-        this.PC = new ParseController(context);
+        PC = new PHPController(context);
         this.context = context;
         this.gameId = 0;
+        thisGame = new aGame();
+        thisPlayer = new aPlayer();
     }
 
     //
@@ -42,19 +45,20 @@ public class GameController {
                 PC.setGame(aGame.getPlayerCount(),
                         aGame.getSetHp(),
                         aGame.getSetAmmo(),
-                        new ParseController.setGameCallback(aGame.getGameId()) {
+                        new PHPController.setGameCallback(GameIdmaker.newId()) {
                             @Override
                             public void run(boolean result) {
                                 if (result) {
                                     whenSucceed.hostSucceed();
                                     connect();
-                                    Log.wtf("PARSE", "set Game Succeed");
+                                    Log.wtf("gc", "set Game Succeed");
                                 } else {
                                     whenSucceed.hostFailed();
-                                    Log.wtf("PARSE", "set Game Failed");
+                                    Log.wtf("gc", "set Game Failed");
                                 }
                             }
                         });
+
             }else
                 Log.wtf("PARSE", "Player is null!");
         }else
@@ -62,7 +66,7 @@ public class GameController {
     }
 
     //
-    public void connect() {
+    private void connect() {
         privateConnect();
     }
 
@@ -73,17 +77,17 @@ public class GameController {
     }
 
     //
-    private void privateConnect(){
-        PC.connectGame(new ParseController.connectGameCallback(this.gameId) {
+    private void privateConnect() {
+        PC.connectGame(new PHPController.connectGameCallback(thisGame.getGameId()) {
             @Override
             public void run(boolean result) {
                 if (result) {
                     whenSucceed.connectSucceed();
                     join();
-                    Log.wtf("PARSE", "connect Game Succeed");
+                    Log.wtf("gc", "connect Game Succeed");
                 } else {
                     whenSucceed.connectFailed();
-                    Log.wtf("PARSE", "connect Game Failed");
+                    Log.wtf("gc", "connect Game Failed");
                 }
             }
         });
@@ -102,8 +106,7 @@ public class GameController {
 
     //
     private void privateJoin(){
-        PC.joinGame(new ParseController.joinGameCallback(
-                thisPlayer.getPlayerId(),
+        PC.joinGame(new PHPController.joinGameCallback(  thisPlayer.getPlayerId(),
                 thisPlayer.getPlayerName()) {
             @Override
             public void run(boolean result) {
@@ -134,7 +137,7 @@ public class GameController {
     }
 
     //
-    public static ParseController getPc(){
+    public PHPController getPc(){
         if(PC!=null)
             return PC;
         else

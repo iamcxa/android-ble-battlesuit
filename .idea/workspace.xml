@@ -39,7 +39,20 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <PATH>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ExternalProjectsStructure$RootNode" />
+              </PATH_ELEMENT>
+              <PATH_ELEMENT>
+                <option name="myItemId" value="noway-p2-app-demo" />
+                <option name="myItemType" value="com.intellij.openapi.externalSystem.view.ProjectNode" />
+              </PATH_ELEMENT>
+            </PATH>
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -51,89 +64,32 @@
       <file leaf-file-name="MainFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MainFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.172414">
-              <caret line="391" column="13" selection-start-line="391" selection-start-column="13" selection-end-line="391" selection-end-column="13" />
+            <state vertical-scroll-proportion="-3.9655173">
+              <caret line="385" column="0" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#10633#10695#0" expanded="true" />
-                <element signature="e#12731#12889#0" expanded="true" />
-                <element signature="e#12888#12889#0" expanded="true" />
-                <element signature="method#hostSucceed#0;class#MainFragment#0" expanded="false" />
-                <element signature="method#joinSucceed#0;class#MainFragment#0" expanded="false" />
-                <element signature="method#hostFailed#0;class#MainFragment#0" expanded="false" />
-                <element signature="method#connectFailed#0;class#MainFragment#0" expanded="false" />
-                <element signature="method#joinFailed#0;class#MainFragment#0" expanded="false" />
-                <element signature="docComment;class#OnFragmentInteractionListener#0;class#MainFragment#0" expanded="false" />
-                <element signature="class#OnFragmentInteractionListener#0;class#MainFragment#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.051724">
-              <caret line="534" column="47" selection-start-line="534" selection-start-column="19" selection-end-line="534" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#13392#13630#0" expanded="true" />
-                <element signature="e#13629#13630#0" expanded="true" />
-                <element signature="e#13944#14182#0" expanded="true" />
-                <element signature="e#14181#14182#0" expanded="true" />
-                <element signature="e#14228#14497#0" expanded="true" />
-                <element signature="e#14496#14497#0" expanded="true" />
-                <element signature="e#14542#14977#0" expanded="true" />
-                <element signature="e#14976#14977#0" expanded="true" />
-                <element signature="e#15305#15543#0" expanded="true" />
-                <element signature="e#15542#15543#0" expanded="true" />
-                <element signature="e#15587#15815#0" expanded="true" />
-                <element signature="e#15814#15815#0" expanded="true" />
-                <element signature="e#16162#16400#0" expanded="true" />
-                <element signature="e#16399#16400#0" expanded="true" />
-                <element signature="e#16445#16727#0" expanded="true" />
-                <element signature="e#16726#16727#0" expanded="true" />
-                <element signature="e#16947#17578#0" expanded="true" />
-                <element signature="e#17577#17578#0" expanded="true" />
-                <element signature="e#17683#18783#0" expanded="true" />
-                <element signature="e#18782#18783#0" expanded="true" />
-                <element signature="e#21332#22080#0" expanded="true" />
-                <element signature="e#22079#22080#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SuggestedCard.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCard.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1889#2183#0" expanded="true" />
-                <element signature="e#2182#2183#0" expanded="true" />
-                <element signature="e#2243#2483#0" expanded="true" />
-                <element signature="e#2482#2483#0" expanded="true" />
-                <element signature="e#4345#4375#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GameListDialog.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/GameListDialog.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24541607">
-              <caret line="310" column="66" selection-start-line="310" selection-start-column="66" selection-end-line="310" selection-end-column="66" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3836#4431#0" expanded="true" />
-                <element signature="e#4011#4384#0" expanded="true" />
-                <element signature="e#4383#4384#0" expanded="true" />
-                <element signature="e#4430#4431#0" expanded="true" />
-                <element signature="e#4732#6491#0" expanded="true" />
-                <element signature="e#6490#6491#0" expanded="true" />
+                <element signature="e#9179#9241#0" expanded="true" />
+                <element signature="e#9640#9818#0" expanded="true" />
+                <element signature="e#9817#9818#0" expanded="true" />
+                <element signature="e#10358#10420#0" expanded="true" />
+                <element signature="e#10875#11051#0" expanded="true" />
+                <element signature="e#11050#11051#0" expanded="true" />
+                <element signature="e#11652#13123#0" expanded="true" />
+                <element signature="e#12005#12011#0" expanded="true" />
+                <element signature="e#13122#13123#0" expanded="true" />
+                <element signature="e#13483#13713#0" expanded="true" />
+                <element signature="e#13712#13713#0" expanded="true" />
+                <element signature="e#13757#13985#0" expanded="true" />
+                <element signature="e#13984#13985#0" expanded="true" />
+                <element signature="method#init_card_animation_shadow#0;class#MainFragment#0" expanded="false" />
+                <element signature="e#14582#14622#0" expanded="true" />
+                <element signature="e#14693#14755#0" expanded="true" />
+                <element signature="e#14996#16113#0" expanded="true" />
+                <element signature="e#16112#16113#0" expanded="true" />
+                <element signature="e#16157#16315#0" expanded="true" />
+                <element signature="e#16314#16315#0" expanded="true" />
+                <element signature="e#17959#17960#0" expanded="true" />
+                <element signature="e#17987#17988#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -142,45 +98,91 @@
       <file leaf-file-name="PHPController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="362" column="58" selection-start-line="362" selection-start-column="58" selection-end-line="362" selection-end-column="58" />
+            <state vertical-scroll-proportion="-3.7413793">
+              <caret line="266" column="0" selection-start-line="266" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SuggestedCardThumb.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCardThumb.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HostFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/HostFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="219" column="16" selection-start-line="219" selection-start-column="16" selection-end-line="219" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BattleFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="72" column="29" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4026#4224#0" expanded="true" />
+                <element signature="e#4223#4224#0" expanded="true" />
+                <element signature="e#4249#4450#0" expanded="true" />
+                <element signature="e#4449#4450#0" expanded="true" />
+                <element signature="e#4478#4610#0" expanded="true" />
+                <element signature="e#4609#4610#0" expanded="true" />
+                <element signature="e#7909#7910#0" expanded="true" />
+                <element signature="e#7940#7941#0" expanded="true" />
+                <element signature="e#10584#10626#0" expanded="true" />
+                <element signature="e#10730#10773#0" expanded="true" />
+                <element signature="e#10877#10919#0" expanded="true" />
+                <element signature="e#11204#11246#0" expanded="true" />
+                <element signature="e#11352#11395#0" expanded="true" />
+                <element signature="e#11501#11543#0" expanded="true" />
+                <element signature="e#15593#21298#0" expanded="true" />
+                <element signature="e#21297#21298#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PHPcolumn.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/column/PHPcolumn.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="42" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dialog_show_game_list.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_show_game_list.xml">
+      <file leaf-file-name="fragment_battle.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_battle.xml">
           <provider selected="true" editor-type-id="android-designer">
             <state />
           </provider>
           <provider editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="37" column="35" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="35" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PullToRefreshView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/taurus/src/main/java/com/yalantis/taurus/PullToRefreshView.java">
+      <file leaf-file-name="GameController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/controller/GameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="389" column="0" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.4522472">
+              <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2209#2210#0" expanded="true" />
+                <element signature="e#2241#2242#0" expanded="true" />
+                <element signature="e#2928#2929#0" expanded="true" />
+                <element signature="e#2957#2958#0" expanded="true" />
+                <element signature="e#3686#3687#0" expanded="true" />
+                <element signature="e#3730#3731#0" expanded="true" />
+                <element signature="e#3767#3768#0" expanded="true" />
+                <element signature="e#3798#3799#0" expanded="true" />
+                <element signature="e#3839#3840#0" expanded="true" />
+                <element signature="e#3872#3873#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -189,11 +191,31 @@
       <file leaf-file-name="TestMainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="213" column="33" selection-start-line="213" selection-start-column="33" selection-end-line="213" selection-end-column="33" />
+            <state vertical-scroll-proportion="-12.344828">
+              <caret line="264" column="9" selection-start-line="263" selection-start-column="0" selection-end-line="277" selection-end-column="29" />
               <folding>
-                <element signature="e#6629#7804#0" expanded="true" />
-                <element signature="e#7803#7804#0" expanded="true" />
+                <element signature="e#7877#8391#0" expanded="true" />
+                <element signature="e#8390#8391#0" expanded="true" />
+                <element signature="e#9582#9864#0" expanded="true" />
+                <element signature="e#9863#9864#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.5344828">
+              <caret line="449" column="1" selection-start-line="449" selection-start-column="1" selection-end-line="461" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#13068#13069#0" expanded="true" />
+                <element signature="e#13101#13102#0" expanded="true" />
+                <element signature="e#13161#13162#0" expanded="true" />
+                <element signature="e#13213#13214#0" expanded="true" />
+                <element signature="e#13640#13878#0" expanded="true" />
+                <element signature="e#13877#13878#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -204,8 +226,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="valueResourceFile" />
+        <option value="layoutResourceFile_vertical" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -6635,16 +6658,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/phpcontroller/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/list_item_selector.xml.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/list_item_selector.xml" />
-        <option value="$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/list_item_selector.xml" />
-        <option value="$PROJECT_DIR$/waterWaveProgress/src/main/res/values/attrs.xml" />
-        <option value="$PROJECT_DIR$/waterWaveProgress/src/main/java/cn/modificator/waterwave_progress/WaterWaveAttrInit.java" />
-        <option value="$PROJECT_DIR$/taurus/src/main/java/com/yalantis/taurus/RefreshView.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MaterialV1Fragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BaseFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/CircleDrawable.java" />
@@ -6657,9 +6670,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/NativeShadowFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MiscCardFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/NativeListBaseFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/carddemo_suggested_header_inner.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_suggested_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/demo_fragment_native_misc_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/carddemo_example_circleleft.xml" />
@@ -6672,20 +6682,33 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_listview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BlankFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/OnlineGameListDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BleCustomDialog2.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/OnlineGameDialog.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/list_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MainFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_show_game_list.xml" />
         <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java" />
         <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCard.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/GameListDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/demo_fragment_native_list_base.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_show_game_list.xml" />
+        <option value="$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/res/layout/native_list_card_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/native_list_card_layou.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/card_shadow.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/carddemo_suggested_header_inner.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_suggested_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles_card.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCardHeader.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCard.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/util/BscUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_battle.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MainFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/controller/GameController.java" />
       </list>
     </option>
   </component>
@@ -6906,6 +6929,42 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -6968,12 +7027,8 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="uiCard" />
+              <option name="myItemId" value="util" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SuggestedCard.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -6995,6 +7050,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="uiCard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="battlesuitcontroller" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -7332,13 +7409,13 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50469685" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3561059" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.560205" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32109308" sideWeight="0.50190735" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23677474" sideWeight="0.4970111" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23634812" sideWeight="0.4970111" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32877883" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24680308" sideWeight="0.49530315" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977816" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24658704" sideWeight="0.49530315" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5029889" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -7348,6 +7425,36 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32109308" sideWeight="0.50190735" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24658704" sideWeight="0.49530315" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32109308" sideWeight="0.49809265" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Nativer Admin" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50469685" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3561059" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32109308" sideWeight="0.50190735" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23634812" sideWeight="0.4970111" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32877883" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977816" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5029889" order="2" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -7367,209 +7474,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/circularseekbar/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/circularcounter/src/main/res/values/attrs.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19903691">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/circularcounter/src/main/res/values/dimens.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/carddemo_mayknow_add.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/carddemo_mayknow_add_rectangle_pressed.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/carddemo_mayknow_add_rectangle_normal.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_mayknow_inner_header.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_mayknow_inner_content.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.456522">
-          <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
-          <folding>
-            <element signature="e#1387#1419#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_mycard_inner_content.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/card_menu_button_other.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/democard_my_shadow.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ratingbar_small_holo_dark.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles_card.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="241" column="88" selection-start-line="241" selection-start-column="49" selection-end-line="241" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BaseFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_error_loadingorangesmall.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_host.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.7173915">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_suggested_layout.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="26.282608">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_suggested_header_inner.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.34444445">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/taurus/src/main/java/com/yalantis/taurus/RefreshView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="27" selection-start-line="109" selection-start-column="22" selection-end-line="109" selection-end-column="27" />
-          <folding>
-            <element signature="e#6334#6335#0" expanded="false" />
-            <element signature="e#6384#6385#0" expanded="false" />
-            <element signature="e#20435#20436#0" expanded="false" />
-            <element signature="e#20469#20470#0" expanded="false" />
-            <element signature="e#20505#20506#0" expanded="false" />
-            <element signature="e#20534#20535#0" expanded="false" />
-            <element signature="e#20607#20608#0" expanded="false" />
-            <element signature="e#20651#20652#0" expanded="false" />
-            <element signature="e#20696#20697#0" expanded="false" />
-            <element signature="e#20742#20743#0" expanded="false" />
-            <element signature="e#20790#20791#0" expanded="false" />
-            <element signature="e#20818#20819#0" expanded="false" />
-            <element signature="e#21328#21547#0" expanded="false" />
-            <element signature="e#21546#21547#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_example_circleleft.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -7577,17 +7486,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/demo_fragment_native_misc_card.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -7621,14 +7519,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74333924">
-          <caret line="27" column="59" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_circle_thumbnail_layout.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -7640,29 +7530,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="100" column="13" selection-start-line="100" selection-start-column="13" selection-end-line="100" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BleFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/HostFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="13" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -7692,25 +7563,6 @@
             <element signature="e#919#920#0" expanded="false" />
             <element signature="e#969#970#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/jars/classes.jar!/it/gmariotti/cardslib/library/internal/Card.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33269414">
-          <caret line="319" column="25" selection-start-line="319" selection-start-column="19" selection-end-line="319" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -7768,10 +7620,84 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+    <entry file="file://$PROJECT_DIR$/taurus/src/main/java/com/yalantis/taurus/PullToRefreshView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <caret line="389" column="0" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/21e31b9298ed677b17fcac6dd0eb0a82ec35adc2/gson-2.3-sources.jar!/com/google/gson/JsonArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33286318">
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+          <folding>
+            <element signature="e#4631#4632#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/column/PHPcolumn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/GameListDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="313" column="39" selection-start-line="313" selection-start-column="39" selection-end-line="313" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3836#4431#0" expanded="false" />
+            <element signature="e#4011#4384#0" expanded="false" />
+            <element signature="e#4383#4384#0" expanded="false" />
+            <element signature="e#4430#4431#0" expanded="false" />
+            <element signature="e#4732#6491#0" expanded="false" />
+            <element signature="e#6490#6491#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/jars/classes.jar!/it/gmariotti/cardslib/library/internal/CardHeader.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.2">
+          <caret line="34" column="37" selection-start-line="34" selection-start-column="35" selection-end-line="34" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/demo_fragment_native_list_base.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7873303">
+          <caret line="33" column="19" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="19" />
+          <folding>
+            <element signature="e#1308#1338#0" expanded="true" />
+            <element signature="e#1367#1397#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/red_flag.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_suggested_inner_content.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -7787,134 +7713,355 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/taurus/src/main/java/com/yalantis/taurus/PullToRefreshView.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/native_list_card_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/res/layout/native_list_card_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69905955">
+          <caret line="35" column="15" selection-start-line="0" selection-start-column="0" selection-end-line="36" selection-end-column="146" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/demo_fragment_native_misc_card.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="0" selection-start-line="389" selection-start-column="0" selection-end-line="389" selection-end-column="0" />
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/jars/classes.jar!/it/gmariotti/cardslib/library/internal/Card.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33226836">
+          <caret line="28" column="29" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/res/drawable/card_shadow.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.3913045">
+          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.gabrielemariotti.cards/cardslib-core/2.1.0/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34502923">
+          <caret line="339" column="17" selection-start-line="339" selection-start-column="17" selection-end-line="339" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_suggested_header_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.84162897">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_suggested_header_inner.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="44" selection-start-line="36" selection-start-column="44" selection-end-line="36" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/carddemo_native_suggested_layout.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="40" column="71" selection-start-line="40" selection-start-column="71" selection-end-line="40" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/card_shadow.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.793103">
+          <caret line="64" column="44" selection-start-line="64" selection-start-column="44" selection-end-line="64" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="59" selection-start-line="27" selection-start-column="59" selection-end-line="27" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles_card.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.7413793">
+          <caret line="200" column="58" selection-start-line="200" selection-start-column="58" selection-end-line="200" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.534483">
+          <caret line="59" column="59" selection-start-line="59" selection-start-column="58" selection-end-line="59" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCardHeader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="63" selection-start-line="17" selection-start-column="63" selection-end-line="17" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MainFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.172414">
-          <caret line="391" column="13" selection-start-line="391" selection-start-column="13" selection-end-line="391" selection-end-column="13" />
+        <state vertical-scroll-proportion="-3.7413793">
+          <caret line="107" column="64" selection-start-line="107" selection-start-column="64" selection-end-line="107" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#10633#10695#0" expanded="true" />
-            <element signature="e#12731#12889#0" expanded="true" />
-            <element signature="e#12888#12889#0" expanded="true" />
-            <element signature="method#hostSucceed#0;class#MainFragment#0" expanded="false" />
-            <element signature="method#joinSucceed#0;class#MainFragment#0" expanded="false" />
-            <element signature="method#hostFailed#0;class#MainFragment#0" expanded="false" />
-            <element signature="method#connectFailed#0;class#MainFragment#0" expanded="false" />
-            <element signature="method#joinFailed#0;class#MainFragment#0" expanded="false" />
-            <element signature="docComment;class#OnFragmentInteractionListener#0;class#MainFragment#0" expanded="false" />
-            <element signature="class#OnFragmentInteractionListener#0;class#MainFragment#0" expanded="false" />
+            <element signature="e#2035#2252#0" expanded="true" />
+            <element signature="e#2251#2252#0" expanded="true" />
+            <element signature="e#2312#2591#0" expanded="true" />
+            <element signature="e#2590#2591#0" expanded="true" />
+            <element signature="e#2699#2774#0" expanded="true" />
+            <element signature="e#4662#4663#0" expanded="true" />
+            <element signature="e#4692#4693#0" expanded="true" />
+            <element signature="e#4738#4739#0" expanded="true" />
+            <element signature="e#4776#4777#0" expanded="true" />
+            <element signature="e#4815#4816#0" expanded="true" />
+            <element signature="e#4850#4851#0" expanded="true" />
+            <element signature="e#4906#4907#0" expanded="true" />
+            <element signature="e#4954#4955#0" expanded="true" />
+            <element signature="e#4990#4991#0" expanded="true" />
+            <element signature="e#5022#5023#0" expanded="true" />
+            <element signature="e#5072#5073#0" expanded="true" />
+            <element signature="e#5114#5115#0" expanded="true" />
+            <element signature="e#5149#5150#0" expanded="true" />
+            <element signature="e#5180#5181#0" expanded="true" />
+            <element signature="e#5228#5229#0" expanded="true" />
+            <element signature="e#5268#5269#0" expanded="true" />
+            <element signature="e#5321#5322#0" expanded="true" />
+            <element signature="e#5367#5368#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/util/BscUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="4" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_battle.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="213" column="33" selection-start-line="213" selection-start-column="33" selection-end-line="213" selection-end-column="33" />
+        <state vertical-scroll-proportion="-12.344828">
+          <caret line="264" column="9" selection-start-line="263" selection-start-column="0" selection-end-line="277" selection-end-column="29" />
           <folding>
-            <element signature="e#6629#7804#0" expanded="true" />
-            <element signature="e#7803#7804#0" expanded="true" />
+            <element signature="e#7877#8391#0" expanded="true" />
+            <element signature="e#8390#8391#0" expanded="true" />
+            <element signature="e#9582#9864#0" expanded="true" />
+            <element signature="e#9863#9864#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3/21e31b9298ed677b17fcac6dd0eb0a82ec35adc2/gson-2.3-sources.jar!/com/google/gson/JsonArray.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCardThumb.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33286318">
-          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="146" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="72" column="29" selection-start-line="72" selection-start-column="27" selection-end-line="72" selection-end-column="29" />
           <folding>
-            <element signature="e#4631#4632#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#4026#4224#0" expanded="true" />
+            <element signature="e#4223#4224#0" expanded="true" />
+            <element signature="e#4249#4450#0" expanded="true" />
+            <element signature="e#4449#4450#0" expanded="true" />
+            <element signature="e#4478#4610#0" expanded="true" />
+            <element signature="e#4609#4610#0" expanded="true" />
+            <element signature="e#7909#7910#0" expanded="true" />
+            <element signature="e#7940#7941#0" expanded="true" />
+            <element signature="e#10584#10626#0" expanded="true" />
+            <element signature="e#10730#10773#0" expanded="true" />
+            <element signature="e#10877#10919#0" expanded="true" />
+            <element signature="e#11204#11246#0" expanded="true" />
+            <element signature="e#11352#11395#0" expanded="true" />
+            <element signature="e#11501#11543#0" expanded="true" />
+            <element signature="e#15593#21298#0" expanded="true" />
+            <element signature="e#21297#21298#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.051724">
-          <caret line="534" column="47" selection-start-line="534" selection-start-column="19" selection-end-line="534" selection-end-column="47" />
+        <state vertical-scroll-proportion="-0.5344828">
+          <caret line="449" column="1" selection-start-line="449" selection-start-column="1" selection-end-line="461" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#13392#13630#0" expanded="true" />
-            <element signature="e#13629#13630#0" expanded="true" />
-            <element signature="e#13944#14182#0" expanded="true" />
-            <element signature="e#14181#14182#0" expanded="true" />
-            <element signature="e#14228#14497#0" expanded="true" />
-            <element signature="e#14496#14497#0" expanded="true" />
-            <element signature="e#14542#14977#0" expanded="true" />
-            <element signature="e#14976#14977#0" expanded="true" />
-            <element signature="e#15305#15543#0" expanded="true" />
-            <element signature="e#15542#15543#0" expanded="true" />
-            <element signature="e#15587#15815#0" expanded="true" />
-            <element signature="e#15814#15815#0" expanded="true" />
-            <element signature="e#16162#16400#0" expanded="true" />
-            <element signature="e#16399#16400#0" expanded="true" />
-            <element signature="e#16445#16727#0" expanded="true" />
-            <element signature="e#16726#16727#0" expanded="true" />
-            <element signature="e#16947#17578#0" expanded="true" />
-            <element signature="e#17577#17578#0" expanded="true" />
-            <element signature="e#17683#18783#0" expanded="true" />
-            <element signature="e#18782#18783#0" expanded="true" />
-            <element signature="e#21332#22080#0" expanded="true" />
-            <element signature="e#22079#22080#0" expanded="true" />
+            <element signature="e#13068#13069#0" expanded="true" />
+            <element signature="e#13101#13102#0" expanded="true" />
+            <element signature="e#13161#13162#0" expanded="true" />
+            <element signature="e#13213#13214#0" expanded="true" />
+            <element signature="e#13640#13878#0" expanded="true" />
+            <element signature="e#13877#13878#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="362" column="58" selection-start-line="362" selection-start-column="58" selection-end-line="362" selection-end-column="58" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/column/PHPcolumn.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="42" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="42" />
+        <state vertical-scroll-proportion="-3.7413793">
+          <caret line="266" column="0" selection-start-line="266" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/uiCard/SuggestedCard.java">
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/GameIdmaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13765542">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/HostFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="11" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+          <caret line="219" column="16" selection-start-line="219" selection-start-column="16" selection-end-line="219" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/MainFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9655173">
+          <caret line="385" column="0" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1889#2183#0" expanded="true" />
-            <element signature="e#2182#2183#0" expanded="true" />
-            <element signature="e#2243#2483#0" expanded="true" />
-            <element signature="e#2482#2483#0" expanded="true" />
-            <element signature="e#4345#4375#0" expanded="true" />
+            <element signature="e#9179#9241#0" expanded="true" />
+            <element signature="e#9640#9818#0" expanded="true" />
+            <element signature="e#9817#9818#0" expanded="true" />
+            <element signature="e#10358#10420#0" expanded="true" />
+            <element signature="e#10875#11051#0" expanded="true" />
+            <element signature="e#11050#11051#0" expanded="true" />
+            <element signature="e#11652#13123#0" expanded="true" />
+            <element signature="e#12005#12011#0" expanded="true" />
+            <element signature="e#13122#13123#0" expanded="true" />
+            <element signature="e#13483#13713#0" expanded="true" />
+            <element signature="e#13712#13713#0" expanded="true" />
+            <element signature="e#13757#13985#0" expanded="true" />
+            <element signature="e#13984#13985#0" expanded="true" />
+            <element signature="method#init_card_animation_shadow#0;class#MainFragment#0" expanded="false" />
+            <element signature="e#14582#14622#0" expanded="true" />
+            <element signature="e#14693#14755#0" expanded="true" />
+            <element signature="e#14996#16113#0" expanded="true" />
+            <element signature="e#16112#16113#0" expanded="true" />
+            <element signature="e#16157#16315#0" expanded="true" />
+            <element signature="e#16314#16315#0" expanded="true" />
+            <element signature="e#17959#17960#0" expanded="true" />
+            <element signature="e#17987#17988#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/GameListDialog.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/controller/GameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24541607">
-          <caret line="310" column="66" selection-start-line="310" selection-start-column="66" selection-end-line="310" selection-end-column="66" />
+        <state vertical-scroll-proportion="-0.4522472">
+          <caret line="37" column="6" selection-start-line="37" selection-start-column="6" selection-end-line="37" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3836#4431#0" expanded="true" />
-            <element signature="e#4011#4384#0" expanded="true" />
-            <element signature="e#4383#4384#0" expanded="true" />
-            <element signature="e#4430#4431#0" expanded="true" />
-            <element signature="e#4732#6491#0" expanded="true" />
-            <element signature="e#6490#6491#0" expanded="true" />
+            <element signature="e#2209#2210#0" expanded="true" />
+            <element signature="e#2241#2242#0" expanded="true" />
+            <element signature="e#2928#2929#0" expanded="true" />
+            <element signature="e#2957#2958#0" expanded="true" />
+            <element signature="e#3686#3687#0" expanded="true" />
+            <element signature="e#3730#3731#0" expanded="true" />
+            <element signature="e#3767#3768#0" expanded="true" />
+            <element signature="e#3798#3799#0" expanded="true" />
+            <element signature="e#3839#3840#0" expanded="true" />
+            <element signature="e#3872#3873#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -5,7 +5,6 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -17,20 +16,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.db.circularcounter.CircularCounter;
+import com.geodoer.battlesuitcontroller.MainActivity;
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
 import com.geodoer.bluetoothcontroler.service.BluetoothLeService;
 import com.geodoer.circularseekbar.CircularSeekBar;
-import com.geodoer.parsecontroller.controller.ParseController;
-
-import java.util.ArrayList;
+import com.geodoer.phpcontroller.controller.PHPController;
+import com.geodoer.phpcontroller.utils.StatusChangeListener;
 
 
 /**
@@ -48,7 +46,7 @@ public class BattleFragment
         View.OnClickListener,
         CircularSeekBar.OnSeekChangeListener {
 
-    private static ParseController PC;
+    private static PHPController PC;
 
     private CircularCounter meterHp,meterAmmo;
 
@@ -90,6 +88,13 @@ public class BattleFragment
     long tNow;
 
     public static BattleFragment newInstance(
+    ) {
+        BattleFragment fragment = new BattleFragment();
+        return fragment;
+    }
+
+
+    public static BattleFragment newInstance(
             long gameId,
             int playerId,
             int sHp,
@@ -110,6 +115,8 @@ public class BattleFragment
 
     public BattleFragment() {
         // Required empty public constructor
+
+
         handler = new Handler();
         r = new Runnable(){
             int currV = 0;
@@ -165,6 +172,8 @@ public class BattleFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        MainActivity.setIsBattling(true);
+
         // 震動元件
         mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
 
@@ -186,8 +195,30 @@ public class BattleFragment
             Log.wtf("args", "=====================");
 
             // PC =new ParseController(getActivity().getApplicationContext());
-            PC=GameController.getPc();
         }
+
+        PC=new PHPController();
+
+        StatusChangeListener SCL = new StatusChangeListener()
+        {
+            @Override
+            public void onHPChanged(int value)
+            {
+                Log.wtf("bat","HP have been changed to "+value);
+                meterHp.setValues(value,value*2,value*3);
+            }
+
+            @Override
+            public void onAMMOChanged(int value)
+            {
+                Log.wtf("bat","AMMO have been changed to "+value);
+                meterAmmo.setValues(value,value*2,value*3);
+            }
+        };
+
+        PC.addSCListener(SCL);
+        PC.startService();
+
     }
 
     @Override
@@ -234,9 +265,9 @@ public class BattleFragment
     @Override
     public void onResume() {
         super.onResume();
-        getActivity()
-                .registerReceiver(ble_activity_receiver,
-                        ble_activity_receiverIntentFilter());
+//        getActivity()
+//                .registerReceiver(ble_activity_receiver,
+//                        ble_activity_receiverIntentFilter());
     }
 
     @Override
@@ -250,6 +281,7 @@ public class BattleFragment
         getActivity().unregisterReceiver(ble_activity_receiver);
         isAutoRun=false;
         handler.removeCallbacks(r);
+        MainActivity.setIsBattling(false);
     }
 
     private void setupcompements() {
@@ -288,13 +320,13 @@ public class BattleFragment
 
             isAutoRun = false;
 
-            Button btnMore = (Button) getView().findViewById(R.id.btnMore);
-            Button btnLess = (Button) getView().findViewById(R.id.btnLess);
-            Button btnAuto = (Button) getView().findViewById(R.id.btnAuto);
+          //  Button btnMore = (Button) getView().findViewById(R.id.btnMore);
+          //  Button btnLess = (Button) getView().findViewById(R.id.btnLess);
+           // Button btnAuto = (Button) getView().findViewById(R.id.btnAuto);
 
-            btnMore.setOnClickListener(this);
-            btnLess.setOnClickListener(this);
-            btnAuto.setOnClickListener(this);
+          //  btnMore.setOnClickListener(this);
+          //  btnLess.setOnClickListener(this);
+         //  btnAuto.setOnClickListener(this);
 
             String[] colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
             String[] colorsHp = getResources().getStringArray(R.array.colors_HP);
@@ -344,27 +376,27 @@ public class BattleFragment
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.btnLess:
-                reduceMeter(meterAmmo);
-                reduceMeter(meterHp);
-                break;
-
-            case R.id.btnMore:
-                addMeter(meterAmmo);
-                addMeter(meterHp);
-                break;
-
-            case R.id.btnAuto:
-                if(!isAutoRun){
-                    isAutoRun=true;
-                    handler.postDelayed(r,50);
-                }else{
-                    isAutoRun=false;
-                    handler.removeCallbacks(r);
-                }
-                break;
-        }
+//        switch (v.getId()){
+//            case R.id.btnLess:
+//                reduceMeter(meterAmmo);
+//                reduceMeter(meterHp);
+//                break;
+//
+//            case R.id.btnMore:
+//                addMeter(meterAmmo);
+//                addMeter(meterHp);
+//                break;
+//
+//            case R.id.btnAuto:
+//                if(!isAutoRun){
+//                    isAutoRun=true;
+//                    handler.postDelayed(r,50);
+//                }else{
+//                    isAutoRun=false;
+//                    handler.removeCallbacks(r);
+//                }
+//                break;
+//        }
     }
 
     @Override
@@ -395,42 +427,43 @@ public class BattleFragment
     }
 
     private void setShootingFlag(){
-        if(PC.Player.getAmmo_t()==1)
-            // 開槍狀態=0
-            PC.Player.updateInfo(
-                    new ParseController
-                            .updateInfoCallback(
-                            ParseController
-                                    .PlayerStatus.AMMO_t
-                            , 0) {
-                        @Override
-                        public void run(boolean result) {
-                            if (result){
-                                Log.wtf("PARSE", "update Ammo_t 0 success");
-                            }
-                            else Log.wtf("PARSE", "update Ammo_t 0 fail");
-                        }
-                    });
-        handler.removeCallbacks(setShottingFlag);
+
+//        if(PC.getAmmo_t()==1)
+//            // 開槍狀態=0
+//            PC.Player.updateInfo(
+//                    new ParseController
+//                            .updateInfoCallback(
+//                            ParseController
+//                                    .PlayerStatus.AMMO_t
+//                            , 0) {
+//                        @Override
+//                        public void run(boolean result) {
+//                            if (result){
+//                                Log.wtf("PARSE", "update Ammo_t 0 success");
+//                            }
+//                            else Log.wtf("PARSE", "update Ammo_t 0 fail");
+//                        }
+//                    });
+//        handler.removeCallbacks(setShottingFlag);
     }
 
     private void reduceHp(){
         // 血環扣血
-        if(meterHp.getValue1()>0)
-            // 雲端扣血
-            PC.Player
-                    .updateInfo(new ParseController
-                            .updateInfoCallback(ParseController
-                            .PlayerStatus.HP, -1) {
-                        @Override
-                        public void run(boolean result) {
-                            if (result) {
-                                Log.wtf("PARSE", "update HP -1 success");
-                                mVibrator.vibrate(tVibrattion);
-                                reduceMeter(meterHp);
-                            } else Log.wtf("PARSE", "update HP -1 fail");
-                        }
-                    });
+//        if(meterHp.getValue1()>0)
+//            // 雲端扣血
+//            PC.Player
+//                    .updateInfo(new ParseController
+//                            .updateInfoCallback(ParseController
+//                            .PlayerStatus.HP, -1) {
+//                        @Override
+//                        public void run(boolean result) {
+//                            if (result) {
+//                                Log.wtf("PARSE", "update HP -1 success");
+//                                mVibrator.vibrate(tVibrattion);
+//                                reduceMeter(meterHp);
+//                            } else Log.wtf("PARSE", "update HP -1 fail");
+//                        }
+//                    });
     }
 
     // 接收BLE廣播
@@ -456,35 +489,35 @@ public class BattleFragment
 
                         tNow=System.currentTimeMillis();
 
-                        // 檢查誰開槍
-                        PC.getWhoShooting(new ParseController.getWhoShootCallback() {
-                            @Override
-                            public void run(boolean result, ArrayList<Integer> list) {
-                                if(result){
-                                    if(!list.isEmpty()){
-                                        Log.wtf("PARSE", list.toString()+"Now="+tNow+" this is pId="+mPlayerId);
-                                        if(list.contains(mPlayerId)){
-                                            int i;
-                                            for(i=0;i<list.size();i++){
-                                                //Log.wtf("list", "list item=" + list.get(i));
-                                                if(list.get(i)==mPlayerId){
-                                                    list.remove(i);
-                                                    //Log.wtf("list", "remove itself.");
-                                                }}
-                                        }else {
-
-                                            Log.wtf("PARSE", "attacked by pId=" + list.toString());
-
-
-                                            //reduceHp();
-
-                                        }
-
-                                    }else
-                                        Log.wtf("PARSE", "沒有配對到槍手");
-                                }
-                            }
-                        });
+//                        // 檢查誰開槍
+//                        PC.getWhoShooting(new ParseController.getWhoShootCallback() {
+//                            @Override
+//                            public void run(boolean result, ArrayList<Integer> list) {
+//                                if(result){
+//                                    if(!list.isEmpty()){
+//                                        Log.wtf("PARSE", list.toString()+"Now="+tNow+" this is pId="+mPlayerId);
+//                                        if(list.contains(mPlayerId)){
+//                                            int i;
+//                                            for(i=0;i<list.size();i++){
+//                                                //Log.wtf("list", "list item=" + list.get(i));
+//                                                if(list.get(i)==mPlayerId){
+//                                                    list.remove(i);
+//                                                    //Log.wtf("list", "remove itself.");
+//                                                }}
+//                                        }else {
+//
+//                                            Log.wtf("PARSE", "attacked by pId=" + list.toString());
+//
+//
+//                                            //reduceHp();
+//
+//                                        }
+//
+//                                    }else
+//                                        Log.wtf("PARSE", "沒有配對到槍手");
+//                                }
+//                            }
+//                        });
 
                         // 被擊中
                     }else if(temp.equals("BB")){
@@ -508,61 +541,61 @@ public class BattleFragment
                             mVibrator.vibrate(tVibrattion);
                             reduceMeter(meterAmmo);
 
-                            if(PC.Player.getAmmo_t()==0) {
-                                // 開槍狀態=1
-                                PC.Player
-                                        .updateInfo(
-                                                new ParseController
-                                                        .updateInfoCallback(
-                                                        ParseController
-                                                                .PlayerStatus.AMMO_t
-                                                        , 1) {
-                                                    @Override
-                                                    public void run(boolean result) {
-                                                        if (result)
-                                                            Log.wtf("PARSE", "update Ammo_t 1 success");
-                                                        else
-                                                            Log.wtf("PARSE", "update Ammo_t 1 fail");
-                                                    }
-                                                });
-                            }else{
+//                            if(PC.Player.getAmmo_t()==0) {
+//                                // 開槍狀態=1
+//                                PC.Player
+//                                        .updateInfo(
+//                                                new ParseController
+//                                                        .updateInfoCallback(
+//                                                        ParseController
+//                                                                .PlayerStatus.AMMO_t
+//                                                        , 1) {
+//                                                    @Override
+//                                                    public void run(boolean result) {
+//                                                        if (result)
+//                                                            Log.wtf("PARSE", "update Ammo_t 1 success");
+//                                                        else
+//                                                            Log.wtf("PARSE", "update Ammo_t 1 fail");
+//                                                    }
+//                                                });
+                        }else{
 
-                                handler.postDelayed(setShottingFlag,10);
-                            }
+                            handler.postDelayed(setShottingFlag,10);
+                        }
+                        Log.wtf("","");
+                        // 更新子彈量
+//                            PC.Player
+//                                    .updateInfo(
+//                                            new ParseController
+//                                                    .updateInfoCallback(
+//                                                    ParseController
+//                                                            .PlayerStatus.AMMO
+//                                                    , -1) {
+//                                                @Override
+//                                                public void run(boolean result) {
+//                                                    if (result) {
+//                                                        Log.wtf("PARSE", "update Ammo -1 success");
+//                                                    } else Log.wtf("PARSE", "update Ammo -1 fail");
+//                                                }
+//                                            });
 
-                            // 更新子彈量
-                            PC.Player
-                                    .updateInfo(
-                                            new ParseController
-                                                    .updateInfoCallback(
-                                                    ParseController
-                                                            .PlayerStatus.AMMO
-                                                    , -1) {
-                                                @Override
-                                                public void run(boolean result) {
-                                                    if (result) {
-                                                        Log.wtf("PARSE", "update Ammo -1 success");
-                                                    } else Log.wtf("PARSE", "update Ammo -1 fail");
-                                                }
-                                            });
-
-                        }else
-                            Toast.makeText(getActivity(),
-                                    "你沒子彈啦！",
-                                    Toast.LENGTH_SHORT).show();
-                    }
+                    }else
+                        Toast.makeText(getActivity(),
+                                "你沒子彈啦！",
+                                Toast.LENGTH_SHORT).show();
                 }
             }
         }
+
     };
 
-    //
-    private static IntentFilter ble_activity_receiverIntentFilter()
-    {
-        final IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BleCustomDialog.mAction_servicestate);
-        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
-        return intentFilter;
-    }
+//    //
+//private static IntentFilter ble_activity_receiverIntentFilter()
+//        {
+//final IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(BleCustomDialog.mAction_servicestate);
+//        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+//        return intentFilter;
+//        }
 }
 

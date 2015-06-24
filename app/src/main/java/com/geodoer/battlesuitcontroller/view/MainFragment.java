@@ -1,10 +1,12 @@
 package com.geodoer.battlesuitcontroller.view;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,23 +20,25 @@ import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
+import com.geodoer.battlesuitcontroller.gameItem.aGame;
 import com.geodoer.battlesuitcontroller.gameItem.aPlayer;
 import com.geodoer.battlesuitcontroller.uiCard.SuggestedCard;
-import com.geodoer.parsecontroller.controller.ParseController;
+import com.geodoer.battlesuitcontroller.uiCard.SuggestedCardHeader;
+import com.geodoer.parsecontroller.controller.GameIdmaker;
+import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.controller.PHPController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import at.markushi.ui.CircleButton;
 import it.gmariotti.cardslib.library.Constants;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.view.CardViewNative;
 
-import static com.geodoer.battlesuitcontroller.util.BscUtils.switchFragment;
+import static com.geodoer.battlesuitcontroller.util.BscUtils.logTag;
 
 
 /**
@@ -50,8 +54,11 @@ public class MainFragment
         Fragment
         implements
         View.OnClickListener,
+        Card.OnCardClickListener,
+        Card.OnLongCardClickListener,
         ListView.OnItemClickListener,
-        GameController.whenSucceed{
+        GameController.whenSucceed,
+        SuggestedCard.whenClicked{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -66,9 +73,9 @@ public class MainFragment
 
     private OnFragmentInteractionListener mListener;
 
-    private ListView listView;
+    //private ListView listView;
 
-    private ParseController PC;
+    //private ParseController PC;
 
     private PHPController pc;
 
@@ -78,7 +85,11 @@ public class MainFragment
 
     //private PullToRefreshView mPullToRefreshView;
 
-    protected ScrollView mScrollView;
+    protected ScrollView
+            mScrollView;
+
+    private CardViewNative
+            cardView,cardView2;
 
     private long gTime=0;
     /**
@@ -111,6 +122,10 @@ public class MainFragment
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+       // pc = new PHPController(getActivity());
+        gc = new GameController(getActivity());
+        gc.setWhenSucceedTarget(this);
+        pc = gc.getPc();
     }
 
     @Override
@@ -163,93 +178,25 @@ public class MainFragment
 
     private void setComponents(){
         if(getView()!=null){
+            cardView
+                    = (CardViewNative) getActivity().findViewById(R.id.carddemo_suggested);
+
+            cardView2
+                    = (CardViewNative) getActivity().findViewById(R.id.carddemo_suggested2);
 
 
-            //
-//            mPullToRefreshView = (PullToRefreshView) getActivity().findViewById(R.id.pull_to_refresh);
-//            mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
-//                @Override
-//                public void onRefresh() {
-//                    mPullToRefreshView.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//
-//
-//                            mPullToRefreshView.setRefreshing(false);
-//                        }
-//                    }, 500);
-//                }
-//            });
-//            mPullToRefreshView.setBackgroundColor(
-//                    getResources().getColor(R.color.c_half_transparent));
+            SuggestedCard.setWhenClcikedTarget(this);
 
-            //
+            //  CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
+            //  CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
 
-            CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
-            CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
-
-            btnBack.setOnClickListener(this);
-            btnDone.setOnClickListener(this);
-
-            listView=(ListView)getView().findViewById(R.id.listView);
-            listView.setOnItemClickListener(this);
-
+//            btnBack.setOnClickListener(this);
+            // btnDone.setOnClickListener(this);
 
             mScrollView = (ScrollView) getActivity().findViewById(R.id.card_scrollview);
-            init_card_animation_shadow();
+            //init_card_animation_shadow();
+
             initCardSuggested();
-
-
-            Map<String, Integer> map;
-            List<Map<String, Integer>> sampleList = new ArrayList<>();
-
-
-//            int[] colors = {
-//                    R.color.saffron,
-//                    R.color.eggplant,
-//                    R.color.sienna};
-//
-//            int[] tripNames = {
-//                    R.string.trip_to_india,
-//                    R.string.trip_to_italy,
-//                    R.string.trip_to_indonesia};
-//
-//            for (int i = 0; i < tripNames.length; i++) {
-//                map = new HashMap<>();
-//                map.put(SampleAdapter.KEY_NAME, tripNames[i]);
-//                map.put(SampleAdapter.KEY_COLOR, colors[i]);
-//                sampleList.add(map);
-//            }
-
-//            pc=new PHPController(getActivity());
-//            pc.getOnlineGames(new PHPController.getOnlineGamesCallback() {
-//                @Override
-//                public void run(boolean result, ArrayList<Long> list) {
-//                    //
-//                    if (result) {
-//                        Log.wtf("pc", "get Onlining Games success");
-//
-//                        //-------get ID from list--------------------
-//                        if (list == null)
-//                            Log.wtf("pc", "getOnlining list is null");
-//                        else {
-//                            Log.wtf("pc", "getOnlining list size :" + list.size());
-//                            for (long i : list) {
-//                                Log.wtf("pc", "Onlining Games ID : " + i);
-//                            }
-//                            adapter = new SampleAdapter(
-//                                    getActivity(),
-//                                    R.layout.list_item,
-//                                    list);
-//                            //new SampleAdapter(this, R.layout.list_item, sampleList)
-//                            listView.setAdapter(adapter);
-//                        }
-//                        //---------------------------------------------
-//                    } else
-//                        Log.wtf("PARSE", "get Onlining Games fail");
-//                    //
-//                }
-//            });
         }
     }
 
@@ -274,13 +221,10 @@ public class MainFragment
         pc.connectGame(new PHPController.connectGameCallback(gameId) {
             @Override
             public void run(boolean result) {
-                if (result)
-                {
+                if (result) {
                     Log.wtf(TAG, "connectGame success");
                     joinGame(playerId, playerName);
-                }
-                else
-                {
+                } else {
                     Log.wtf(TAG, "connectGame fail");
                 }
             }
@@ -302,32 +246,196 @@ public class MainFragment
         });
     }
 
+    private void hostGame(int totalPlayers, int maxHp, int maxAmmo){
+        aGame aGame = new aGame();
+        aGame.setGameId(GameIdmaker.newId());
+        aGame.setGameTime(999);
+        aGame.setPlayerCount(totalPlayers);
+        aGame.setSetAmmo(maxAmmo);
+        aGame.setSetHp(maxHp);
+
+        aPlayer aPlayer = new aPlayer();
+        aPlayer.setPlayerId(1);
+        aPlayer.setPlayerName("host");
+
+        gc.host(aGame,aPlayer);
+
+//        pc.setGame(totalPlayers, maxHp, maxAmmo,
+//                new PHPController.setGameCallback(GameIdmaker.newId()) {
+//                    @Override
+//                    public void run(boolean result) {
+//                        if (result)
+//                        {
+//
+//                        }else
+//                        {
+//
+//                        }
+//                    }
+//                });
+    }
+
     /**
      * This method builds a suggested card example
      */
     private void initCardSuggested() {
 
+        //
         CardThumbnail cardThumbnail = new CardThumbnail(getActivity());
-        cardThumbnail.setDrawableResource(R.drawable.ic_ring_ammo);
+        cardThumbnail.setDrawableResource(R.drawable.ic_ring_hp);
 
         //Create a CardHeader
-        CardHeader header = new CardHeader(getActivity());
-        header.setTitle("header tittle");
+        SuggestedCardHeader header = new SuggestedCardHeader(getActivity(),"團隊搶旗");
+        header.setsHeaderText("團隊搶旗");
 
+        //
         SuggestedCard card = new SuggestedCard(getActivity());
-        CardViewNative cardView
-                = (CardViewNative) getActivity().findViewById(R.id.carddemo_suggested);
-
-        card.setTitle("card title");
+        card.setsTittle("搶旗");
+        card.setsHeaderText("搶旗");
         card.setShadow(true);
         card.setCardElevation(getResources().getDimension(R.dimen.carddemo_shadow_elevation));
-        //card.addCardHeader(header);
-        //card.addCardThumbnail(cardThumbnail);
+        card.setsDescription("●勝利條件（任一項）：\n" +
+                "> 最快得到搶旗分數上限\n" +
+                "> 限時內得分最高隊\n" +
+                "●起始條件：\n" +
+                ">  10 生命\n" +
+                "> 120 彈藥");
+        card.setsSubTitle("遊戲開始需要至少 2 人");
+        card.setsPurpose("開始搶旗！");
+        card.addCardThumbnail(cardThumbnail);
+        card.addCardHeader(header);
+        card.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
 
+                onGameModeCardClicked(1);
 
+            }
+        });
         cardView.setCard(card);
+
+        //
+        CardThumbnail cardThumbnail2 = new CardThumbnail(getActivity());
+        cardThumbnail2.setDrawableResource(R.drawable.ic_ring_ammo);
+
+        //Create a CardHeader
+        SuggestedCardHeader header2 = new SuggestedCardHeader(getActivity(),"團隊死鬥");
+        header2.setsHeaderText("團隊死鬥");
+
+        SuggestedCard card2 = new SuggestedCard(getActivity());
+        card2.setTitle("死鬥");
+        card2.setsHeaderText("團隊死鬥");
+        card2.setShadow(true);
+        card2.setCardElevation(getResources().getDimension(R.dimen.carddemo_shadow_elevation));
+        card2.addCardThumbnail(cardThumbnail);
+        card2.setsDescription("●勝利條件（任一項）：\n" +
+                "> 最先殺人數達到殺人上限\n" +
+                "> 限時內殺人數最多\n" +
+                "●起始條件：\n" +
+                ">  20 生命\n" +
+                "> 400 彈藥");
+        card2.setsSubTitle("遊戲開始需要至少 2 人");
+        card2.setsPurpose("開始死鬥！");
+        card2.addCardHeader(header2);
+        card2.addCardThumbnail(cardThumbnail2);
+        card2.setOnClickListener(new Card.OnCardClickListener() {
+            @Override
+            public void onClick(Card card, View view) {
+                onGameModeCardClicked(2);
+            }
+        });
+        cardView2.setCard(card2);
+
+        // ArrayList<Card> cards = new ArrayList<>();
+//        cards.add(card);
+//        cards.add(card2);
+//        cards.add(card);
+//
+//        CardArrayAdapter mCardArrayAdapter = new CardArrayAdapter(getActivity(),cards);
+//
+//        CardListView listView
+//                = (CardListView) getActivity().findViewById(R.id.carddemo_list_base1);
+//        if (listView!=null){
+//            listView.setAdapter(mCardArrayAdapter);
+//        }
     }
 
+    private void onGameModeCardClicked(final int gameMode){
+        // go check
+        pc.getOnlineGames(new PHPController.getOnlineGamesCallback() {
+
+            @Override
+            public void run(boolean result, List<Map<String, Long>> list) {
+
+                if(result) {
+                    if (list.size() > 0) {
+                        long nowTime = System.currentTimeMillis();
+                        ArrayList<Long> arrayGameList = new ArrayList<Long>();
+                        long gameTime;
+
+                        for (Map i : list) {
+                            gameTime = Long.valueOf(i.get(PHPcolumn.game.gameId).toString());
+                            if (nowTime - gameTime < 300000)
+                                arrayGameList.add(gameTime);
+                        }
+
+                        if(arrayGameList.size()>0) {
+                            Log.wtf(logTag, "i got those games available=" + arrayGameList.toString());
+
+                            for (long l : arrayGameList) {
+                                gc.connect(l);
+                            }
+                        }else
+                            showDialogWhenGetNoBleSupport(gameMode);
+                    }
+                    else
+                    {
+                        Log.wtf(logTag, "i got no suitable games.");
+                        showDialogWhenGetNoBleSupport(gameMode);
+                    }
+                }
+                else
+                {
+                    Log.wtf(logTag, "something goes wrong." );
+                }
+
+            }
+        });
+    }
+
+    private AlertDialog showDialogWhenGetNoBleSupport(final int gameMode){
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("有東西出狀況了")
+                .setIcon(R.drawable.warning)
+                .setMessage("系統找不到可以配對或是正在進行的遊戲，您要自己開一場嗎？")
+                .setCancelable(false)
+                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        hostGame(gameMode);
+                    }
+                })
+                .setNegativeButton("再等等", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    private void hostGame(int gameMode){
+        switch (gameMode){
+            case 1:
+
+                hostGame(2, 10, 120);
+                break;
+
+            case 2:
+
+                hostGame(2, 20, 400);
+                break;
+        }
+    }
     /**
      * This method builds a card with an animation
      */
@@ -386,7 +494,7 @@ public class MainFragment
 
     @Override
     public void hostSucceed() {
-
+        Toast.makeText(getActivity(),"host game ok!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -403,20 +511,21 @@ public class MainFragment
     @Override
     public void joinSucceed() {
         Toast.makeText(getActivity(),"joinSucceed",Toast.LENGTH_SHORT).show();
-        switchFragment(getActivity(),
-                BattleFragment.newInstance(
-                        PC.getGameId(),
-                        2,
-                        PC.getSetHP(),
-                        PC.getSetAMMO(),
-                        120,
-                        gc.getPlayer().getPlayerName()
+        // switchFragment(getActivity(),
+
+//                BattleFragment.newInstance(
+//                        PC.getGameId(),
+//                        2,
+//                        PC.getSetHP(),
+//                        PC.getSetAMMO(),
+//                        120,
+//                        gc.getPlayer().getPlayerName()
 
 //                        gc.getGame().getSetHp(),
 //                        gc.getGame().getSetAmmo(),
 //                        gc.getGame().getGameTime(),
 //                        gc.getPlayer().getPlayerName()
-                ));
+        //               ));
     }
 
     @Override
@@ -432,6 +541,27 @@ public class MainFragment
     @Override
     public void joinFailed() {
 
+    }
+
+    @Override
+    public void onClicked() {
+    }
+
+    @Override
+    public void onLongClicked() {
+
+        GameListDialog gameListDialog = new GameListDialog(getActivity());
+        gameListDialog.show();
+    }
+
+    @Override
+    public void onClick(Card card, View view) {
+
+    }
+
+    @Override
+    public boolean onLongClick(Card card, View view) {
+        return false;
     }
 
     /**

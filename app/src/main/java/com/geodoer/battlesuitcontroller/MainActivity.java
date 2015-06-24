@@ -105,6 +105,10 @@ public class MainActivity
             arrayListFakeMsg = null,
             arrayBleDevices = null;
 
+    private static boolean
+            isBattling = false;
+
+
     //
     //
     //
@@ -429,6 +433,14 @@ public class MainActivity
             // 設定logo->消失/
             cbMainLogo.setVisibility(View.GONE);
         }
+    }
+
+    public static boolean isBattling() {
+        return isBattling;
+    }
+
+    public static void setIsBattling(boolean isBattling) {
+        MainActivity.isBattling = isBattling;
     }
 
     //==============================//
@@ -868,7 +880,20 @@ public class MainActivity
 
     @Override
     public void onReceivedActionData(String actionData) {
+        //Log.wtf(logTag, "onReceived=" + actionData);
 
+        if(isBattling()) {
+            if (actionData.equals("BB")) {
+                final Intent intent1 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
+                intent1.putExtra(BscUtils.EXTRA_DATA, "BB");
+                sendBroadcast(intent1);
+
+            } else if (actionData.equals("CC")) {
+                final Intent intent2 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
+                intent2.putExtra(BscUtils.EXTRA_DATA, "CC");
+                sendBroadcast(intent2);
+            }
+        }
     }
 
     @Override

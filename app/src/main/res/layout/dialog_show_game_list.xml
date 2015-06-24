@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:background="#ffffffff"
+            android:background="#b15eb2ff"
             android:padding="8dp"/>
 
 

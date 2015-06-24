@@ -198,7 +198,7 @@
 
     <style name="carddemo_suggested_text">
         <item name="android:textSize">13sp</item>
-        <item name="android:textColor">#D0D0D0</item>
+        <item name="android:textColor">@color/c_dark_brown</item>
     </style>
 
     <style name="carddemo_suggested_text_bold">
