@@ -19,4 +19,12 @@
   <color name="window_background">#FFF5F5F5</color>
     <color name="bar_color_ammo">#FFE0A400</color>
     <color name="bar_color_hp">#FFAC3430</color>
+
+  <!-- color card -->
+  <color name="demo_card_background_color1">#FFBB33</color>
+  <color name="demo_card_background_color2">#98CC00</color>
+  <color name="demo_card_background_color3">#A966CC</color>
+  <color name="demo_card_background_color4">#33B4E4</color>
+  <color name="demo_card_background_color5">#FF4343</color>
+
 </resources>

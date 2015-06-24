@@ -14,14 +14,14 @@ import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
-import com.geodoer.battlesuitcontroller.item.aGame;
-import com.geodoer.battlesuitcontroller.item.aPlayer;
+import com.geodoer.battlesuitcontroller.gameItem.aGame;
+import com.geodoer.battlesuitcontroller.gameItem.aPlayer;
 import com.geodoer.parsecontroller.controller.GameIdmaker;
 import com.geodoer.parsecontroller.controller.ParseController;
 
 import at.markushi.ui.CircleButton;
 
-import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
+import static com.geodoer.battlesuitcontroller.util.BscUtils.switchFragment;
 
 public class HostFragment
         extends

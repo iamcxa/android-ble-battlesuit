@@ -36,7 +36,8 @@
             android:src="@drawable/ic_clear_white_48dp"
             app:cb_color="@color/c_red_ncs"
             app:cb_pressedRingWidth="12dip"
-            android:padding="20dp"  />
+            android:padding="20dp"
+            />
     </LinearLayout>
 
 </LinearLayout>

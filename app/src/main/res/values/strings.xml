@@ -24,13 +24,52 @@
         <item>#00000000</item>
     </string-array>
 
+    <string-array name="array_fake_loading_msg">
+        <item>正在與鋼鐵裝甲連線</item>
+        <item>正在連接虛擬能量電池</item>
+        <item>正在檢查使用者心智</item>
+        <item>正在填充愛家小精靈</item>
+        <item>正在等待衛星通訊</item>
+        <item>正在與siri調情</item>
+        <item>失去與Google總部通訊</item>
+        <item>發現前方十點鐘處有敵對成員</item>
+        <item>發現可愛小狗一隻</item>
+        <item>正在準備大規模當機</item>
+        <item>正在填充不存在的反裝甲彈</item>
+        <item>填充小精靈完成</item>
+        <item>填充反裝甲彈完成</item>
+        <item>鋼鐵裝甲準備完成</item>
+        <item>鋼鐵裝甲準備失敗</item>
+        <item>正在檢查使用者生命跡象</item>
+        <item>使用者生命跡象檢查失敗</item>
+    </string-array>
+
+    <string name="fake_loading_msg_using_simulator">開啟作弊模式</string>
+
+
     <string name="menu_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_main3">Main3Activity</string>
     <string name="title_activity_host">HostActivity</string>
     <string name="title_activity_join">JoinActivity</string>
+
+    <!-- You may know card -->
+    <string name="may_know_card_title">You may know</string>
+    <string name="may_know_card_subtitle">To see posts from friends and family, add them.</string>
+    <string name="may_know_card_add">Add</string>
+    <string name="may_know_card_inner_title">Gabriele Mariotti</string>
+    <string name="may_know_card_inner_subtitle">178 in common</string>
+
+
+    <!-- Suggested communities -->
+    <string name="demo_suggested_header">Suggested communities</string>
+    <string name="demo_suggested_title">Android &#8482;</string>
+    <string name="demo_suggested_member">199990 members</string>
+    <string name="demo_suggested_subtitle">Brought to you by Android Central......</string>
+    <string name="demo_suggested_community">View community</string>
+
 
 </resources>

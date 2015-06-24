@@ -1,1 +1,1 @@
-include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar', ':phpcontroller', ':waterWaveProgress'
+include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar', ':phpcontroller', ':waterWaveProgress', ':taurus', ':velocimeterlibrary'

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
-import com.geodoer.battlesuitcontroller.item.aGame;
-import com.geodoer.battlesuitcontroller.item.aPlayer;
+import com.geodoer.battlesuitcontroller.gameItem.aGame;
+import com.geodoer.battlesuitcontroller.gameItem.aPlayer;
 import com.geodoer.parsecontroller.controller.ParseController;
 
 /**

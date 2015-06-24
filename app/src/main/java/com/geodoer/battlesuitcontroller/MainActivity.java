@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -17,11 +18,13 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geodoer.battlesuitcontroller.util.BscUtils;
 import com.geodoer.battlesuitcontroller.view.HostFragment;
-import com.geodoer.battlesuitcontroller.view.JoinFragment;
+import com.geodoer.battlesuitcontroller.view.MainFragment;
 import com.geodoer.battlesuitcontroller.view.SettingsActivity;
 import com.geodoer.bluetoothcontroler.BcUtils;
 import com.geodoer.bluetoothcontroler.controller.BleActionReceiver;
@@ -29,11 +32,14 @@ import com.geodoer.bluetoothcontroler.controller.BleController;
 import com.geodoer.bluetoothcontroler.service.GeoBleService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Random;
 
 import at.markushi.ui.CircleButton;
 
-import static com.geodoer.battlesuitcontroller.BscUtils.logTag;
-import static com.geodoer.battlesuitcontroller.BscUtils.switchFragment;
+import static com.geodoer.battlesuitcontroller.util.BscUtils.logTag;
+import static com.geodoer.battlesuitcontroller.util.BscUtils.switchFragment;
 
 
 public class MainActivity
@@ -43,18 +49,28 @@ public class MainActivity
         View.OnClickListener,
         BleActionReceiver.whenReceivedBleAction,
         BleController.whenRunningBleService,
-        GeoBleService.whenServiceStateChanged{
+        GeoBleService.whenServiceStateChanged,
+        MainFragment.OnFragmentInteractionListener{
+
+    private final static int
+            MODE_CODE_COMPONENT_PARPARE_TO_WAITING = 0,
+            MODE_CODE_COMPONENT_WAISTING_IS_OVER = 1,
+            MODE_CODE_COMPONENT_FADING_OUT_END = 2;
 
     private CircleButton
-            btnHost,
-            btnJoin,
+            //btnHost,
+            //btnJoin,
             cbMainLogo;
+
+    private FrameLayout
+            container;
 
     private Toolbar
             toolbar;
 
     private TextView
-            txtWaitingIndicator;
+            txtWaitingIndicator,
+            txtShowFakeLoadingMsg;
 
     private Handler
             handler,
@@ -65,6 +81,7 @@ public class MainActivity
             rCheckBle,
             rCheckConnectionAlive,
             rWaitingForConnection,
+            rFakeWaitingMsg,
             rAutoConnectToDevice,
             rMainLogoFading,
             rMainLogoFadeOut;
@@ -85,15 +102,18 @@ public class MainActivity
             findDeviceFailedCount = 0;
 
     private ArrayList<String>
+            arrayListFakeMsg = null,
             arrayBleDevices = null;
 
     //
     //
     //
 
-    private BleActionReceiver mBleActionReceiver;
+    private BleActionReceiver
+            mBleActionReceiver;
 
-    private BleController bc;
+    private BleController
+            bc;
 
     //
     // AppCompatActivity Overrides
@@ -166,6 +186,7 @@ public class MainActivity
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0) {
+            //moveTaskToBack(true);
             event.startTracking();
             return true;
         }else
@@ -211,15 +232,18 @@ public class MainActivity
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(false);
 
-        btnHost = (CircleButton) findViewById(R.id.btnHost);
-        btnJoin = (CircleButton) findViewById(R.id.btnJoin);
-        btnHost.setOnClickListener(this);
-        btnJoin.setOnClickListener(this);
+        container = (FrameLayout) findViewById(R.id.container);
+
+//        btnHost = (CircleButton) findViewById(R.id.btnHost);
+//        btnJoin = (CircleButton) findViewById(R.id.btnJoin);
+//        btnHost.setOnClickListener(this);
+//        btnJoin.setOnClickListener(this);
 
         cbMainLogo = (CircleButton) findViewById(R.id.cbMainLogo);
         cbMainLogo.setOnClickListener(this);
 
         txtWaitingIndicator = (TextView) findViewById(R.id.txtWaitingIndicator);
+        txtShowFakeLoadingMsg =(TextView) findViewById(R.id.txtShowFakeLoadingMsg);
 
         mBleActionReceiver = new BleActionReceiver();
         mBleActionReceiver.setWhenReceivedBleActionTarget(this);
@@ -230,6 +254,13 @@ public class MainActivity
         GeoBleService gbs = new GeoBleService();
         gbs.setServiceStateChangedTarget(this);
 
+        initAllThings();
+    }
+
+    private void initAllThings(){
+        // 還原預設值
+        Log.wtf(BscUtils.logTag, "----------- reSTART -----------");
+
         arrayBleDevices = new ArrayList<>();
         arrayBleDevices.clear();
 
@@ -237,20 +268,65 @@ public class MainActivity
         handler = new Handler();
         handlerForMainLogoFading = new Handler();
 
-        start();
-    }
+        // 塞入假訊息
+        initFakeLoadingMsg();
 
-    private void start(){
-        // 還原預設值
-        setComponentsBackDefaultValue();
+        // 重設變數
+        initVariable();
+
+        // 設定ui物件屬性
+        initComponentsWhenFindingDevicesStart();
 
         // 清空queue
         removeAllRunnableFromQueue();
 
         // 塞入runnable
-        handlerForUi.postDelayed(setRunWaiting(), 300);
         handler.post(setRunCheckBle());
+        handlerForUi.postDelayed(setRunWaiting(), 300);
+        handlerForUi.postDelayed(setRunFakeWaitingMsg(), 500);
         handlerForMainLogoFading.postDelayed(setRunFading(), 100);
+    }
+
+    private void initVariable(){
+        BscUtils.deviceName = "";
+        BscUtils.ConnectedBleDeviceAddress = "";
+        BscUtils.ConnectedBleDevice = null;
+
+        arrayBleDevices.clear();
+
+        findDeviceFailedCount = 0;
+        isMainLogoFading = true;
+        isWaiting = true;
+        hasDevice1 = false;
+        hasDevice2 = false;
+        doConnect = false;
+    }
+
+    private void initComponentsWhenFindingDevicesStart(){
+
+        // 藏起 toolbar
+        toolbar.setVisibility(View.GONE);
+
+        // 藏起frame
+        container.setVisibility(View.INVISIBLE);
+
+        //  btnHost.setVisibility(View.INVISIBLE);
+        //  btnJoin.setVisibility(View.INVISIBLE);
+
+        controlTxtView(MODE_CODE_COMPONENT_PARPARE_TO_WAITING);
+
+        controlMainLogo(MODE_CODE_COMPONENT_PARPARE_TO_WAITING);
+    }
+
+    private void initFakeLoadingMsg(){
+        //
+        String[] fakeMsgs
+                = getResources().getStringArray(R.array.array_fake_loading_msg);
+        Log.wtf(logTag, "size=" + fakeMsgs.length +
+                "msg=" + Arrays.toString(fakeMsgs));
+        arrayListFakeMsg = new ArrayList<>();
+        arrayListFakeMsg.clear();
+        Collections.addAll(arrayListFakeMsg, fakeMsgs);
     }
 
     private void removeAllRunnableFromQueue(){
@@ -265,6 +341,8 @@ public class MainActivity
                 handlerForUi.removeCallbacks(rWaitingForConnection);
             if (rCheckConnectionAlive != null)
                 handlerForUi.removeCallbacks(rCheckConnectionAlive);
+            if(rFakeWaitingMsg!=null)
+                handlerForUi.removeCallbacks(rFakeWaitingMsg);
         }
         if(handlerForMainLogoFading!=null){
             if(rMainLogoFading!=null)
@@ -272,75 +350,94 @@ public class MainActivity
             if(rMainLogoFadeOut!=null)
                 handlerForMainLogoFading.removeCallbacks(rMainLogoFadeOut);
         }
-
         if(bc!=null)
             bc.triggerStopService();
     }
 
-    private void setComponentsBackDefaultValue(){
-        Log.wtf(BscUtils.logTag, "----------- reSTART -----------");
 
-        BscUtils.deviceName = "";
-        BscUtils.ConnectedBleDeviceAddress = "";
-        BscUtils.ConnectedBleDevice = null;
-
-        arrayBleDevices.clear();
-
-        findDeviceFailedCount = 0;
-        isMainLogoFading = true;
-        isWaiting = true;
-        hasDevice1 = false;
-        hasDevice2 = false;
-        doConnect = false;
-
-        setComponentsWhenNeededToConnectBleDevices();
-    }
-
-    private void setComponentsWhenBleDeviceConnected(){
-        cbMainLogo.setColor(getResources().getColor(R.color.c_brick_red));
-        cbMainLogo.setAlpha((float) 1);
-        cbMainLogo.setClickable(false);
-        cbMainLogo.setPressed(true);
-
+    private void setComponentsWhenFindingDevicesEnd(){
+//
+        controlMainLogo(MODE_CODE_COMPONENT_WAISTING_IS_OVER);
+        //
         isMainLogoFading = false;
     }
 
-    private void setComponentsWhenNeededToConnectBleDevices(){
-        txtWaitingIndicator.setVisibility(View.VISIBLE);
-        txtWaitingIndicator.setText("...");
-        txtWaitingIndicator.setAlpha((float) 1);
-
+    private void setComponentsWhenFadingOutEnd(){
+        //
         toolbar.setVisibility(View.GONE);
-        btnHost.setVisibility(View.INVISIBLE);
-        btnJoin.setVisibility(View.INVISIBLE);
 
-        cbMainLogo.setVisibility(View.VISIBLE);
-        cbMainLogo.setColor(getResources().getColor(R.color.c_deep_sky_blue));
-        cbMainLogo.setAlpha((float) 0.5);
-        cbMainLogo.setClickable(false);
-        cbMainLogo.setPressed(false);
+        //
+        // btnHost.setVisibility(View.VISIBLE);
+        // btnJoin.setVisibility(View.VISIBLE);
+
+
+        // fading out 結束才顯示frame
+        container.setVisibility(View.VISIBLE);
+        switchFragment(this, MainFragment.newInstance("", ""));
+
+
+        controlTxtView(MODE_CODE_COMPONENT_FADING_OUT_END);
+
+        controlMainLogo(MODE_CODE_COMPONENT_FADING_OUT_END);
     }
 
-    private void setSubMenuShow(){
-        txtWaitingIndicator.setVisibility(View.GONE);
-        txtWaitingIndicator.setText("...");
+    private void controlTxtView(int mode){
+        if (mode == MODE_CODE_COMPONENT_PARPARE_TO_WAITING) {
+            // 顯示 "..."
+            txtWaitingIndicator.setVisibility(View.VISIBLE);
+            txtWaitingIndicator.setText("...");
+            txtWaitingIndicator.setAlpha((float) 1);
+            //
+            txtShowFakeLoadingMsg.setVisibility(View.VISIBLE);
+            txtShowFakeLoadingMsg.setText("正在準備");
+            txtShowFakeLoadingMsg.setAlpha((float)1);
+        }else
+        if(mode == MODE_CODE_COMPONENT_WAISTING_IS_OVER){
 
-        toolbar.setVisibility(View.VISIBLE);
-        btnHost.setVisibility(View.VISIBLE);
-        btnJoin.setVisibility(View.VISIBLE);
+            txtShowFakeLoadingMsg.setText("開啟作弊模式");
 
-        cbMainLogo.setClickable(false);
-        cbMainLogo.setVisibility(View.GONE);
+        }else
+        if(mode == MODE_CODE_COMPONENT_FADING_OUT_END) {
+            //
+            // 不顯示任何東西
+            txtWaitingIndicator.setVisibility(View.GONE);
+            txtWaitingIndicator.setText("...");
+
+            txtShowFakeLoadingMsg.setVisibility(View.GONE);
+            txtShowFakeLoadingMsg.setText("正在準備");
+        }
     }
 
+    private void controlMainLogo(int mode) {
+        if (mode == MODE_CODE_COMPONENT_PARPARE_TO_WAITING) {
+            // 設定logo->顯示/藍色/半透明/不能按/未按下
+            cbMainLogo.setVisibility(View.VISIBLE);
+            cbMainLogo.setColor(getResources().getColor(R.color.c_deep_sky_blue));
+            cbMainLogo.setAlpha((float) 0.5);
+            cbMainLogo.setClickable(false);
+            cbMainLogo.setPressed(false);
+        } else
+        if(mode == MODE_CODE_COMPONENT_WAISTING_IS_OVER){
+            // 設定logo->顯示/紅色/不透明/不能按/已按下(發光)
+            cbMainLogo.setVisibility(View.VISIBLE);
+            cbMainLogo.setColor(getResources().getColor(R.color.c_brick_red));
+            cbMainLogo.setAlpha((float) 1);
+            cbMainLogo.setClickable(false);
+            cbMainLogo.setPressed(true);
+        }else
+        if(mode == MODE_CODE_COMPONENT_FADING_OUT_END) {
+            // 設定logo->消失/
+            cbMainLogo.setVisibility(View.GONE);
+        }
+    }
 
-    //
-    // dialogs
-    //
+    //==============================//
+    //           Dialog(s)          //
+    //==============================//
 
     private AlertDialog showDialogWhenGetNoBleSupport(){
         return new AlertDialog.Builder(this)
-                .setTitle("發現問題")
+                .setTitle("發生什麼事")
                 .setIcon(R.drawable.warning)
                 .setMessage("你的裝置不支援藍牙4.0！")
                 .setCancelable(false)
@@ -354,11 +451,11 @@ public class MainActivity
 
     private AlertDialog showDialogWhenFindNoDevices(){
         return new AlertDialog.Builder(this)
-                .setTitle("發現問題")
+                .setTitle("發生什麼事")
                 .setIcon(R.drawable.warning)
                 .setMessage("找不到裝置！")
                 .setCancelable(false)
-                .setNeutralButton("離開", new DialogInterface.OnClickListener() {
+                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
@@ -367,14 +464,15 @@ public class MainActivity
                 .setPositiveButton("再多試幾次", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        start();
+                        initAllThings();
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("用模擬器好了...", new DialogInterface.OnClickListener() {
+                .setNeutralButton("用模擬器吧", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         removeAllRunnableFromQueue();
+                        controlTxtView(MODE_CODE_COMPONENT_WAISTING_IS_OVER);
                         handlerForUi.postDelayed(setRunFadingOut(), 1000);
                         dialog.dismiss();
                     }
@@ -404,7 +502,7 @@ public class MainActivity
     private AlertDialog showDialogWhenLostConnection(){
         bc.triggerStopService();
         return new AlertDialog.Builder(this)
-                .setTitle("發現問題")
+                .setTitle("發生什麼事")
                 .setIcon(R.drawable.warning)
                 .setMessage("裝置斷線！")
                 .setCancelable(false)
@@ -427,11 +525,33 @@ public class MainActivity
     //         Runnable(s)          //
     //==============================//
 
+    //
+    private Runnable setRunFakeWaitingMsg(){
+        return rFakeWaitingMsg = new Runnable(){
+            @Override
+            public void run() {
+                // run initAllThings
+                if(isWaiting) {
+                    Random seed = new Random();
+                    int position = seed.nextInt(arrayListFakeMsg.size());
+                    txtShowFakeLoadingMsg.setText(arrayListFakeMsg.get(position));
+                    //Log.wtf(logTag, "Seed=" + position + ",msg=" + arrayListFakeMsg.get(position));
+                    handlerForUi.postDelayed(this, 700);
+                }else
+                    handlerForUi.removeCallbacks(this);
+                // run end
+            }
+        };
+
+    }
+
     // 搜尋Ble裝置時做動
     private Runnable setRunWaiting(){
         return rWaitingForConnection = new Runnable() {
             @Override
             public void run() {
+                // run initAllThings
+                //
                 if (txtWaitingIndicator.getText().equals("..."))
                     txtWaitingIndicator.setText("....");
                 else
@@ -441,6 +561,7 @@ public class MainActivity
                 if (txtWaitingIndicator.getText().equals("....."))
                     txtWaitingIndicator.setText("...");
 
+                //
                 if(isWaiting)
                 {
                     handlerForUi.postDelayed(this, 300);
@@ -448,9 +569,12 @@ public class MainActivity
                 else
                 {
                     handlerForUi.removeCallbacks(this);
-                    setComponentsWhenBleDeviceConnected();
+                    if(rFakeWaitingMsg!=null)
+                        handlerForUi.removeCallbacks(rFakeWaitingMsg);
+                    setComponentsWhenFindingDevicesEnd();
                     handlerForUi.postDelayed(setRunCheckConnectionAlive(),2500);
                 }
+                // run end
             }
         };
     }
@@ -458,9 +582,10 @@ public class MainActivity
     // 檢查ble支援狀態
     private Runnable setRunCheckBle(){
         return rCheckBle = new Runnable() {
+            boolean isStartedIntent = false;
             @Override
             public void run() {
-                // run start
+                // run initAllThings
                 int bleStateCode = bc.checkBleState();
 
                 if (bleStateCode==BleController.BLE_STATE_OK)
@@ -470,9 +595,12 @@ public class MainActivity
                 }
                 else if (bleStateCode==BleController.BLE_STATE_OFF)
                 {
-                    Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                    startActivityForResult(intent, BcUtils.REQUEST_ENABLE_BT);
-                    handler.postDelayed(rCheckBle,5000);
+                    if(!isStartedIntent) {
+                        Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(intent, BcUtils.REQUEST_ENABLE_BT);
+                        isStartedIntent = true;
+                    }
+                    handler.postDelayed(this,10000);
                 }
                 else if(bleStateCode == BleController.BLE_STATE_UNSUPPORTED)
                 {
@@ -490,7 +618,7 @@ public class MainActivity
             String bleConnectionStateString;
             @Override
             public void run() {
-                // run start
+                // run initAllThings
                 bleConnectionState =
                         bc.keepConnection(BscUtils.ConnectedBleDeviceAddress);
 
@@ -525,7 +653,7 @@ public class MainActivity
         return rAutoConnectToDevice = new Runnable(){
             @Override
             public void run() {
-                // run start
+                // run initAllThings
                 if(doConnect) {
                     final Intent connectBle = new Intent(getApplicationContext(),
                             GeoBleService.class);
@@ -543,14 +671,14 @@ public class MainActivity
     }
 
     private Runnable setRunFadingOut(){
-        setComponentsWhenBleDeviceConnected();
+        setComponentsWhenFindingDevicesEnd();
         return rMainLogoFadeOut = new Runnable() {
             int currV = ((int)cbMainLogo.getAlpha())*100;
             float alpha;
             boolean go = true;
             @Override
             public void run() {
-                // run start
+                // run initAllThings
                 alpha = ((float) currV) / 100;
 
                 if(go) currV--;
@@ -563,12 +691,15 @@ public class MainActivity
 
                 cbMainLogo.setAlpha(alpha);
                 txtWaitingIndicator.setAlpha(alpha);
+                txtShowFakeLoadingMsg.setAlpha(alpha);
                 //Log.wtf(logTag, "fadout currV=" + currV + " currAlpha=" + cbMainLogo.getAlpha());
                 if(go)
+                    // 仍在fading
                     handlerForMainLogoFading.postDelayed(this, 20);
                 else {
+                    // 結束
                     handlerForMainLogoFading.removeCallbacks(this);
-                    cbMainLogo.callOnClick();
+                    setComponentsWhenFadingOutEnd();
                 }
                 // run end
             }
@@ -581,7 +712,7 @@ public class MainActivity
             boolean go = true;
             @Override
             public void run() {
-                // run start
+                // run initAllThings
                 if (currV == 110 && go)
                     go = false;
                 else
@@ -614,12 +745,9 @@ public class MainActivity
                 break;
 
             case R.id.btnJoin:
-                switchFragment(this,JoinFragment.newInstance("", ""));
+                switchFragment(this, MainFragment.newInstance("", ""));
                 break;
 
-            case R.id.cbMainLogo:
-                setSubMenuShow();
-                break;
         }
         Toast.makeText(this, v.getId() + "", Toast.LENGTH_SHORT).show();
     }
@@ -701,8 +829,12 @@ public class MainActivity
 
             BscUtils.ConnectedBleDeviceAddress = device_address;
 
+            //
             txtWaitingIndicator.setText(
                     "OK with Board " + BscUtils.deviceName);
+
+            //
+            txtShowFakeLoadingMsg.setText("準備完成");
 
             handlerForUi.postDelayed(setRunFadingOut(),1000);
         }
@@ -746,6 +878,11 @@ public class MainActivity
 
     @Override
     public void onReceivedSomething() {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

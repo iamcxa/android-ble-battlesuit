@@ -10,7 +10,6 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
 
-//import com.geodoer.bluetoothcontroler.service.BluetoothLeService;
 import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.utils.StatusChangeListener;
 import com.google.gson.JsonArray;
@@ -19,6 +18,11 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//import com.geodoer.bluetoothcontroler.service.BluetoothLeService;
 
 /**
  *
@@ -44,7 +48,7 @@ public class PHPController extends Service
     private static long gameId;
 
     private static int ObjectId ;
-    //private static int player_count;
+    private static int player_count;
     private static int setHP;
     private static int setAMMO;
 
@@ -297,7 +301,7 @@ public class PHPController extends Service
                         ObjectId = JO.get(PHPcolumn.game.objectId_json).getAsInt();
                         setHP = JO.get(PHPcolumn.game.setHp).getAsInt();
                         setAMMO = JO.get(PHPcolumn.game.setAmmo).getAsInt();
-                        //player_count = JO.get(PHPcolumn.game.gPcount).getAsInt();
+                        player_count = JO.get(PHPcolumn.game.gPcount).getAsInt();
                         run(true);
                     }
                 }
@@ -415,7 +419,8 @@ public class PHPController extends Service
         public abstract void run(boolean result);
     }
 
-    public static abstract class getOnlineGamesCallback implements  FutureCallback<JsonObject>
+    public static abstract class getOnlineGamesCallback
+            implements  FutureCallback<JsonObject>
     {
         @Override
         public void onCompleted(Exception e, JsonObject result)
@@ -424,10 +429,22 @@ public class PHPController extends Service
             {
                 if(result.get(status).getAsInt() == 1)
                 {
-                    ArrayList<Long> AL = new ArrayList<>();
+                    Map<String, Long> map;
+                    List<Map<String, Long>> AL = new ArrayList<>();
                     JsonArray JA = result.getAsJsonArray(data);
-                    for(int i = 0 ; i< JA.size() ; i++)
-                        AL.add(JA.get(i).getAsJsonObject().get(PHPcolumn.game.gameId).getAsLong());
+
+                    // 倒數
+                    for(int i = JA.size()-1 ; i>=0  ; i--) {
+                        //AL.add(JA.get(i).getAsJsonObject().get(PHPcolumn.game.gameId).getAsLong());
+
+                        map = new HashMap<>();
+                        map.put(PHPcolumn.game.gameId,
+                                JA.get(i).getAsJsonObject().get(PHPcolumn.game.gameId).getAsLong());
+                        map.put(PHPcolumn.game.gPcount,
+                                JA.get(i).getAsJsonObject().get(PHPcolumn.game.gPcount).getAsLong());
+                        AL.add(map);
+                    }
+
                     run(true, AL);
                 }
                 else
@@ -442,7 +459,7 @@ public class PHPController extends Service
                 Log.wtf(TAG,"connectGameCallback exception:"+e.toString());
             }
         }
-        public abstract void run(boolean result,ArrayList<Long> list);
+        public abstract void run(boolean result,List<Map<String, Long>> list);
     }
 
 

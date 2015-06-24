@@ -11,11 +11,13 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.controller.GameIdmaker;
 import com.geodoer.phpcontroller.controller.PHPController;
 import com.geodoer.phpcontroller.utils.StatusChangeListener;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class TestMainActivity extends AppCompatActivity
@@ -195,7 +197,7 @@ public class TestMainActivity extends AppCompatActivity
                 PC.getOnlineGames(new PHPController.getOnlineGamesCallback()
                 {
                     @Override
-                    public void run(boolean result, ArrayList<Long> list)
+                    public void run(boolean result, List<Map<String, Long>> list)
                     {
                         if (result)
                         {
@@ -205,9 +207,10 @@ public class TestMainActivity extends AppCompatActivity
                             else
                             {
                                 Log.wtf(TAG, "getOnline list size :" + list.size());
-                                for (long i : list)
-                                {
-                                    Log.wtf(TAG, "Online Games ID : " + i);
+                                for (Map i : list) {
+                                    Log.wtf("pc",
+                                            "Onlining Games ID : " + i.get(PHPcolumn.game.gameId) +
+                                                    "and its people count : " + i.get(PHPcolumn.game.gPcount));
                                 }
                             }
                             //---------------------------------------------

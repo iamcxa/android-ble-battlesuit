@@ -87,14 +87,6 @@
             android:name=".view.BattleActivity"
             android:label="@string/title_activity_main3" >
         </activity>
-        <activity
-            android:name=".view.HostActivity"
-            android:label="@string/title_activity_host" >
-        </activity>
-        <activity
-            android:name=".view.JoinActivity"
-            android:label="@string/title_activity_join" >
-        </activity>
     </application>
 
 </manifest>

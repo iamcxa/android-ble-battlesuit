@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import cn.modificator.waterwave_progress.R;
 
 public class WaterWaveAttrInit {
 
@@ -44,7 +43,7 @@ public class WaterWaveAttrInit {
 		fontSize = typedArray.getDimensionPixelOffset(
 				R.styleable.WaterWaveProgress_fontSize, 0);
 		textColor = typedArray.getColor(
-				R.styleable.WaterWaveProgress_textColor, 0xFFFFFFFF);
+				R.styleable.WaterWaveProgress_fontColor, 0xFFFFFFFF);
 		progress = typedArray.getInteger(
 				R.styleable.WaterWaveProgress_progress, 15);
 		maxProgress = typedArray.getInteger(

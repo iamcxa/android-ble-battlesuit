@@ -1,38 +1,84 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+                xmlns:card="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:id="@+id/fragment_join_linearLayout"
+                android:weightSum="1">
+
+
+    <!-- Animation shadow -->
 
     <LinearLayout
-        android:layout_gravity="center"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
 
-        <at.markushi.ui.CircleButton
-            android:id="@+id/btnHost"
-            android:layout_width="192dp"
-            android:layout_height="192dp"
-            android:layout_marginBottom="8dip"
-            android:src="@drawable/ic_word_host"
-            app:cb_color="#FF4444"
-            app:cb_pressedRingWidth="12dip"
-            android:padding="20dp" />
+            <ScrollView
+                style="@style/carddemo_default_container_padding"
+                android:id="@+id/card_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="383dp">
 
-        <at.markushi.ui.CircleButton
-            android:id="@+id/btnJoin"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginBottom="8dip"
-            android:src="@drawable/ic_word_join"
-            app:cb_color="@color/c_blue_ncs"
-            app:cb_pressedRingWidth="12dip"
-            android:padding="20dp" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <ListView
+                        android:id="@+id/listView"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:background="#ffffffff"
+                        android:layout_gravity="center_horizontal"
+                        />
+
+                    <it.gmariotti.cardslib.library.view.CardViewNative
+                        android:id="@+id/carddemo_suggested"
+                        style="@style/card_external"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        card:card_layout_resourceID="@layout/carddemo_native_suggested_layout"/>
+
+
+                    <!-- Empty view-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="demo_section_shadow_animation"
+            android:textColor="#ffffffff"/>
+
+        <it.gmariotti.cardslib.library.view.CardViewNative
+            android:id="@+id/carddemo_shadow_animation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/card_external"/>
+
+        <include
+            layout="@layout/include_host_join_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/include"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
     </LinearLayout>
+
 
 </RelativeLayout>
 
