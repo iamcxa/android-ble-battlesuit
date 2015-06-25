@@ -20,11 +20,8 @@ import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
-import com.geodoer.battlesuitcontroller.gameItem.aGame;
-import com.geodoer.battlesuitcontroller.gameItem.aPlayer;
 import com.geodoer.battlesuitcontroller.uiCard.SuggestedCard;
 import com.geodoer.battlesuitcontroller.uiCard.SuggestedCardHeader;
-import com.geodoer.parsecontroller.controller.GameIdmaker;
 import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.controller.PHPController;
 
@@ -56,9 +53,7 @@ public class MainFragment
         View.OnClickListener,
         Card.OnCardClickListener,
         Card.OnLongCardClickListener,
-        ListView.OnItemClickListener,
-        GameController.whenSucceed,
-        SuggestedCard.whenClicked{
+        ListView.OnItemClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -92,6 +87,10 @@ public class MainFragment
             cardView,cardView2;
 
     private long gTime=0;
+
+    public static int
+            gameMode;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -116,16 +115,16 @@ public class MainFragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-       // pc = new PHPController(getActivity());
-        gc = new GameController(getActivity());
-        gc.setWhenSucceedTarget(this);
-        pc = gc.getPc();
+        // pc = new PHPController(getActivity());
+        //gc = new GameController(getActivity());
+        //gc.setWhenSucceedTarget(this);
+        //pc = gc.getPc();
     }
 
     @Override
@@ -185,7 +184,7 @@ public class MainFragment
                     = (CardViewNative) getActivity().findViewById(R.id.carddemo_suggested2);
 
 
-            SuggestedCard.setWhenClcikedTarget(this);
+            //SuggestedCard.setWhenClcikedTarget(this);
 
             //  CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
             //  CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
@@ -246,35 +245,6 @@ public class MainFragment
         });
     }
 
-    private void hostGame(int totalPlayers, int maxHp, int maxAmmo){
-        aGame aGame = new aGame();
-        aGame.setGameId(GameIdmaker.newId());
-        aGame.setGameTime(999);
-        aGame.setPlayerCount(totalPlayers);
-        aGame.setSetAmmo(maxAmmo);
-        aGame.setSetHp(maxHp);
-
-        aPlayer aPlayer = new aPlayer();
-        aPlayer.setPlayerId(1);
-        aPlayer.setPlayerName("host");
-
-        gc.host(aGame,aPlayer);
-
-//        pc.setGame(totalPlayers, maxHp, maxAmmo,
-//                new PHPController.setGameCallback(GameIdmaker.newId()) {
-//                    @Override
-//                    public void run(boolean result) {
-//                        if (result)
-//                        {
-//
-//                        }else
-//                        {
-//
-//                        }
-//                    }
-//                });
-    }
-
     /**
      * This method builds a suggested card example
      */
@@ -299,7 +269,9 @@ public class MainFragment
                 "> 限時內得分最高隊\n" +
                 "●起始條件：\n" +
                 ">  10 生命\n" +
-                "> 120 彈藥");
+                "> 120 彈藥 "+
+                "> 沒有彈藥包（透過NFC）"+
+                "> 有補血包（透過NFC）");
         card.setsSubTitle("遊戲開始需要至少 2 人");
         card.setsPurpose("開始搶旗！");
         card.addCardThumbnail(cardThumbnail);
@@ -308,7 +280,10 @@ public class MainFragment
             @Override
             public void onClick(Card card, View view) {
 
-                onGameModeCardClicked(1);
+                gameMode = 1;
+                GameListDialog gameListDialog = new GameListDialog(getActivity());
+                gameListDialog.show();
+                //onGameModeCardClicked(1);
 
             }
         });
@@ -333,7 +308,9 @@ public class MainFragment
                 "> 限時內殺人數最多\n" +
                 "●起始條件：\n" +
                 ">  20 生命\n" +
-                "> 400 彈藥");
+                "> 400 彈藥\n" +
+                "> 沒有補血包（透過NFC）"+
+                "> 有彈藥包（透過NFC）");
         card2.setsSubTitle("遊戲開始需要至少 2 人");
         card2.setsPurpose("開始死鬥！");
         card2.addCardHeader(header2);
@@ -341,7 +318,14 @@ public class MainFragment
         card2.setOnClickListener(new Card.OnCardClickListener() {
             @Override
             public void onClick(Card card, View view) {
-                onGameModeCardClicked(2);
+
+                gameMode = 2 ;
+
+                GameListDialog gameListDialog = new GameListDialog(getActivity());
+
+                gameListDialog.show();
+//                onGameModeCardClicked(2);
+
             }
         });
         cardView2.setCard(card2);
@@ -361,6 +345,8 @@ public class MainFragment
     }
 
     private void onGameModeCardClicked(final int gameMode){
+        this.gameMode = gameMode;
+
         // go check
         pc.getOnlineGames(new PHPController.getOnlineGamesCallback() {
 
@@ -386,12 +372,12 @@ public class MainFragment
                                 gc.connect(l);
                             }
                         }else
-                            showDialogWhenGetNoBleSupport(gameMode);
+                            showDialogWhenFindNoEmptyOnlineGame(gameMode);
                     }
                     else
                     {
                         Log.wtf(logTag, "i got no suitable games.");
-                        showDialogWhenGetNoBleSupport(gameMode);
+                        showDialogWhenFindNoEmptyOnlineGame(gameMode);
                     }
                 }
                 else
@@ -403,16 +389,20 @@ public class MainFragment
         });
     }
 
-    private AlertDialog showDialogWhenGetNoBleSupport(final int gameMode){
+    //==============================//
+    //           Dialog(s)          //
+    //==============================//
+
+    private AlertDialog showDialogWhenFindNoEmptyOnlineGame(final int gameMode){
         return new AlertDialog.Builder(getActivity())
-                .setTitle("有東西出狀況了")
-                .setIcon(R.drawable.warning)
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
                 .setMessage("系統找不到可以配對或是正在進行的遊戲，您要自己開一場嗎？")
                 .setCancelable(false)
                 .setPositiveButton("好的", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        hostGame(gameMode);
+                        gc.hostGameMode(gameMode);
                     }
                 })
                 .setNegativeButton("再等等", new DialogInterface.OnClickListener() {
@@ -423,19 +413,27 @@ public class MainFragment
                 }).show();
     }
 
-    private void hostGame(int gameMode){
-        switch (gameMode){
-            case 1:
-
-                hostGame(2, 10, 120);
-                break;
-
-            case 2:
-
-                hostGame(2, 20, 400);
-                break;
-        }
+    private AlertDialog showDialogWhenSelectGameMode(final int gameMode){
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("系統找不到可以配對或是正在進行的遊戲，您要自己開一場嗎？")
+                .setCancelable(false)
+                .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //hostGame();
+                        gc.hostGameMode(gameMode);
+                    }
+                })
+                .setNegativeButton("再等等", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
+
     /**
      * This method builds a card with an animation
      */
@@ -493,68 +491,6 @@ public class MainFragment
     }
 
     @Override
-    public void hostSucceed() {
-        Toast.makeText(getActivity(),"host game ok!",Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void connectSucceed() {
-        Toast.makeText(getActivity(),"connectSucceed",Toast.LENGTH_SHORT).show();
-
-        aPlayer aPlayer = new aPlayer();
-        aPlayer.setPlayerId(2);
-        aPlayer.setPlayerName("joiner");
-
-        gc.join(aPlayer);
-    }
-
-    @Override
-    public void joinSucceed() {
-        Toast.makeText(getActivity(),"joinSucceed",Toast.LENGTH_SHORT).show();
-        // switchFragment(getActivity(),
-
-//                BattleFragment.newInstance(
-//                        PC.getGameId(),
-//                        2,
-//                        PC.getSetHP(),
-//                        PC.getSetAMMO(),
-//                        120,
-//                        gc.getPlayer().getPlayerName()
-
-//                        gc.getGame().getSetHp(),
-//                        gc.getGame().getSetAmmo(),
-//                        gc.getGame().getGameTime(),
-//                        gc.getPlayer().getPlayerName()
-        //               ));
-    }
-
-    @Override
-    public void hostFailed() {
-
-    }
-
-    @Override
-    public void connectFailed() {
-
-    }
-
-    @Override
-    public void joinFailed() {
-
-    }
-
-    @Override
-    public void onClicked() {
-    }
-
-    @Override
-    public void onLongClicked() {
-
-        GameListDialog gameListDialog = new GameListDialog(getActivity());
-        gameListDialog.show();
-    }
-
-    @Override
     public void onClick(Card card, View view) {
 
     }
@@ -578,11 +514,5 @@ public class MainFragment
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
-    //
-    //
-    //
-
-
 
 }

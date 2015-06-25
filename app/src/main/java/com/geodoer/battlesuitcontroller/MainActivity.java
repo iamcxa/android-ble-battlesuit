@@ -22,7 +22,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.geodoer.battlesuitcontroller.controller.GameController;
 import com.geodoer.battlesuitcontroller.util.BscUtils;
+import com.geodoer.battlesuitcontroller.view.BattleFragment;
 import com.geodoer.battlesuitcontroller.view.HostFragment;
 import com.geodoer.battlesuitcontroller.view.MainFragment;
 import com.geodoer.battlesuitcontroller.view.SettingsActivity;
@@ -50,7 +52,8 @@ public class MainActivity
         BleActionReceiver.whenReceivedBleAction,
         BleController.whenRunningBleService,
         GeoBleService.whenServiceStateChanged,
-        MainFragment.OnFragmentInteractionListener{
+        MainFragment.OnFragmentInteractionListener,
+        BattleFragment.OnFragmentInteractionListener{
 
     private final static int
             MODE_CODE_COMPONENT_PARPARE_TO_WAITING = 0,
@@ -86,7 +89,6 @@ public class MainActivity
             rMainLogoFading,
             rMainLogoFadeOut;
 
-    //
     private boolean
             isMainLogoFading = true,
             isWaiting = true,
@@ -108,16 +110,14 @@ public class MainActivity
     private static boolean
             isBattling = false;
 
-
-    //
-    //
-    //
-
     private BleActionReceiver
             mBleActionReceiver;
 
     private BleController
             bc;
+
+    protected static GameController
+            gc;
 
     //
     // AppCompatActivity Overrides
@@ -125,13 +125,8 @@ public class MainActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_main);
-
-        //mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        //if (navigationView != null) setupDrawerContent(navigationView);
 
         setComponents();
     }
@@ -263,7 +258,9 @@ public class MainActivity
 
     private void initAllThings(){
         // 還原預設值
-        Log.wtf(BscUtils.logTag, "----------- reSTART -----------");
+        Log.wtf(BscUtils.logTag, "----------- initAllThings -----------");
+
+        gc = new GameController(this);
 
         arrayBleDevices = new ArrayList<>();
         arrayBleDevices.clear();
@@ -379,7 +376,6 @@ public class MainActivity
         container.setVisibility(View.VISIBLE);
         switchFragment(this, MainFragment.newInstance("", ""));
 
-
         controlTxtView(MODE_CODE_COMPONENT_FADING_OUT_END);
 
         controlMainLogo(MODE_CODE_COMPONENT_FADING_OUT_END);
@@ -435,6 +431,10 @@ public class MainActivity
         }
     }
 
+    public static GameController getThisGC(){
+        return gc;
+    }
+
     public static boolean isBattling() {
         return isBattling;
     }
@@ -449,11 +449,11 @@ public class MainActivity
 
     private AlertDialog showDialogWhenGetNoBleSupport(){
         return new AlertDialog.Builder(this)
-                .setTitle("發生什麼事")
+                .setTitle("問題")
                 .setIcon(R.drawable.warning)
                 .setMessage("你的裝置不支援藍牙4.0！")
                 .setCancelable(false)
-                .setPositiveButton("離開", new DialogInterface.OnClickListener() {
+                .setPositiveButton("離開遊戲", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
@@ -463,24 +463,25 @@ public class MainActivity
 
     private AlertDialog showDialogWhenFindNoDevices(){
         return new AlertDialog.Builder(this)
-                .setTitle("發生什麼事")
-                .setIcon(R.drawable.warning)
-                .setMessage("找不到裝置！")
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("找不到裝置。\n\n" +
+                        "請確定藍芽裝置都有開啟、並且在手機附近，或是將藍芽裝置重啟。")
                 .setCancelable(false)
-                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                .setNegativeButton("離開遊戲", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
                     }
                 })
-                .setPositiveButton("再多試幾次", new DialogInterface.OnClickListener() {
+                .setPositiveButton("再試一次", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         initAllThings();
                         dialog.dismiss();
                     }
                 })
-                .setNeutralButton("用模擬器吧", new DialogInterface.OnClickListener() {
+                .setNeutralButton("用模擬器", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         removeAllRunnableFromQueue();
@@ -493,11 +494,11 @@ public class MainActivity
 
     private AlertDialog showDialogWhenPressedBackKey(){
         return new AlertDialog.Builder(this)
-                .setTitle("你確定？")
-                .setIcon(R.drawable.ic_forum)
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
                 .setMessage("你按下返回鍵了。你要離開B.S.C嗎？")
                 .setCancelable(false)
-                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                .setNegativeButton("離開遊戲", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
@@ -514,11 +515,12 @@ public class MainActivity
     private AlertDialog showDialogWhenLostConnection(){
         bc.triggerStopService();
         return new AlertDialog.Builder(this)
-                .setTitle("發生什麼事")
-                .setIcon(R.drawable.warning)
-                .setMessage("裝置斷線！")
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("偵測到裝置斷線！\n\n" +
+                        "請確定BLE裝置有接上電源、而且在手機附近。")
                 .setCancelable(false)
-                .setNegativeButton("離開", new DialogInterface.OnClickListener() {
+                .setNegativeButton("離開遊戲", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.this.finish();
@@ -646,7 +648,7 @@ public class MainActivity
 
                     case 2: // connected
                         handlerForUi.removeCallbacks(this);
-                        handlerForUi.postDelayed(this, 2500);
+                        handlerForUi.postDelayed(this, 5000);
                         bleConnectionStateString = "ALIVE.";
                         break;
                 }
@@ -883,15 +885,28 @@ public class MainActivity
         //Log.wtf(logTag, "onReceived=" + actionData);
 
         if(isBattling()) {
-            if (actionData.equals("BB")) {
-                final Intent intent1 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
-                intent1.putExtra(BscUtils.EXTRA_DATA, "BB");
-                sendBroadcast(intent1);
+            //Log.wtf("MA", "now is Battling!");
+            switch (actionData) {
+                case "AA":
+                    //Log.wtf("MA", "Battling received AA");
+                    final Intent intent = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
+                    intent.putExtra(BscUtils.EXTRA_DATA, "AA");
+                    sendBroadcast(intent);
 
-            } else if (actionData.equals("CC")) {
-                final Intent intent2 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
-                intent2.putExtra(BscUtils.EXTRA_DATA, "CC");
-                sendBroadcast(intent2);
+                    break;
+                case "BB":
+                    //Log.wtf("MA", "Battling received BB");
+                    final Intent intent1 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
+                    intent1.putExtra(BscUtils.EXTRA_DATA, "BB");
+                    sendBroadcast(intent1);
+
+                    break;
+                case "CC":
+                    //Log.wtf("MA", "Battling received CC");
+                    final Intent intent2 = new Intent(BscUtils.ACTION_DATA_AVAILABLE);
+                    intent2.putExtra(BscUtils.EXTRA_DATA, "CC");
+                    sendBroadcast(intent2);
+                    break;
             }
         }
     }
@@ -902,8 +917,12 @@ public class MainActivity
     }
 
     @Override
-    public void onReceivedSomething() {
+    public void onReceivedSomething(String data) {
 
+        if(data.equals("START_TO_SWITCH_FRAGMENT_TO_BATTLE")) {
+            switchFragment(this,
+                    BattleFragment.newInstance());
+        }
     }
 
     @Override

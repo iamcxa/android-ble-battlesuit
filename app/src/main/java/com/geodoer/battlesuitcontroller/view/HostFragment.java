@@ -124,7 +124,7 @@ public class HostFragment
                     aPlayer.setPlayerName(pName);
 
                     // host it up.
-                    gc.host(aGame, aPlayer);
+                   gc.host(aGame, aPlayer);
 
                 }else
                     Toast.makeText(getActivity(),"請先選擇裝置!",Toast.LENGTH_SHORT).show();

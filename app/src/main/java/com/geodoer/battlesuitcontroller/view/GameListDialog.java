@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnShowListener;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,19 +14,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.geodoer.battlesuitcontroller.MainActivity;
 import com.geodoer.battlesuitcontroller.R;
+import com.geodoer.battlesuitcontroller.controller.GameController;
+import com.geodoer.battlesuitcontroller.util.BscUtils;
+import com.geodoer.bluetoothcontroler.BcUtils;
 import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.controller.PHPController;
 import com.yalantis.taurus.PullToRefreshView;
 
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -37,11 +42,12 @@ import at.markushi.ui.CircleButton;
  */
 public class GameListDialog extends AlertDialog
         implements
+        View.OnClickListener,
         DialogInterface.OnClickListener,
         OnShowListener,
-        View.OnClickListener
+        GameController.whenSucceed,
+        AdapterView.OnItemClickListener
 {
-
     private View
             dialogLayout;
 
@@ -54,18 +60,36 @@ public class GameListDialog extends AlertDialog
     private PullToRefreshView
             mPullToRefreshView;
 
-    private PHPController
-            pc;
-
     private ArrayAdapter<Map<String, Long>>
             arrayAdapter;
 
     private CircleButton
-            cbDialogOk;
+            cbDialogBack,
+            cbDialogNewGame;
 
     private ArrayList<Integer>
             arrayColors;
 
+    private int
+            gameMode;
+
+    //private PHPController
+    //        pc;
+
+    //private GameController
+    //       gc;
+
+    //
+    //
+    //
+
+    public GameListDialog(Context context) {
+        super(context);
+        //
+        setWindow();
+        //
+        setVars();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,21 +100,6 @@ public class GameListDialog extends AlertDialog
         setComponent();
     }
 
-    public GameListDialog(Context context) {
-        super(context);
-
-        setWindow();
-
-        pc=new PHPController(context);
-
-        arrayColors = new ArrayList<>();
-        //arrayColors.add(R.color.c_coral_red);
-        arrayColors.add(R.color.c_blue_ryb);
-        arrayColors.add(R.color.c_dark_green_x11);
-        arrayColors.add(R.color.c_blue_gray);
-        arrayColors.add(R.color.c_blue_munsell);
-    }
-
     private void setWindow(){
         // get things
         mLayoutInflater = getWindow().getLayoutInflater();
@@ -98,6 +107,8 @@ public class GameListDialog extends AlertDialog
 
         // set custom dialog layout
         setView(dialogLayout);
+
+        //setContentView(R.layout.dialog_show_game_list);
 
         // remove window title
         this.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -125,8 +136,12 @@ public class GameListDialog extends AlertDialog
     }
 
     private void setComponent(){
-        cbDialogOk = (CircleButton) findViewById(R.id.cbDialogOk);
-        cbDialogOk.setOnClickListener(this);
+        cbDialogBack = (CircleButton) findViewById(R.id.cbDialogBack);
+        cbDialogBack.setOnClickListener(this);
+
+        cbDialogNewGame = (CircleButton) findViewById(R.id.cbDialogNewGame);
+        cbDialogNewGame.setOnClickListener(this);
+        cbDialogNewGame.setEnabled(false);
 
         // mPullToRefreshView
         mPullToRefreshView
@@ -142,6 +157,7 @@ public class GameListDialog extends AlertDialog
                             public void run() {
                                 // run start
                                 setGameListAdapter();
+                                Toast.makeText(getContext(), "更新線上遊戲清單中...", Toast.LENGTH_SHORT).show();
                                 mPullToRefreshView.setRefreshing(false);
                                 // run end
                             }
@@ -155,10 +171,26 @@ public class GameListDialog extends AlertDialog
 
         // listView
         lvGameList = (ListView) findViewById(R.id.lvGameList);
+        lvGameList.setOnItemClickListener(this);
+
+    }
+
+    private void setVars(){
+        // gc
+        MainActivity.getThisGC().setWhenSucceedTarget(this);
+        // pc = gc.getPc();
+
+        // random colors
+        arrayColors = new ArrayList<Integer>();
+        //arrayColors.add(R.color.c_coral_red);
+        arrayColors.add(R.color.c_blue_ryb);
+        arrayColors.add(R.color.c_dark_green_x11);
+        arrayColors.add(R.color.c_blue_gray);
+        arrayColors.add(R.color.c_blue_munsell);
     }
 
     private void setGameListAdapter(){
-        pc.getOnlineGames(new PHPController.getOnlineGamesCallback() {
+        MainActivity.getThisGC().getPc().getOnlineGames(new PHPController.getOnlineGamesCallback() {
             @Override
             public void run(boolean result, List<Map<String, Long>> list) {
                 //
@@ -170,7 +202,7 @@ public class GameListDialog extends AlertDialog
                         Log.wtf("pc", "getOnlining list is null");
                     else {
 
-                        ArrayList<Long> arrayList = new ArrayList<>();
+                        ArrayList<Long> arrayList = new ArrayList<Long>();
                         arrayList.clear();
 
                         Log.wtf("pc", "getOnlining list size :" + list.size());
@@ -194,30 +226,17 @@ public class GameListDialog extends AlertDialog
 
                         lvGameList.setAdapter(arrayAdapter);
 
+                        cbDialogNewGame.setEnabled(true);
                     }
                     //---------------------------------------------
 
-                } else
-                    Log.wtf("PARSE", "get Onlining Games fail");
+                } else {
+                    Log.wtf("dialog", "get Onlining Games fail");
+                    // showDialogWhenGetNoOnlineGame();
+                }
             }
         });
     }
-
-//    private Button getBanNeutral() {
-//        return getButton(DialogInterface.BUTTON_NEUTRAL);
-//    }
-
-//    private void setDialogShowing(DialogInterface dialog) {
-//        try {
-//            //不關閉
-//            Field field = dialog.getClass().getSuperclass().getSuperclass().getDeclaredField("mShowing");
-//            field.setAccessible(true);
-//            field.set(dialog, false);
-//            //  MyDebug.MakeLog(1, "setDialogShowing");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void setDialogDismiss(DialogInterface dialog) {
         try {
@@ -231,45 +250,74 @@ public class GameListDialog extends AlertDialog
         }
     }
 
-//    /**
-//     * This is called when a long press occurs on our listView02 items.
-//     */
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//
-//        menu.setHeaderTitle("Context Menu");
-//        menu.add(0, v.getId(), 0, "Delete");
-//    }
+    private AlertDialog showDialogWhenGetNoOnlineGame(){
+        return new AlertDialog.Builder(getContext())
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("更新遊戲清單沒有成功。\n \n" +
+                        "請嘗試檢查網路狀態，或是滑動清單重新讀取一次。\n" +
+                        "*如果讀取遊戲清單一直失敗，將不能開啟一局新遊戲。")
+                .setCancelable(false)
+                .setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
 
-//    /**
-//     * This is called when an item in our context menu is clicked.
-//     */
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//
-//        return true;
-//    }
-    /**
-     * Return date in specified format.
-     * @param milliSeconds Date in milliseconds
-     * @param dateFormat Date format
-     * @return String representing date in specified format
-     */
-    public static String getDate(long milliSeconds, String dateFormat)
-    {
-        // Create a DateFormatter object for displaying date in specified format.
-        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
-
-        // Create a calendar object that will convert the date and time value in milliseconds to date.
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliSeconds);
-        return formatter.format(calendar.getTime());
+                }).show();
     }
 
-/*
+    @Override
+    public void hostSucceed() {
+        Log.wtf("dialog", "dialog:hostSucceed");
+    }
 
- */
+    @Override
+    public void connectSucceed() {
+        Log.wtf("dialog", "dialog:connectSucceed");
+    }
+
+    @Override
+    public void joinSucceed() {
+        Log.wtf("dialog", "dialog:joinSucceed");
+
+        //
+        final Intent intent = new Intent(BcUtils.SERVICE_STATE);
+        intent.putExtra(BcUtils.EXTRA_DATA,
+                "START_TO_SWITCH_FRAGMENT_TO_BATTLE");
+        getContext().sendBroadcast(intent);
+        //
+
+        this.dismiss();
+    }
+
+    @Override
+    public void hostFailed() {
+
+        Toast.makeText(getContext(),
+                "開遊戲失敗，可能是網路原因或其他問題。",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void connectFailed() {
+
+        Toast.makeText(getContext(),
+                "連接失敗！可能是網路問題，或是這場遊戲已經滿了。",Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void joinFailed() {
+
+        Toast.makeText(getContext(),
+                "連接成功，但加入遊戲失敗！可能是網路問題，或是這場遊戲已經滿了。",Toast.LENGTH_SHORT).show();
+
+    }
+
+    /*
+
+     */
     class SampleAdapter extends ArrayAdapter<Map<String, Long>> {
 
         public static final String KEY_NAME = "name";
@@ -291,24 +339,27 @@ public class GameListDialog extends AlertDialog
         public View getView(final int position,
                             View convertView,
                             @NonNull ViewGroup parent) {
+            //
             final ViewHolder viewHolder;
+            //
             if (convertView == null) {
                 viewHolder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.list_item, parent, false);
                 viewHolder.textViewName =
                         (TextView) convertView.findViewById(R.id.text_view_name);
-                convertView.setTag(viewHolder);
+                convertView.setTag(R.layout.list_item,viewHolder);
             } else {
-                viewHolder = (ViewHolder) convertView.getTag();
+                viewHolder = (ViewHolder) convertView.getTag(R.layout.list_item);
             }
 
+            long nowTime = System.currentTimeMillis();
             String data = String.valueOf(mData.get(position).get(PHPcolumn.game.gameId));
             String showText = "ID:" +
                     data +
                     "\nTime=" +
-                    getDate(Long.valueOf(data), "yyyy/MM/dd, hh:mm:ss");
+                    BscUtils.getDate(Long.valueOf(data), "yyyy/MM/dd, hh:mm:ss");
 
-            if(mData.get(position).get(PHPcolumn.game.gPcount) > 0)
+            if(nowTime - mData.get(position).get(PHPcolumn.game.gameId) < 1800000)
             {
                 convertView.setBackgroundResource(R.color.c_coral_red);
                 showText = showText + " (可加入)";
@@ -318,8 +369,10 @@ public class GameListDialog extends AlertDialog
                 Random seed = new Random();
                 int colorSelected = seed.nextInt(arrayColors.size() - 1);
                 convertView.setBackgroundResource(arrayColors.get(colorSelected));
+                showText = showText + " (已逾期)";
             }
 
+            convertView.setTag(data);
             viewHolder.textViewName.setTextSize((float)16);
             viewHolder.textViewName.setText(showText);
 
@@ -333,6 +386,25 @@ public class GameListDialog extends AlertDialog
             TextView textViewName;
         }
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        long gameId = Long.valueOf(view.getTag().toString());
+        long nowTime = System.currentTimeMillis();
+        Log.wtf("list",
+                "view.getTag="+gameId+
+                        ", position="+position+
+                        ", id"+id);
+
+        if(nowTime - gameId > 1800000)
+        {
+            Toast.makeText(getContext(),"不能加入逾期遊戲，請重新開啟新局。"
+                    ,Toast.LENGTH_SHORT).show();
+            return;
+        }
+        MainActivity.getThisGC().connect(gameId);
     }
 
     /**
@@ -375,14 +447,18 @@ public class GameListDialog extends AlertDialog
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.cbDialogOk:
+            case R.id.cbDialogBack:
 
                 this.dismiss();
                 setDialogDismiss(this);
 
                 break;
+
+            case R.id.cbDialogNewGame:
+
+                MainActivity.getThisGC().hostGameMode(MainFragment.gameMode);
+
+                break;
         }
     }
-
-
 }

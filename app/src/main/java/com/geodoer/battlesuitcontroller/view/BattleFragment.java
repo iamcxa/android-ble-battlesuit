@@ -2,9 +2,7 @@ package com.geodoer.battlesuitcontroller.view;
 
 import android.app.Activity;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +18,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.db.circularcounter.CircularCounter;
 import com.geodoer.battlesuitcontroller.MainActivity;
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
-import com.geodoer.bluetoothcontroler.service.BluetoothLeService;
+import com.geodoer.battlesuitcontroller.util.BscUtils;
 import com.geodoer.circularseekbar.CircularSeekBar;
-import com.geodoer.phpcontroller.controller.PHPController;
-import com.geodoer.phpcontroller.utils.StatusChangeListener;
 
 
 /**
@@ -44,9 +40,8 @@ public class BattleFragment
         Fragment
         implements
         View.OnClickListener,
-        CircularSeekBar.OnSeekChangeListener {
-
-    private static PHPController PC;
+        GameController.whenPlayerAct,
+        GameController.whenSucceed{
 
     private CircularCounter meterHp,meterAmmo;
 
@@ -70,7 +65,8 @@ public class BattleFragment
 
     private OnFragmentInteractionListener mListener;
 
-    private GameController gc;
+//    private static PHPController PC;
+//    private GameController gc;
 
     private static final String aGameId = "aGameId";
     private static final String aPlayerId = "aPlayerId";
@@ -92,7 +88,6 @@ public class BattleFragment
         BattleFragment fragment = new BattleFragment();
         return fragment;
     }
-
 
     public static BattleFragment newInstance(
             long gameId,
@@ -160,8 +155,6 @@ public class BattleFragment
             public void run() {
 
 
-                setShootingFlag();
-
             }
         };
     }
@@ -173,6 +166,15 @@ public class BattleFragment
         super.onCreate(savedInstanceState);
 
         MainActivity.setIsBattling(true);
+        MainActivity.getThisGC().setWhenPlayerActTarget(this);
+        MainActivity.getThisGC().setWhenSucceedTarget(this);
+
+//        gc = new GameController(getActivity());
+//        gc.setWhenPlayerActTarget(this);
+//        gc.setWhenSucceedTarget(this);
+//        //PC = MainActivity.getThisGC().getPc();
+//
+//        PC=gc.getPc();
 
         // 震動元件
         mVibrator = (Vibrator) getActivity().getSystemService(Service.VIBRATOR_SERVICE);
@@ -185,40 +187,32 @@ public class BattleFragment
             mGameTime = getArguments().getInt(aGameTime);
             mPlayerName = getArguments().getString(aPlayerName);
 
-            Log.wtf("args", "=====================");
-            Log.wtf("args", "gameID=" + mGameId);
-            Log.wtf("args", "mPlayerId=" + mPlayerId);
-            Log.wtf("args", "mSetHP=" + mSetHP);
-            Log.wtf("args", "mSetAmmo=" + mSetAmmo);
-            Log.wtf("args", "mGameTime=" + mGameTime);
-            Log.wtf("args", "mPlayerName=" + mPlayerName);
-            Log.wtf("args", "=====================");
-
             // PC =new ParseController(getActivity().getApplicationContext());
+        }else
+        {
+            mGameId = MainActivity.getThisGC().getGame().getGameId();
+            mSetHP = MainActivity.getThisGC().getGame().getSetHp();
+            mSetAmmo =MainActivity.getThisGC().getGame().getSetAmmo();
+            mGameTime = MainActivity.getThisGC().getGame().getGameTime();
+            mPlayerId = MainActivity.getThisGC().getPlayer().getPlayerId();
+            mPlayerName = MainActivity.getThisGC().getPlayer().getPlayerName();
+
+//            gc.getGame().setGameId(mGameId);
+//            gc.getGame().setSetHp(mSetHP);
+//            gc.getGame().setSetAmmo(mSetAmmo);
+//            gc.getGame().setGameTime(mGameTime);
+//            gc.getPlayer().setPlayerId(mPlayerId);
+//            gc.getPlayer().setPlayerName(mPlayerName);
         }
 
-        PC=new PHPController();
-
-        StatusChangeListener SCL = new StatusChangeListener()
-        {
-            @Override
-            public void onHPChanged(int value)
-            {
-                Log.wtf("bat","HP have been changed to "+value);
-                meterHp.setValues(value,value*2,value*3);
-            }
-
-            @Override
-            public void onAMMOChanged(int value)
-            {
-                Log.wtf("bat","AMMO have been changed to "+value);
-                meterAmmo.setValues(value,value*2,value*3);
-            }
-        };
-
-        PC.addSCListener(SCL);
-        PC.startService();
-
+        Log.wtf("args", "=====================");
+        Log.wtf("args", "gameID=" + mGameId);
+        Log.wtf("args", "mPlayerId=" + mPlayerId);
+        Log.wtf("args", "mSetHP=" + mSetHP);
+        Log.wtf("args", "mSetAmmo=" + mSetAmmo);
+        Log.wtf("args", "mGameTime=" + mGameTime);
+        Log.wtf("args", "mPlayerName=" + mPlayerName);
+        Log.wtf("args", "=====================");
     }
 
     @Override
@@ -230,19 +224,10 @@ public class BattleFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupcompements();
-
-        //   connectGame.connect(mGameId);
-
-        //if(joinGame.join(mPlayerId,mPlayerName))
+        //
+        setupompements();
+        //
         handler.postDelayed(stateUpdate,500);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -265,9 +250,6 @@ public class BattleFragment
     @Override
     public void onResume() {
         super.onResume();
-//        getActivity()
-//                .registerReceiver(ble_activity_receiver,
-//                        ble_activity_receiverIntentFilter());
     }
 
     @Override
@@ -278,13 +260,21 @@ public class BattleFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(ble_activity_receiver);
+        // getActivity().unregisterReceiver(ble_activity_receiver);
         isAutoRun=false;
+        MainActivity.getThisGC().stopPcService();
         handler.removeCallbacks(r);
         MainActivity.setIsBattling(false);
     }
 
-    private void setupcompements() {
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    private void setupompements() {
         if (getView() != null) {
             battleLL=(LinearLayout)getView().findViewById(R.id.battleLL);
             battleLL.setVisibility(View.INVISIBLE);
@@ -293,10 +283,10 @@ public class BattleFragment
             ivWarning.setVisibility(View.INVISIBLE);
 
             txtGetPname = (TextView) getView().findViewById(R.id.txtGetPname);
-            txtGetPname.setText(mPlayerName+"["+ PC.getGameId()+"]");
+            txtGetPname.setText("[" + mPlayerName + "]");
 
             txtBleState=(TextView)getView().findViewById(R.id.txtBleState);
-            txtBleState.setText("no data");
+            txtBleState.setText("no data yet");
 
             txtLoading=(TextView)getView().findViewById(R.id.txtLoading);
             txtLoading.setText("Loading");
@@ -308,7 +298,8 @@ public class BattleFragment
             barAmmo.setBarWidth(35);
             barAmmo.invalidate();
             barAmmo.setProgressColor(getResources().getColor(R.color.bar_color_ammo));
-            barAmmo.setSeekBarChangeListener(this);
+            //barAmmo.setSeekBarChangeListener(this);
+            barAmmo.setVisibility(View.GONE);
 
             CircularSeekBar barHp = (CircularSeekBar) getView().findViewById(R.id.barHp);
             barHp.setMaxProgress(mSetHP);
@@ -316,17 +307,10 @@ public class BattleFragment
             barHp.setBarWidth(35);
             barHp.invalidate();
             barHp.setProgressColor(getResources().getColor(R.color.bar_color_hp));
-            barHp.setSeekBarChangeListener(this);
+            // barHp.setSeekBarChangeListener(this);
+            barHp.setVisibility(View.GONE);
 
             isAutoRun = false;
-
-          //  Button btnMore = (Button) getView().findViewById(R.id.btnMore);
-          //  Button btnLess = (Button) getView().findViewById(R.id.btnLess);
-           // Button btnAuto = (Button) getView().findViewById(R.id.btnAuto);
-
-          //  btnMore.setOnClickListener(this);
-          //  btnLess.setOnClickListener(this);
-         //  btnAuto.setOnClickListener(this);
 
             String[] colorsAmmo = getResources().getStringArray(R.array.colors_AMMO);
             String[] colorsHp = getResources().getStringArray(R.array.colors_HP);
@@ -344,7 +328,7 @@ public class BattleFragment
                     .setThirdColor(Color.parseColor(colorsHp[2]))
                     .setBackgroundColor(Color.parseColor(colorsHp[3]));
 
-            meterAmmo.setValues(mSetAmmo, mSetAmmo * 2,mSetAmmo*3);
+            meterAmmo.setValues(mSetAmmo, mSetAmmo * 2, mSetAmmo * 3);
             meterAmmo.setRange(mSetAmmo)
                     .setFirstWidth(getResources().getDimension(R.dimen.first))
                     .setFirstColor(Color.parseColor(colorsAmmo[0]))
@@ -356,23 +340,6 @@ public class BattleFragment
         }
     }
 
-    private void reduceMeter(CircularCounter meter){
-        meter.setValues(meter.getValue1() - 1,
-                meter.getValue2() - 2,
-                meter.getValue3() - 3);
-    }
-
-    private void addMeter(CircularCounter meter){
-        meter.setValues(meter.getValue1() + 1,
-                meter.getValue2() + 2,
-                meter.getValue3() + 3);
-    }
-
-    private void addMeter(CircularCounter meter,int v1,int v2,int v3){
-        meter.setValues(v1,
-                v2,
-                v3);
-    }
 
     @Override
     public void onClick(View v) {
@@ -400,15 +367,100 @@ public class BattleFragment
     }
 
     @Override
-    public void onProgressChange(CircularSeekBar view, int newProgress) {
-        switch (view.getId()){
-            case R.id.barAmmo:
-                addMeter(meterAmmo, newProgress, newProgress * 2, newProgress * 3);
-                break;
-            case R.id.barHp:
-                addMeter(meterHp,newProgress,newProgress*2,newProgress*3);
-                break;
+    public void changeHP(int value) {
+        if(value>0)
+            this.meterHp.setValues(value,value*2,value*3);
+        else if((value<=0)) {
+            showDialogWhenPlayerDie();
+            MainActivity.getThisGC().getPc().clearSCListener();
         }
+
+    }
+
+    @Override
+    public void changeAmmo(int value) {
+
+        if(value>0)
+            this.meterAmmo.setValues(value,value*2,value*3);
+        else {
+            showDialogWhenPlayerOutOfAmmo();
+            MainActivity.getThisGC().getPc().clearSCListener();
+        }
+    }
+
+    @Override
+    public void hostSucceed() {
+
+    }
+
+    @Override
+    public void connectSucceed() {
+
+    }
+
+    @Override
+    public void joinSucceed() {
+        MainActivity.getThisGC().getPc().startService(getActivity());
+        MainActivity.getThisGC().setWhenPlayerActTarget(this);
+    }
+
+    @Override
+    public void hostFailed() {
+
+    }
+
+    @Override
+    public void connectFailed() {
+
+    }
+
+    @Override
+    public void joinFailed() {
+
+    }
+
+    private AlertDialog showDialogWhenPlayerOutOfAmmo(){
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("你沒子彈！")
+                .setCancelable(false)
+                .setNegativeButton("離開遊戲", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BattleFragment.this.onDestroy();
+                        getActivity().getParent().finish();
+                    }
+                })
+                .setPositiveButton("再玩一場", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BscUtils.switchFragment(getActivity(), MainFragment.newInstance("", ""));
+                        BattleFragment.this.onDestroy();
+                    }
+                }).show();
+    }
+
+    private AlertDialog showDialogWhenPlayerDie(){
+        return new AlertDialog.Builder(getActivity())
+                .setTitle("問題")
+                .setIcon(R.drawable.question_mark)
+                .setMessage("你陣亡啦！")
+                .setCancelable(false)
+                .setNegativeButton("離開遊戲", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BattleFragment.this.onDestroy();
+                        getActivity().getParent().finish();
+                    }
+                })
+                .setPositiveButton("再玩一場", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        BscUtils.switchFragment(getActivity(), MainFragment.newInstance("", ""));
+                        BattleFragment.this.onDestroy();
+                    }
+                }).show();
     }
 
     /**
@@ -425,177 +477,5 @@ public class BattleFragment
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
-
-    private void setShootingFlag(){
-
-//        if(PC.getAmmo_t()==1)
-//            // 開槍狀態=0
-//            PC.Player.updateInfo(
-//                    new ParseController
-//                            .updateInfoCallback(
-//                            ParseController
-//                                    .PlayerStatus.AMMO_t
-//                            , 0) {
-//                        @Override
-//                        public void run(boolean result) {
-//                            if (result){
-//                                Log.wtf("PARSE", "update Ammo_t 0 success");
-//                            }
-//                            else Log.wtf("PARSE", "update Ammo_t 0 fail");
-//                        }
-//                    });
-//        handler.removeCallbacks(setShottingFlag);
-    }
-
-    private void reduceHp(){
-        // 血環扣血
-//        if(meterHp.getValue1()>0)
-//            // 雲端扣血
-//            PC.Player
-//                    .updateInfo(new ParseController
-//                            .updateInfoCallback(ParseController
-//                            .PlayerStatus.HP, -1) {
-//                        @Override
-//                        public void run(boolean result) {
-//                            if (result) {
-//                                Log.wtf("PARSE", "update HP -1 success");
-//                                mVibrator.vibrate(tVibrattion);
-//                                reduceMeter(meterHp);
-//                            } else Log.wtf("PARSE", "update HP -1 fail");
-//                        }
-//                    });
-    }
-
-    // 接收BLE廣播
-    private final BroadcastReceiver ble_activity_receiver = new BroadcastReceiver()
-    {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            final String action = intent.getAction();
-            //final String bString = BleCustomDialog.mAction_servicestate;
-            if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action))
-            {
-                String data = intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
-                if(data!=null)
-                {
-                    String temp = data.substring(0, 2);
-                    txtBleState.setText(temp+System.currentTimeMillis()/(60*60*60));
-
-                    // 被瞄準
-                    if(temp.equals("AA")) {
-                        ivWarning.setVisibility(View.VISIBLE);
-                        handler.postDelayed(hideWarring, 1500);
-
-                        tNow=System.currentTimeMillis();
-
-//                        // 檢查誰開槍
-//                        PC.getWhoShooting(new ParseController.getWhoShootCallback() {
-//                            @Override
-//                            public void run(boolean result, ArrayList<Integer> list) {
-//                                if(result){
-//                                    if(!list.isEmpty()){
-//                                        Log.wtf("PARSE", list.toString()+"Now="+tNow+" this is pId="+mPlayerId);
-//                                        if(list.contains(mPlayerId)){
-//                                            int i;
-//                                            for(i=0;i<list.size();i++){
-//                                                //Log.wtf("list", "list item=" + list.get(i));
-//                                                if(list.get(i)==mPlayerId){
-//                                                    list.remove(i);
-//                                                    //Log.wtf("list", "remove itself.");
-//                                                }}
-//                                        }else {
-//
-//                                            Log.wtf("PARSE", "attacked by pId=" + list.toString());
-//
-//
-//                                            //reduceHp();
-//
-//                                        }
-//
-//                                    }else
-//                                        Log.wtf("PARSE", "沒有配對到槍手");
-//                                }
-//                            }
-//                        });
-
-                        // 被擊中
-                    }else if(temp.equals("BB")){
-
-                        // 如果還有血
-                        if(meterHp.getValue1()>0) {
-
-
-                            reduceHp();
-
-                        }else
-                            // 沒血
-                            Toast.makeText(getActivity(),
-                                    "你死啦！",
-                                    Toast.LENGTH_SHORT).show();
-                        // 開槍
-                    }else if(temp.equals("CC")){
-                        //
-                        if(meterAmmo.getValue1()>0) {
-
-                            mVibrator.vibrate(tVibrattion);
-                            reduceMeter(meterAmmo);
-
-//                            if(PC.Player.getAmmo_t()==0) {
-//                                // 開槍狀態=1
-//                                PC.Player
-//                                        .updateInfo(
-//                                                new ParseController
-//                                                        .updateInfoCallback(
-//                                                        ParseController
-//                                                                .PlayerStatus.AMMO_t
-//                                                        , 1) {
-//                                                    @Override
-//                                                    public void run(boolean result) {
-//                                                        if (result)
-//                                                            Log.wtf("PARSE", "update Ammo_t 1 success");
-//                                                        else
-//                                                            Log.wtf("PARSE", "update Ammo_t 1 fail");
-//                                                    }
-//                                                });
-                        }else{
-
-                            handler.postDelayed(setShottingFlag,10);
-                        }
-                        Log.wtf("","");
-                        // 更新子彈量
-//                            PC.Player
-//                                    .updateInfo(
-//                                            new ParseController
-//                                                    .updateInfoCallback(
-//                                                    ParseController
-//                                                            .PlayerStatus.AMMO
-//                                                    , -1) {
-//                                                @Override
-//                                                public void run(boolean result) {
-//                                                    if (result) {
-//                                                        Log.wtf("PARSE", "update Ammo -1 success");
-//                                                    } else Log.wtf("PARSE", "update Ammo -1 fail");
-//                                                }
-//                                            });
-
-                    }else
-                        Toast.makeText(getActivity(),
-                                "你沒子彈啦！",
-                                Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-
-    };
-
-//    //
-//private static IntentFilter ble_activity_receiverIntentFilter()
-//        {
-//final IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(BleCustomDialog.mAction_servicestate);
-//        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
-//        return intentFilter;
-//        }
 }
 

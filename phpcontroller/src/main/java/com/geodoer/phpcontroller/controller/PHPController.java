@@ -43,7 +43,7 @@ public class PHPController extends Service
     private static final String TAG = "ParseController";
     private static final String DEFAULT_PLAYER_NAME = "empty";
 
-    private Context context;
+    protected Context context;
 
     private static long gameId;
 
@@ -57,6 +57,8 @@ public class PHPController extends Service
     private static int player_hp;
     private static int player_ammo;
 
+
+    private  Runnable r ;
 
 
     private static PHPaddressBuilder PB;
@@ -151,9 +153,13 @@ public class PHPController extends Service
     private static ArrayList<StatusChangeListener> SCL_list = new ArrayList<>();
     public void addSCListener(StatusChangeListener SCL)
     {
+        Log.wtf(TAG,"addSCListener be called.");
+        int size = SCL_list.size();
         SCL_list.add(SCL);
+        if(SCL_list.size()>size)
+            Log.wtf(TAG,"addSCListener ok.");
     }
-    public static void clearSCListener()
+    public void clearSCListener()
     {
         SCL_list.clear();
     }
@@ -479,15 +485,31 @@ public class PHPController extends Service
 
     public void startService()
     {
-        if(ObjectId==0  )
+        privateStartService(null);
+    }
+
+    public void startService(Context context)
+    {
+        privateStartService(context);
+    }
+
+    private void privateStartService(Context c){
+        if(ObjectId==0 )
         {
             Log.wtf(TAG, "startService failure with no ObjectID, Please connectGame before startService");
             return;
         }
 
-        Intent intent = new Intent(context,PHPController.class);
-        context.startService(intent);
+        Log.wtf(TAG, "trying to startService...");
+        if(c!=null) {
+            final Intent intent = new Intent(c, PHPController.class);
+            c.startService(intent);
+        }else{
+            final Intent intent = new Intent(context, PHPController.class);
+            context.startService(intent);
+        }
     }
+
     public void stopService()
     {
         Intent intent = new Intent(context,PHPController.class);
@@ -535,15 +557,17 @@ public class PHPController extends Service
 
             if (ACTION_DATA_AVAILABLE.equals(action))
             {
+                mHandler.removeCallbacks(r);
                 String data = intent.getStringExtra(EXTRA_DATA);
                 data = data.substring(0, 2).toUpperCase();
                 if(data.equals("CC"))
                 {
-                    mHandler.post(new postToServer(data));
+                    r = new postToServer(data);
+                    mHandler.post(r);
                 }
                 else
                 {
-                    mHandler.postDelayed(new postToServer(data), 100);
+                    mHandler.postDelayed(new postToServer(data), 200);
                 }
 
                 Log.wtf(TAG,"mBattleSuitReceiver onReceive = "+data);

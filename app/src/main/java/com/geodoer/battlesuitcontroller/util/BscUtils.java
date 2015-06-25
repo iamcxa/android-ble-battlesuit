@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.geodoer.battlesuitcontroller.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by iamcx_000 on 2015/6/6.
  */
@@ -30,12 +33,30 @@ public class BscUtils {
     public static BluetoothClass.Device ConnectedBleDevice;
 
 
+
+    /**
+     * Return date in specified format.
+     * @param milliSeconds Date in milliseconds
+     * @param dateFormat Date format
+     * @return String representing date in specified format
+     */
+    public static String getDate(long milliSeconds, String dateFormat)
+    {
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
+
     public static void switchFragment(FragmentActivity fragmentActivity, Fragment newFragment) {
         switchFragment(fragmentActivity,null,newFragment);
     }
 
     public static void switchFragment(AppCompatActivity appCompatActivity, Fragment newFragment) {
-        switchFragment(null,appCompatActivity,newFragment);
+        switchFragment(null, appCompatActivity, newFragment);
     }
 
     private static void switchFragment(FragmentActivity fragmentActivity,

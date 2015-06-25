@@ -37,14 +37,12 @@
         </activity>
         <!-- END -->
 
-
         <!-- Settings Activity -->
         <activity
             android:name=".view.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <!-- END -->
-
 
         <!-- Ble Main Activity -->
         <activity
@@ -53,6 +51,7 @@
         </activity>
         <!-- END -->
 
+        <!-- Ble Main Activity -->
         <activity android:name="com.geodoer.bluetoothcontroler.view.BleActivity" />
 
         <!-- Parse Activity -->
@@ -77,16 +76,10 @@
         <service
             android:name="com.geodoer.bluetoothcontroler.service.GeoBleService"
             android:enabled="true" />
+        <service
+            android:name="com.geodoer.phpcontroller.controller.PHPController"
+            android:enabled="true" />
         <!-- END -->
 
-        <activity
-            android:name=".view.ResultActivity"
-            android:label="@string/title_activity_main2" >
-        </activity>
-        <activity
-            android:name=".view.BattleActivity"
-            android:label="@string/title_activity_main3" >
-        </activity>
     </application>
-
 </manifest>

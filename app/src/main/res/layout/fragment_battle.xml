@@ -1,14 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="top|center">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="50dp"
-        android:gravity="center"
+        android:gravity="top|center"
         android:id="@+id/battleLL">
 
         <TextView
@@ -19,7 +19,7 @@
             android:id="@+id/txtGetPname"
             android:layout_gravity="center_horizontal"
             android:textColor="#FFFFFF"
-            android:textSize="50dp"/>
+            android:textSize="50dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,13 +43,13 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:id="@+id/ivWarning"
-        android:background="@drawable/warning"
         android:layout_gravity="center_horizontal"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="50dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/lockdown" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textColor="#ffffffff"
-        android:textSize="50dp"/>
+        android:textSize="50sp"/>
 
 
 </RelativeLayout>
