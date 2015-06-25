@@ -42,6 +42,9 @@ public class GeoBleService extends Service
     private String device_address;
     private boolean mConnected = false;
 
+    private static String DA="";
+    public static String getDeviceAddress() { return DA; }
+
     @Override
     public void onCreate()
     {
@@ -59,6 +62,7 @@ public class GeoBleService extends Service
 
         device_name = b.getString(EXTRAS_DEVICE_NAME);
         device_address = b.getString(EXTRAS_DEVICE_ADDRESS);
+        DA = device_address;
         Log.wtf(TAG,"device name = "+ device_name);
         Log.wtf(TAG,"device address = "+device_address);
         registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());

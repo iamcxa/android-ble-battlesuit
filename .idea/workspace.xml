@@ -10,8 +10,17 @@
   </component>
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <target>android-21</target>
+      </config>
     </shared>
+    <layouts>
+      <layout url="file://$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
+    </layouts>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
@@ -19,26 +28,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77752d11-f67c-4cc0-9813-13610435ec2a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/controller/GameController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/parsecontroller/src/main/java/com/geodoer/parsecontroller/controller/PlayerIdMaker.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/item/aGame.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/item/aPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/item/aReactClass.java" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\.idea\.name" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\.idea\compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\.idea\copyright\profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\.idea\vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\app\src\main\java\com\geodoer\battlesuitcontroller\controller\ConnectGame.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\app\src\main\java\com\geodoer\battlesuitcontroller\controller\HostGame.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\Program code\Github\noway-p2-app-demo\app\src\main\java\com\geodoer\battlesuitcontroller\controller\JoinGame.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/HostFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/HostFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/JoinFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/JoinFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/parsecontroller/src/main/java/com/geodoer/parsecontroller/controller/ParseController.java" afterPath="$PROJECT_DIR$/parsecontroller/src/main/java/com/geodoer/parsecontroller/controller/ParseController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_battle.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_battle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java" afterPath="$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java" afterPath="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml" afterPath="$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/phpcontroller/build.gradle" afterPath="$PROJECT_DIR$/phpcontroller/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="noway-p2-app-demo.iws" />
@@ -69,13 +65,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PHPController.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="PHPController.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.051630434" vertical-offset="547" max-vertical-offset="7020">
-              <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+            <state vertical-scroll-proportion="-15.034483" vertical-offset="5192" max-vertical-offset="7068">
+              <caret line="495" column="76" selection-start-line="495" selection-start-column="8" selection-end-line="495" selection-end-column="76" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#17529#19560#0" expanded="true" />
+                <element signature="e#19542#19543#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,8 +82,65 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="228" max-vertical-offset="372">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="528">
+              <caret line="8" column="88" selection-start-line="8" selection-start-column="88" selection-end-line="8" selection-end-column="88" />
+              <folding>
+                <element signature="e#569#587#0" expanded="true" />
+                <element signature="e#720#738#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestMainActivity2.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="6.202532" vertical-offset="5342" max-vertical-offset="5952">
+              <caret line="486" column="12" selection-start-line="486" selection-start-column="12" selection-end-line="486" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4149#4357#0" expanded="true" />
+                <element signature="e#4346#4347#0" expanded="true" />
+                <element signature="e#4401#6567#0" expanded="true" />
+                <element signature="e#6556#6557#0" expanded="true" />
+                <element signature="e#6726#6727#0" expanded="true" />
+                <element signature="e#6767#6768#0" expanded="true" />
+                <element signature="e#6853#6854#0" expanded="true" />
+                <element signature="e#6894#6895#0" expanded="true" />
+                <element signature="e#6986#9284#0" expanded="true" />
+                <element signature="e#9277#9278#0" expanded="true" />
+                <element signature="e#9326#11679#0" expanded="true" />
+                <element signature="e#9456#11661#0" expanded="true" />
+                <element signature="e#11646#11647#0" expanded="true" />
+                <element signature="e#11672#11673#0" expanded="true" />
+                <element signature="e#11730#11868#0" expanded="true" />
+                <element signature="e#11861#11862#0" expanded="true" />
+                <element signature="e#12208#14345#0" expanded="true" />
+                <element signature="e#14326#14327#0" expanded="true" />
+                <element signature="e#14395#14396#0" expanded="true" />
+                <element signature="e#14462#14463#0" expanded="true" />
+                <element signature="e#14507#14772#0" expanded="true" />
+                <element signature="e#14765#14766#0" expanded="true" />
+                <element signature="e#14816#15081#0" expanded="true" />
+                <element signature="e#15074#15075#0" expanded="true" />
+                <element signature="e#15315#15506#0" expanded="true" />
+                <element signature="e#15499#15500#0" expanded="true" />
+                <element signature="e#15557#17051#0" expanded="true" />
+                <element signature="e#16256#16703#0" expanded="true" />
+                <element signature="e#16676#16677#0" expanded="true" />
+                <element signature="e#17044#17045#0" expanded="true" />
+                <element signature="e#17617#17618#0" expanded="true" />
+                <element signature="e#17657#17658#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BluetoothLeService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/BluetoothLeService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="3144">
+              <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -94,18 +149,64 @@
       <file leaf-file-name="TestMainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3600" max-vertical-offset="4380">
-              <caret line="300" column="13" selection-start-line="300" selection-start-column="13" selection-end-line="300" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3660">
+              <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+              <folding>
+                <element signature="e#9678#9942#0" expanded="true" />
+                <element signature="e#9931#9932#0" expanded="true" />
+                <element signature="e#10091#10392#0" expanded="true" />
+                <element signature="e#10381#10382#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_test_main.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml">
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1656">
+              <caret line="107" column="28" selection-start-line="107" selection-start-column="28" selection-end-line="107" selection-end-column="28" />
+              <folding>
+                <element signature="e#223#258#0" expanded="true" />
+                <element signature="e#284#319#0" expanded="true" />
+                <element signature="e#343#376#0" expanded="true" />
+                <element signature="e#403#436#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GeoBleService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.862069" vertical-offset="123" max-vertical-offset="2880">
+              <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BluetoothLeService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/BluetoothLeService.java">
+      <file leaf-file-name="BleMainActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/BleMainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="3396">
-              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="43" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+              <caret line="22" column="30" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
+              <folding>
+                <element signature="e#613#781#0" expanded="true" />
+                <element signature="e#770#771#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BleActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/view/BleActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="4020">
+              <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -3833,6 +3934,11 @@
                 <option name="name" value="prepareDebugUnitTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare noway-p2-app-demo:bluetoothcontroler:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/phpcontroller" />
+                <option name="name" value="prepareNowayP2AppDemoBluetoothcontrolerUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/phpcontroller" />
                 <option name="name" value="prepareReleaseDependencies" />
               </ExternalTaskPojo>
@@ -3940,7 +4046,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="C:/_github/DragTopLayout/sample" value="5721870500350" />
-        <entry key="$PROJECT_DIR$" value="11473457898428" />
+        <entry key="$PROJECT_DIR$" value="11476152019146" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -4194,9 +4300,13 @@
         <option value="$PROJECT_DIR$/phpcontroller/src/main/res/values/PHPpostaddress.xml" />
         <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPaddressBuilder.java" />
         <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/utils/StatusChangeListener.java" />
-        <option value="$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java" />
         <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java" />
+        <option value="$PROJECT_DIR$/phpcontroller/src/main/java/TestMainActivity2.java" />
+        <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java" />
+        <option value="$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml" />
+        <option value="$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java" />
+        <option value="$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity2.java" />
       </list>
     </option>
   </component>
@@ -4232,6 +4342,27 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="noway-p2-app-demo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -4239,23 +4370,9 @@
               <option name="myItemId" value="noway-p2-app-demo" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="noway-p2-app-demo" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpcontroller" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -4266,10 +4383,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="phpcontroller" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -4302,28 +4415,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="phpcontroller" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="noway-p2-app-demo" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpcontroller" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpcontroller" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -4352,14 +4443,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="noway-p2-app-demo" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="phpcontroller" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manifests" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -4426,25 +4509,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="noway-p2-app-demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bluetoothcontroler" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bluetoothcontroler" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="noway-p2-app-demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="noway-p2-app-demo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -4476,14 +4570,14 @@
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../UltimateAndroid" />
     <property name="FullScreen" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="BX902E8D99" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="BX903HJGCL" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Android_Wear_Round_API_21" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="722" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="318" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="254" />
-    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="android.project.structure.last.selected" value="app" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/phpcontroller/src/main/java" />
+    <property name="android.project.structure.last.selected" value="phpcontroller" />
     <property name="android.project.structure.proportion" value="0.15" />
   </component>
   <component name="RecentsManager">
@@ -4494,6 +4588,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\wGithub\noway-p2-app-demo\app\src\main\res\layout" />
       <recent name="D:\wGithub\noway-p2-app-demo\app\src\main\res\drawable" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.geodoer.phpcontroller" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.phpcontroller">
@@ -4710,6 +4807,11 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SliceManager">
+    <option name="analysisUIOptions">
+      <AnalysisUIOptions />
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -4723,53 +4825,53 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36682615" sideWeight="0.43419063" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7320574" sideWeight="0.20574887" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.50189704" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7320574" sideWeight="0.20574887" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5029889" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19948849" sideWeight="0.50469685" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7320574" sideWeight="0.56580937" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.80701756" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.8277512" sideWeight="0.79425114" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17700455" sideWeight="0.49530315" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19894099" sideWeight="0.49530315" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32854864" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6411483" sideWeight="0.5151286" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32877883" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.50469685" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Nativer Admin" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.80701756" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Nativer Admin" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32992327" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.50189704" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32935154" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.213555" sideWeight="0.4970111" order="5" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296328" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -4783,8 +4885,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.381725" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296328" sideWeight="0.498103" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1773231" sideWeight="0.49530315" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -4810,30 +4912,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="228" max-vertical-offset="372">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3600" max-vertical-offset="4380">
-          <caret line="300" column="13" selection-start-line="300" selection-start-column="13" selection-end-line="300" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/BluetoothLeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="480" max-vertical-offset="3396">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="43" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.04" vertical-offset="0" max-vertical-offset="0">
@@ -4869,13 +4947,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
           <caret line="125" column="25" selection-start-line="125" selection-start-column="25" selection-end-line="125" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/view/BleActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="42.58621" vertical-offset="0" max-vertical-offset="0">
-          <caret line="133" column="19" selection-start-line="133" selection-start-column="19" selection-end-line="133" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -5018,13 +5089,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/BleMainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.2" vertical-offset="0" max-vertical-offset="0">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bluetoothcontroler/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.68" vertical-offset="0" max-vertical-offset="0">
@@ -5067,13 +5131,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/geodoer/battlesuitcontroller/view/BattleRecordFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -5099,13 +5156,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.30100334" vertical-offset="0" max-vertical-offset="598">
           <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/parsecontroller/src/main/java/com/geodoer/parsecontroller/controller/ParseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -5137,22 +5187,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7424749" vertical-offset="2232" max-vertical-offset="2832">
-          <caret line="246" column="0" selection-start-line="246" selection-start-column="0" selection-end-line="251" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPaddressBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.73913044" vertical-offset="290" max-vertical-offset="1032">
@@ -5166,19 +5200,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/BluetoothLeService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3144">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="43" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/utils/StatusChangeListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.32107022" vertical-offset="0" max-vertical-offset="598">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5190,28 +5215,165 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2870" max-vertical-offset="3996">
-          <caret line="300" column="13" selection-start-line="300" selection-start-column="13" selection-end-line="300" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
+          <caret line="15" column="88" selection-start-line="13" selection-start-column="4" selection-end-line="15" selection-end-column="88" />
+          <folding>
+            <element signature="e#1794#1812#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24080268" vertical-offset="0" max-vertical-offset="598">
+          <caret line="12" column="27" selection-start-line="12" selection-start-column="27" selection-end-line="12" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/controller/GeoBleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="372">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.3779264" vertical-offset="14" max-vertical-offset="612">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parsecontroller/src/main/java/com/geodoer/parsecontroller/controller/ParseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0200669" vertical-offset="158" max-vertical-offset="6876">
+          <caret line="78" column="16" selection-start-line="78" selection-start-column="16" selection-end-line="78" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/controller/PHPController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.051630434" vertical-offset="547" max-vertical-offset="7020">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        <state vertical-scroll-proportion="-15.034483" vertical-offset="5192" max-vertical-offset="7068">
+          <caret line="495" column="76" selection-start-line="495" selection-start-column="8" selection-end-line="495" selection-end-column="76" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#17529#19560#0" expanded="true" />
+            <element signature="e#19542#19543#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="528">
+          <caret line="8" column="88" selection-start-line="8" selection-start-column="88" selection-end-line="8" selection-end-column="88" />
+          <folding>
+            <element signature="e#569#587#0" expanded="true" />
+            <element signature="e#720#738#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/view/BleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4020">
+          <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/BleMainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <caret line="22" column="30" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
+          <folding>
+            <element signature="e#613#781#0" expanded="true" />
+            <element signature="e#770#771#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3660">
+          <caret line="37" column="45" selection-start-line="37" selection-start-column="45" selection-end-line="37" selection-end-column="45" />
+          <folding>
+            <element signature="e#9678#9942#0" expanded="true" />
+            <element signature="e#9931#9932#0" expanded="true" />
+            <element signature="e#10091#10392#0" expanded="true" />
+            <element signature="e#10381#10382#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/BluetoothLeService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="264" max-vertical-offset="3144">
+          <caret line="56" column="44" selection-start-line="56" selection-start-column="44" selection-end-line="56" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/res/layout/activity_test_main.xml">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1440">
+          <caret line="107" column="28" selection-start-line="107" selection-start-column="28" selection-end-line="107" selection-end-column="28" />
+          <folding>
+            <element signature="e#223#258#0" expanded="true" />
+            <element signature="e#284#319#0" expanded="true" />
+            <element signature="e#343#376#0" expanded="true" />
+            <element signature="e#403#436#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bluetoothcontroler/src/main/java/com/geodoer/bluetoothcontroler/service/GeoBleService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.862069" vertical-offset="123" max-vertical-offset="2880">
+          <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/phpcontroller/src/main/java/com/geodoer/phpcontroller/TestMainActivity2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.202532" vertical-offset="5342" max-vertical-offset="5952">
+          <caret line="486" column="12" selection-start-line="486" selection-start-column="12" selection-end-line="486" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4149#4357#0" expanded="true" />
+            <element signature="e#4346#4347#0" expanded="true" />
+            <element signature="e#4401#6567#0" expanded="true" />
+            <element signature="e#6556#6557#0" expanded="true" />
+            <element signature="e#6726#6727#0" expanded="true" />
+            <element signature="e#6767#6768#0" expanded="true" />
+            <element signature="e#6853#6854#0" expanded="true" />
+            <element signature="e#6894#6895#0" expanded="true" />
+            <element signature="e#6986#9284#0" expanded="true" />
+            <element signature="e#9277#9278#0" expanded="true" />
+            <element signature="e#9326#11679#0" expanded="true" />
+            <element signature="e#9456#11661#0" expanded="true" />
+            <element signature="e#11646#11647#0" expanded="true" />
+            <element signature="e#11672#11673#0" expanded="true" />
+            <element signature="e#11730#11868#0" expanded="true" />
+            <element signature="e#11861#11862#0" expanded="true" />
+            <element signature="e#12208#14345#0" expanded="true" />
+            <element signature="e#14326#14327#0" expanded="true" />
+            <element signature="e#14395#14396#0" expanded="true" />
+            <element signature="e#14462#14463#0" expanded="true" />
+            <element signature="e#14507#14772#0" expanded="true" />
+            <element signature="e#14765#14766#0" expanded="true" />
+            <element signature="e#14816#15081#0" expanded="true" />
+            <element signature="e#15074#15075#0" expanded="true" />
+            <element signature="e#15315#15506#0" expanded="true" />
+            <element signature="e#15499#15500#0" expanded="true" />
+            <element signature="e#15557#17051#0" expanded="true" />
+            <element signature="e#16256#16703#0" expanded="true" />
+            <element signature="e#16676#16677#0" expanded="true" />
+            <element signature="e#17044#17045#0" expanded="true" />
+            <element signature="e#17617#17618#0" expanded="true" />
+            <element signature="e#17657#17658#0" expanded="true" />
           </folding>
         </state>
       </provider>

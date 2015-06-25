@@ -526,7 +526,7 @@ public class PHPController extends Service
                 }
                 else
                 {
-                    mHandler.postDelayed(new postToServer(data), 100);
+                    mHandler.postDelayed(new postToServer(data), 0);
                 }
 
                 Log.wtf(TAG,"mBattleSuitReceiver onReceive = "+data);
