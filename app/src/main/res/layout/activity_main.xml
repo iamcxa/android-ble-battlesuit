@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="..."
-        android:id="@+id/txtWaitingIndicator"
+        android:id="@+id/txtMainFTittle"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="400dp"
         android:layout_alignParentTop="true"

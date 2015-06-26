@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="今天玩什麼模式？"
-        android:id="@+id/txtWaitingIndicator"
+        android:id="@+id/txtMainFTittle"
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
         android:textColor="#ffffffff"
@@ -34,7 +34,7 @@
         android:layout_above="@+id/carddemo_shadow_animation"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
-        android:layout_below="@+id/txtWaitingIndicator">
+        android:layout_below="@+id/txtMainFTittle">
 
 
         <ScrollView

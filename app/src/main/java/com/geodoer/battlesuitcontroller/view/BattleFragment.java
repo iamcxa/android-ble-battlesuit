@@ -283,7 +283,9 @@ public class BattleFragment
             ivWarning.setVisibility(View.INVISIBLE);
 
             txtGetPname = (TextView) getView().findViewById(R.id.txtGetPname);
-            txtGetPname.setText("[" + mPlayerName + "]");
+            txtGetPname.setText("[" + mPlayerName +
+                    "]"+"" +
+                    "("+BscUtils.deviceName+")");
 
             txtBleState=(TextView)getView().findViewById(R.id.txtBleState);
             txtBleState.setText("no data yet");
@@ -337,6 +339,7 @@ public class BattleFragment
                     .setThirdWidth(getResources().getDimension(R.dimen.third))
                     .setThirdColor(Color.parseColor(colorsAmmo[2]))
                     .setBackgroundColor(Color.parseColor(colorsAmmo[3]));
+
         }
     }
 

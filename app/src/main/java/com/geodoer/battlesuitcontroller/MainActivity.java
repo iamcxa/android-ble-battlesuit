@@ -241,7 +241,7 @@ public class MainActivity
         cbMainLogo = (CircleButton) findViewById(R.id.cbMainLogo);
         cbMainLogo.setOnClickListener(this);
 
-        txtWaitingIndicator = (TextView) findViewById(R.id.txtWaitingIndicator);
+        txtWaitingIndicator = (TextView) findViewById(R.id.txtMainFTittle);
         txtShowFakeLoadingMsg =(TextView) findViewById(R.id.txtShowFakeLoadingMsg);
 
         mBleActionReceiver = new BleActionReceiver();
@@ -509,7 +509,15 @@ public class MainActivity
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                }).show();
+                })
+                .setNeutralButton("重來一次", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        MainActivity.this.recreate();
+                    }
+                })
+                .show();
     }
 
     private AlertDialog showDialogWhenLostConnection(){

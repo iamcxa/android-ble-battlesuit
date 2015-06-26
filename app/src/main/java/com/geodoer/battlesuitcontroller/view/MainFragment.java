@@ -16,12 +16,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.geodoer.battlesuitcontroller.R;
 import com.geodoer.battlesuitcontroller.controller.GameController;
 import com.geodoer.battlesuitcontroller.uiCard.SuggestedCard;
 import com.geodoer.battlesuitcontroller.uiCard.SuggestedCardHeader;
+import com.geodoer.battlesuitcontroller.util.BscUtils;
 import com.geodoer.phpcontroller.column.PHPcolumn;
 import com.geodoer.phpcontroller.controller.PHPController;
 
@@ -90,6 +92,9 @@ public class MainFragment
 
     public static int
             gameMode;
+
+    private TextView
+            txtMainFTittle;
 
     /**
      * Use this factory method to create a new instance of
@@ -183,13 +188,15 @@ public class MainFragment
             cardView2
                     = (CardViewNative) getActivity().findViewById(R.id.carddemo_suggested2);
 
+            txtMainFTittle = (TextView) getActivity().findViewById(R.id.txtMainFTittle);
+            txtMainFTittle.setText(txtMainFTittle.getText()+ "("+BscUtils.deviceName+")");
 
             //SuggestedCard.setWhenClcikedTarget(this);
 
             //  CircleButton btnBack = (CircleButton) getView().findViewById(R.id.btnBack);
             //  CircleButton btnDone = (CircleButton) getView().findViewById(R.id.btnDone);
 
-//            btnBack.setOnClickListener(this);
+            //  btnBack.setOnClickListener(this);
             // btnDone.setOnClickListener(this);
 
             mScrollView = (ScrollView) getActivity().findViewById(R.id.card_scrollview);
@@ -309,7 +316,7 @@ public class MainFragment
                 "●起始條件：\n" +
                 ">  20 生命\n" +
                 "> 400 彈藥\n" +
-                "> 沒有補血包（透過NFC）"+
+                "> 沒有補血包（透過NFC）" +
                 "> 有彈藥包（透過NFC）");
         card2.setsSubTitle("遊戲開始需要至少 2 人");
         card2.setsPurpose("開始死鬥！");
@@ -319,7 +326,7 @@ public class MainFragment
             @Override
             public void onClick(Card card, View view) {
 
-                gameMode = 2 ;
+                gameMode = 2;
 
                 GameListDialog gameListDialog = new GameListDialog(getActivity());
 
@@ -329,6 +336,7 @@ public class MainFragment
             }
         });
         cardView2.setCard(card2);
+
 
         // ArrayList<Card> cards = new ArrayList<>();
 //        cards.add(card);
