@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/androidcommon/androidcommon.iml" filepath="$PROJECT_DIR$/androidcommon/androidcommon.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blecontroller/blecontroller.iml" filepath="$PROJECT_DIR$/blecontroller/blecontroller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/blecontroller-demo/blecontroller-demo.iml" filepath="$PROJECT_DIR$/blecontroller-demo/blecontroller-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/bluetoothcontroler/bluetoothcontroler.iml" filepath="$PROJECT_DIR$/bluetoothcontroler/bluetoothcontroler.iml" />
       <module fileurl="file://$PROJECT_DIR$/circularcounter/circularcounter.iml" filepath="$PROJECT_DIR$/circularcounter/circularcounter.iml" />
       <module fileurl="file://$PROJECT_DIR$/circularseekbar/circularseekbar.iml" filepath="$PROJECT_DIR$/circularseekbar/circularseekbar.iml" />

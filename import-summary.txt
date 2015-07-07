@@ -1,14 +1,26 @@
 ECLIPSE ANDROID PROJECT IMPORT SUMMARY
 ======================================
 
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitignore
+* README.md
+* android-common.iml
+* litecommon1.0.0.jar
+
 Moved Files:
 ------------
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => circularcounter\src\main\AndroidManifest.xml
-* res\ => circularcounter\src\main\res\
-* src\ => circularcounter\src\main\java\
+* AndroidManifest.xml => androidcommon\src\main\AndroidManifest.xml
+* lint.xml => androidcommon\lint.xml
+* res\ => androidcommon\src\main\res\
+* src\ => androidcommon\src\main\java\
 
 Next Steps:
 -----------

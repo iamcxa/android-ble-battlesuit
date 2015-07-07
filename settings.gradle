@@ -1,1 +1,2 @@
-include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar', ':phpcontroller', ':waterWaveProgress', ':taurus', ':velocimeterlibrary'
+include ':parsecontroller', ':app', ':bluetoothcontroler', ':circularcounter', ':circularseekbar', ':phpcontroller', ':waterWaveProgress', ':taurus', ':velocimeterlibrary', ':blecontroller', ':blecontroller-demo'
+include ':androidcommon'

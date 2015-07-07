@@ -9,7 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/androidcommon" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/blecontroller" />
+            <option value="$PROJECT_DIR$/blecontroller-demo" />
             <option value="$PROJECT_DIR$/bluetoothcontroler" />
             <option value="$PROJECT_DIR$/circularcounter" />
             <option value="$PROJECT_DIR$/circularseekbar" />
